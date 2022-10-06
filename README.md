@@ -8,6 +8,9 @@ iTop Private Browser, Edge, Vivaldi,
 FireFox, PaleMoon, Thunderbird, SeaMonkey, SlimBrowser, Basilisk, IceDragon, WaterFox, Viber
 Opera. 
 
+
+##
+
 Mentioned programs start working much more slowly with the lapse of time. The reason is fragmentation of profile databases. ArcticProfileOptimizer is specially designed to resolve this problem. The method used in SpeedyFox is 100% safe for your profile (e.g. bookmarks, passwords, etc), it's well documented and has been tested on millions of computers.
 
 <p align="center">

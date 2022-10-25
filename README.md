@@ -15,8 +15,6 @@ Mentioned programs start working much more slowly with the lapse of time. The re
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/109481884/197779706-9f3062f0-e072-4fdf-9edc-e347e83674c7.png"/>
-  ![scrn2](https://user-images.githubusercontent.com/109481884/197779968-88712bc6-cb45-4f19-8950-c051e7c30052.png)
-
 </p>
 
 ## How ArcticProfileOptimizer works

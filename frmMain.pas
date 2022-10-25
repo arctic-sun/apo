@@ -682,7 +682,7 @@ begin
 
                      MaskArray := ['*.sqlite', '*.db'];
                   end
-                  else MaskArray := ['*.*'];
+                  else MaskArray := ['*.*','*'];
                {$ENDREGION}
 
 
@@ -934,7 +934,7 @@ begin
 
                      MaskArray := ['*.sqlite', '*.db'];
                   end
-                  else MaskArray := ['*.*'];
+                  else MaskArray := ['*.*','*'];
                {$ENDREGION}
 
 

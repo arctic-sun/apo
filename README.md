@@ -32,6 +32,9 @@ The optimization process can take from 5 seconds to a minute depending on how la
 Depending on your browsing activity we recommend optimizing your profile once every 1-2 weeks.
 
 
+# Development
+ArcticProfileOptimizer is written in Delphi 11.2.
+
 ## Components used in this project
 Virtual-TreeView from https://github.com/JAM-Software/Virtual-TreeView
 

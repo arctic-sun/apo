@@ -30,3 +30,9 @@ Once installed, ArcticProfileOptimizer can automatically detects profiles of the
 The optimization process can take from 5 seconds to a minute depending on how large your databases are. The whole optimization process is safe as it does not effect your history, bookmarks, passwords, etc.
 
 Depending on your browsing activity we recommend optimizing your profile once every 1-2 weeks.
+
+
+## Components used in this project
+Virtual-TreeView from https://github.com/JAM-Software/Virtual-TreeView
+SVGIconImageList from https://github.com/EtheaDev/SVGIconImageList
+KSVC from http://altd.embarcadero.com/getit/installer/components/KonopkaControls/KonopkaControls-280-7.0For11.2.zip

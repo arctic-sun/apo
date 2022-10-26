@@ -11,7 +11,7 @@ Opera and many others using sqlite database.
 
 ##
 
-Mentioned programs start working much more slowly with the lapse of time. The reason is fragmentation of profile databases. ArcticProfileOptimizer is specially designed to resolve this problem. The method used in SpeedyFox is 100% safe for your profile (e.g. bookmarks, passwords, etc), it's well documented and has been tested on millions of computers.
+Mentioned programs start working much more slowly with the lapse of time. The reason is fragmentation of profile databases. ArcticProfileOptimizer is specially designed to resolve this problem. The method used in ArcticProfileOptimizer is 100% safe for your profile (e.g. bookmarks, passwords, etc), it's well documented and has been tested on millions of computers.
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/109481884/197779706-9f3062f0-e072-4fdf-9edc-e347e83674c7.png"/>
@@ -25,7 +25,7 @@ ArcticProfileOptimizer is able to fix this problem with a single click! It seems
 ArcticProfileOptimizer compacts those databases without losing any data. Databases are optimized to operate faster and are decreased in size.
 
 ## How to use ArcticProfileOptimizer
-Once installed, ArcticProfileOptimizer can automatically detects profiles of the supported apps. If you have more than one profile, you can select the one you want to optimize from the list. If you have a portable version of any of the supported app, choose your profile path manually by selecting 'Add custom profile...' profile from the context menu in the list. All you have to do is hit the 'Optimize' button.
+Once installed, ArcticProfileOptimizer can automatically detects profiles of the supported apps. If you have more than one profile, you can select the one you want to optimize from the list. If you have a portable version of any of the supported app, choose your profile path manually by selecting 'Add profile...' from the context menu in the list. All you have to do is hit the 'Optimize profiles' button.
 
 The optimization process can take from 5 seconds to a minute depending on how large your databases are. The whole optimization process is safe as it does not effect your history, bookmarks, passwords, etc.
 

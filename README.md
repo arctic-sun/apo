@@ -41,3 +41,5 @@ Virtual-TreeView from https://github.com/JAM-Software/Virtual-TreeView
 SVGIconImageList from https://github.com/EtheaDev/SVGIconImageList
 
 Konopka Signature VCL Controls (KSVC) from [Embarcadero Getit](http://altd.embarcadero.com/getit/installer/components/KonopkaControls/KonopkaControls-280-7.0For11.2.zip)
+
+JEDI Code Library from https://github.com/project-jedi/jcl

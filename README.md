@@ -34,5 +34,7 @@ Depending on your browsing activity we recommend optimizing your profile once ev
 
 ## Components used in this project
 Virtual-TreeView from https://github.com/JAM-Software/Virtual-TreeView
+
 SVGIconImageList from https://github.com/EtheaDev/SVGIconImageList
+
 KSVC from http://altd.embarcadero.com/getit/installer/components/KonopkaControls/KonopkaControls-280-7.0For11.2.zip

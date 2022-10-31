@@ -2,7 +2,6 @@ unit frmMain;
 
 interface
 
-
 uses
   Winapi.Windows,
   Winapi.Messages,
@@ -107,7 +106,6 @@ type
     procedure SettingsBtnClick(Sender: TObject);
     procedure ActionsClickClick(Sender: TObject);
     procedure MenuButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-
     procedure VirtualStringTree1FreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure VirtualStringTree1GetText(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
     procedure VirtualStringTree1GetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: TImageIndex; var ImageList: TCustomImageList);
@@ -168,7 +166,7 @@ type
 
 var
   FormMain: TFormMain;
-
+  APO_Portable : Boolean;
   FirstShow: Boolean = False;
 
   settings_minfilesizeType  : Integer;
@@ -178,7 +176,8 @@ var
   settings_delete_shm       : Boolean;
   settings_showhint         : Boolean;
   settings_showlog          : Boolean;
-  settings_searchlnk        : Boolean;
+  settings_searchlnkdesktop : Boolean;
+  settings_searchlnksmenu   : Boolean;
 
 
 // Decrease Exe size
@@ -202,6 +201,7 @@ var
     SearchProfilesResult   : TList<TAProfiles>;
 
 
+
 const
      VST_PROGRESS_BAR_COLOR = $00598FFF;
 
@@ -217,9 +217,14 @@ const
 
      APP_CAPTION            = 'Arctic Profile Optimizer';
      SQLStatusVerCaption    = 'SQLite: %s';
-     AppVerCaption          = 'version: %sa'; //0.2.7a'
+     AppVerCaption          = 'apo: %sa'; //0.X.Xa'
+     AppVerPortableCaption  = 'portable: %sa'; //0.X.Xa'
+
+
+
 
      APP_SETTINGS_PATH              = '\AppData\Local\Arctics\ProfileOptimizer\';
+     APP_PORTABLE_SETTINGS_PATH     = 'ProfileOptimizer\';
      APP_CUSTOM_PROFILES_FILENAME   = 'custom.profiles';
      APP_SETTINGS_FILENAME          = 'micro.cfg';
      APP_DISABLED_PROFILES_FILENAME = 'disabled.profiles';
@@ -255,6 +260,15 @@ begin
   end;
 end;
 
+function GetAppSettingsPath: string;
+begin
+  if APO_Portable then
+   Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
+  else
+   Result := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
+end;
+
+
 procedure SaveSettings;
 var s, tmp_str: string;
 begin
@@ -265,9 +279,10 @@ begin
   settings_delete_shm.ToString + ','     +
   settings_showhint.ToString + ',' +
   settings_showlog.ToString + ',' +
-  settings_searchlnk.ToString ;
+  settings_searchlnkdesktop.ToString + ',' +
+  settings_searchlnksmenu.ToString ;
 
-  tmp_str := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
+  tmp_str := GetAppSettingsPath; // GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
   ForceDirectories(tmp_str);
 
   CustomProfilePaths.SaveToFile(tmp_str + APP_CUSTOM_PROFILES_FILENAME);
@@ -280,7 +295,7 @@ end;
 procedure LoadingSettings;
 var s, tmp_str: string; str_items : TArray<string>;
 begin
-  tmp_str := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
+  tmp_str := GetAppSettingsPath;// GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
 
   if FileExists(tmp_str + APP_CUSTOM_PROFILES_FILENAME) then
     CustomProfilePaths.LoadFromFile(tmp_str + APP_CUSTOM_PROFILES_FILENAME);
@@ -307,7 +322,9 @@ begin
   if Length(str_items)>6 then
   settings_showlog:=          str_items[6].ToBoolean;
   if Length(str_items)>7 then
-  settings_searchlnk:=        str_items[7].ToBoolean;
+  settings_searchlnkdesktop:= str_items[7].ToBoolean;
+  if Length(str_items)>8 then
+  settings_searchlnksmenu:=   str_items[8].ToBoolean;
 end;
 
 function GetMinSizeAsBytes: Int64;
@@ -358,11 +375,12 @@ begin
         if CompareText( ExtractFileExt(FileName) , '.lnk' ) = 0 then
         begin
           var _target, _argument: string;
+
           case GetLnkFile(FileName, _target, _argument) of
-           // RESULT_LNK_TO_DIRECTORY
-           0: AddProfile(_target, 0 {RESULT_UNKNOWN_PROFILE}, True );
-           // RESULT_LNK_TO_CHROMED_PROFILE
-           1: begin
+
+           RESULT_LNK_TO_DIRECTORY: AddProfile(_target, 0 {RESULT_UNKNOWN_PROFILE}, True );
+
+           RESULT_LNK_TO_CHROMED_USERDATADIR: begin
                  var ProfilePath: string;
                  var appType: Integer;
                  appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
@@ -370,8 +388,10 @@ begin
                  if appType >= 0 {RESULT_UNKNOWN_PROFILE} then
                    AddProfile(ProfilePath, appType, true);
               end;
-           // RESULT_LNK_UNKNOWN
-           2: {skip} ;
+
+           RESULT_LNK_TO_CHROMED_PROFILE: {skip} ;
+           RESULT_LNK_UNKNOWN: ;
+
           end;
         end;
     end;
@@ -432,6 +452,9 @@ begin
         ChangeWindowMessageFilter (i, MSGFLT_ADD);
      }
   end;
+
+  APO_Portable := Pos( 'portable',  LowerCase( ExtractFileName( ParamStr(0) ) ) ) > 0  ;
+
 end;
 
 procedure TFormMain.FormResize(Sender: TObject);
@@ -455,8 +478,13 @@ begin
   RzStatusPane_SQLiteVer.Caption :=
      Format(SQLStatusVerCaption, [FileVersion(sqlite3_lib)]);
 
-  RzStatusPane_AppVer.Caption :=
-     Format(AppVerCaption, [FileVersion(Application.ExeName)]);
+  if APO_Portable then
+    RzStatusPane_AppVer.Caption :=
+       Format(AppVerPortableCaption, [FileVersion(Application.ExeName)])
+  else
+    RzStatusPane_AppVer.Caption :=
+       Format(AppVerCaption, [FileVersion(Application.ExeName)]);
+
 
   Application.HintHidePause := 10000;
 
@@ -468,7 +496,9 @@ begin
   settings_delete_shm       := False;
   settings_showhint         := True;
   settings_showlog          := False;
-  settings_searchlnk        := False;
+  settings_searchlnkdesktop := False;
+  settings_searchlnksmenu   := False;
+
 
   LoadingSettings;
 
@@ -1212,18 +1242,10 @@ begin
      VirtualStringTree1.EndUpdate;
    end;
 
-
-  // Add profiles from shortcuts
-  if settings_searchlnk then
+  // Add profiles from Desktop shortcuts
+  if settings_searchlnkdesktop then
   begin
-     var StartMenuLNKListList, DesktopLNKListList : TList<TSearchRec{TSSearchRec}>;
-
-     StartMenuLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_STARTMENU),
-                                              ['*.lnk'],
-                                              0,   // MinSize     0 - any size
-                                              2    // MaxDepth   -1 - any depth
-                                              );
-
+     var DesktopLNKListList : TList<TSearchRec{TSSearchRec}>;
      DesktopLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_DESKTOP),
                                             ['*.lnk'],
                                             0,   // MinSize     0 - any size
@@ -1235,27 +1257,46 @@ begin
        var profilePath: string := '';
        var appType: Integer;
        var _target, _argument: string;
-
        for I := 0 to DesktopLNKListList.Count-1 do
        if GetLnkFile({DesktopLNKListList[i].Path +} DesktopLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
        begin
          appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
-         if appType >= 0 {RESULT_UNKNOWN_PROFILE} then AddProfileToVST(ProfilePath, appType);
+         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR]   then
+           AddProfileToVST(ProfilePath, appType);
        end;
-
-       for I := 0 to StartMenuLNKListList.Count-1 do
-       if GetLnkFile({StartMenuLNKListList[i].Path +} StartMenuLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
-       begin
-         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
-         if appType >= 0 {RESULT_UNKNOWN_PROFILE} then AddProfileToVST(ProfilePath, appType);
-       end;
-
      finally
-       StartMenuLNKListList.Free;
        DesktopLNKListList.Free;
        VirtualStringTree1.EndUpdate;
      end;
   end;
+
+  // Add profiles from StartMenu shortcuts
+  if settings_searchlnksmenu then
+  begin
+     var StartMenuLNKListList : TList<TSearchRec{TSSearchRec}>;
+     StartMenuLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_STARTMENU),
+                                              ['*.lnk'],
+                                              0,   // MinSize     0 - any size
+                                              2    // MaxDepth   -1 - any depth
+                                              );
+     VirtualStringTree1.BeginUpdate;
+     try
+       var profilePath: string := '';
+       var appType: Integer;
+       var _target, _argument: string;
+       for I := 0 to StartMenuLNKListList.Count-1 do
+       if GetLnkFile({StartMenuLNKListList[i].Path +} StartMenuLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
+       begin
+         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
+         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR] then
+          AddProfileToVST(ProfilePath, appType);
+       end;
+     finally
+       StartMenuLNKListList.Free;
+       VirtualStringTree1.EndUpdate;
+     end;
+  end;
+
 
  OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
  OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
@@ -1539,11 +1580,12 @@ begin
      then Edit2.Text := '0'
      else Edit2.Text := settings_maxscanndepth.ToString;
 
-     if settings_delete_wal then ToggleSwitch1.State := tssOn else ToggleSwitch1.State := tssOff;
-     if settings_delete_shm then ToggleSwitch2.State := tssOn else ToggleSwitch2.State := tssOff;
-     if settings_showhint   then ToggleSwitch3.State := tssOn else ToggleSwitch3.State := tssOff;
-     if settings_showlog    then ToggleSwitch4.State := tssOn else ToggleSwitch4.State := tssOff;
-     if settings_searchlnk  then ToggleSwitch5.State := tssOn else ToggleSwitch5.State := tssOff;
+     if settings_delete_wal       then ToggleSwitch1.State := tssOn else ToggleSwitch1.State := tssOff;
+     if settings_delete_shm       then ToggleSwitch2.State := tssOn else ToggleSwitch2.State := tssOff;
+     if settings_showhint         then ToggleSwitch3.State := tssOn else ToggleSwitch3.State := tssOff;
+     if settings_showlog          then ToggleSwitch4.State := tssOn else ToggleSwitch4.State := tssOff;
+     if settings_searchlnkdesktop then ToggleSwitch5.State := tssOn else ToggleSwitch5.State := tssOff;
+     if settings_searchlnksmenu   then ToggleSwitch6.State := tssOn else ToggleSwitch6.State := tssOff;
   end;
 
   if frmSettings.ShowModal = mrOk then
@@ -1557,11 +1599,12 @@ begin
     settings_maxscanndepth := StrToInt(frmSettings.Edit2.Text);
     if settings_maxscanndepth = 0 then settings_maxscanndepth := -1;
 
-    settings_delete_wal    := frmSettings.ToggleSwitch1.State = tssOn;
-    settings_delete_shm    := frmSettings.ToggleSwitch2.State = tssOn;
-    settings_showhint      := frmSettings.ToggleSwitch3.State = tssOn;
-    settings_showlog       := frmSettings.ToggleSwitch4.State = tssOn;
-    settings_searchlnk     := frmSettings.ToggleSwitch5.State = tssOn;
+    settings_delete_wal        := frmSettings.ToggleSwitch1.State = tssOn;
+    settings_delete_shm        := frmSettings.ToggleSwitch2.State = tssOn;
+    settings_showhint          := frmSettings.ToggleSwitch3.State = tssOn;
+    settings_showlog           := frmSettings.ToggleSwitch4.State = tssOn;
+    settings_searchlnkdesktop  := frmSettings.ToggleSwitch5.State = tssOn;
+    settings_searchlnksmenu    := frmSettings.ToggleSwitch6.State = tssOn;
 
     FormMain.ShowHint := settings_showhint;
     Application.ShowHint :=  settings_showhint;

@@ -41,6 +41,8 @@ type
     RzGroupBox1: TRzGroupBox;
     RzGroupBox2: TRzGroupBox;
     RzGroupBox3: TRzGroupBox;
+    ToggleSwitch6: TToggleSwitch;
+    Label9: TLabel;
   private
     { Private declarations }
   public

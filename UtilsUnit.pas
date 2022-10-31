@@ -49,8 +49,6 @@ uses
     Tsqlite3_close = function(db: PSQLite3): Integer;
  {$IFEND}
 
-   {   }
-
   type
    { TSSearchRec = record
       Size: Int64;
@@ -65,7 +63,7 @@ uses
 
     TChromiumProfileType = (cpYandex, cpChrome, cpChromiumOrSRwareIron, cpSlimjet, cpBrave, cpMailRuAtom,
                           cpCentBrowser, cpComodoDragon, cpTwinkstar, cpURBrowser, cpMaxthon, cpDecentr,
-                          cpiTopPrivateBrowser, cpMSEdge, cpVivaldi  );
+                          cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, cpBasilisk, cpQQBrowser   );
 
     TMozillaProfileType  = (mpFireFox, mpPaleMoon, mpThunderbird, mpSeaMonkey, mpSlimBrowser, mpBasilisk, mpIceDragon, mpWaterFox);
 
@@ -108,9 +106,16 @@ uses
      ENGINE_CHROMIUM = 2;
      ENGINE_OPERA    = 3;
 
-     MozillaBasedProfileCount   = 8;
-     ChromiumBasedProfileCount  = 15;
-     MiscEngineProfileCount     = 1;
+     MozillaBasedAppCount   = 8;
+     ChromiumBasedAppCount  = 17;
+     MiscEngineAppCount     = 1;
+
+
+     RESULT_LNK_TO_DIRECTORY           = 0;
+     RESULT_LNK_TO_CHROMED_PROFILE     = 1;
+     RESULT_LNK_TO_CHROMED_USERDATADIR = 2;
+     RESULT_LNK_UNKNOWN                = 3;
+
 
 implementation
 
@@ -174,8 +179,8 @@ Function GetOperaProfiles:TList<string>;
 var tmp_str: string;
 begin
    Result := nil;
-//  C:\Users\u1\AppData\Roaming\Opera Software\Opera Stable
-//  C:\Users\u1\AppData\Roaming\Opera Software\Opera GX Stable
+//  C:\Users\uu\AppData\Roaming\Opera Software\Opera Stable
+//  C:\Users\uu\AppData\Roaming\Opera Software\Opera GX Stable
    tmp_str := GetEnvironmentVariable('APPDATA') + '\Opera Software\';
    if DirectoryExists( tmp_str ) then
     Result := GetDirectories(tmp_str, False);
@@ -201,6 +206,9 @@ begin
     cpiTopPrivateBrowser    : tmp_str := tmp_str + 'iTop Private Browser\User Data';
     cpMSEdge                : tmp_str := tmp_str + 'Microsoft\Edge\User Data';
     cpVivaldi               : tmp_str := tmp_str + 'Vivaldi\User Data';
+
+    cpBasilisk              : tmp_str := tmp_str + 'Basilisk-Dev\Basilisk\Profiles';
+    cpQQBrowser             : tmp_str := tmp_str + 'Tencent\QQBrowser\User Data';
   end;
   if DirectoryExists( tmp_str ) then Result := tmp_str else Result := '';
 end;
@@ -297,6 +305,8 @@ begin
           cpiTopPrivateBrowser    :  begin appType := 212; appName:= 'iTop Private Browser';  end;
           cpMSEdge                :  begin appType := 213; appName:= 'Edge';                  end;
           cpVivaldi               :  begin appType := 214; appName:= 'Vivaldi';               end;
+          cpBasilisk              :  begin appType := 215; appName:= 'Basilisk';              end;
+          cpQQBrowser             :  begin appType := 216; appName:= 'QQBrowser';             end;
         end;
 
    ENGINE_UNKNOWN        :
@@ -353,7 +363,7 @@ Result := TList<TAProfiles>.Create;
 // *******************************
 // Chrome
 // *******************************
-  for I := 0 to ChromiumBasedProfileCount-1 do
+  for I := 0 to ChromiumBasedAppCount-1 do
   begin
     tmp_path := GetChromiumProfile(  TChromiumProfileType(i)  );
     if tmp_path.Length > 0 then
@@ -371,7 +381,7 @@ Result := TList<TAProfiles>.Create;
 // *******************************
 // Mozilla
 // *******************************
-  for I := 0 to MozillaBasedProfileCount-1 do
+  for I := 0 to MozillaBasedAppCount-1 do
   begin
     ADirs := GetMozillaProfiles( TMozillaProfileType(i) );
     if ADirs <> nil then
@@ -390,7 +400,7 @@ Result := TList<TAProfiles>.Create;
 // *******************************
 // Misc
 // *******************************
-  for I := 0 to MiscEngineProfileCount-1 do
+  for I := 0 to MiscEngineAppCount-1 do
   begin
     tmp_path := GetMiscProfile( TMiscProfileType(i)  );
     if tmp_path.Length > 0 then
@@ -494,10 +504,11 @@ begin
 end;
 
 function GetLnkFile(const LNKFilePath: string; var Target: string; var CMD: string): Integer;
-const
- RESULT_LNK_TO_DIRECTORY          = 0;
- RESULT_LNK_TO_CHROMED_PROFILE    = 1;
- RESULT_LNK_UNKNOWN               = 2;
+{const
+ RESULT_LNK_TO_DIRECTORY           = 0;
+ RESULT_LNK_TO_CHROMED_PROFILE     = 1;
+ RESULT_LNK_TO_CHROMED_USERDATADIR = 2;
+ RESULT_LNK_UNKNOWN                = 3;  }
 
 var Link: TShellLink;
 begin
@@ -513,14 +524,20 @@ begin
      Exit;
    end;
 
-   if Pos('--user-data-dir=', lowercase(CMD)) > 0 then
-   begin
-     Result := RESULT_LNK_TO_CHROMED_PROFILE; //Chromed profile
-     Exit;
-   end;
-
    Result := RESULT_LNK_UNKNOWN;
+
+   Case PosIndexText(lowercase(CMD),
+                     ['--user-data-dir=',
+                     '--profile-directory='] )
+   of
+     0 : Result := RESULT_LNK_TO_CHROMED_USERDATADIR;
+     1:  Result := RESULT_LNK_TO_CHROMED_PROFILE; //Chromed profile
+   End;
+   //'--profile-directory="Profile 1"'
+
 end;
+
+
 
 function GetChromedProfileInfo(const srcFileName: string; const srcCMD: string; var ProfilePath: string): Integer;
 const RESULT_NO_CHROME_ARGUMENT = -1;
@@ -530,17 +547,25 @@ const RESULT_NO_CHROME_ARGUMENT = -1;
 var _tmpStr: string;
 begin
   _tmpStr := srcCMD;
-  Delete( _tmpStr, 1, Length('--user-data-dir=') );
+
+  Delete( _tmpStr, 1, pos('=', _tmpStr, 1) );
   _tmpStr :=  _tmpStr.DeQuotedString('"');
 
-  if DirectoryExists(TPath.GetFullPath(_tmpStr)) then
-     ProfilePath := TPath.GetFullPath(_tmpStr) // LongPathName( TPath.GetFullPath(strx) )
-  else
+  // relative from browser dir or from appdata dir
+  if TPath.IsRelativePath( _tmpStr ) then
   begin
-     _tmpStr := TPath.GetFullPath(  TPath.Combine(ExtractFilePath(srcFileName), _tmpStr ) );
-     if DirectoryExists(_tmpStr) then
-      ProfilePath := _tmpStr;// LongPathName( strx );
-  end;
+   // relative path from browser dir
+   if DirectoryExists(TPath.GetFullPath( IncludeTrailingBackslash(ExtractFilePath(srcFileName)) + _tmpStr) ) then
+       ProfilePath := TPath.GetFullPath( IncludeTrailingBackslash(ExtractFilePath(srcFileName)) + _tmpStr)
+   else
+    // relative path from appdata dir
+    if DirectoryExists( TPath.GetFullPath( GetEnvironmentVariable('USERPROFILE') + '\AppData\Local\' + _tmpStr) ) then
+        ProfilePath := TPath.GetFullPath(GetEnvironmentVariable('USERPROFILE') + '\AppData\Local\' + _tmpStr) ;
+  end
+  else
+  // absolute
+  if DirectoryExists(TPath.GetFullPath(_tmpStr)) then ProfilePath := TPath.GetFullPath(_tmpStr);
+
 
   if ProfilePath.Length = 0 then Exit(RESULT_PATH_NOT_FOUND); // Path not found
 
@@ -562,12 +587,15 @@ begin
     'iTop Private Browser',
     'Microsoft Edge',
     'Vivaldi',
-    'Chromium'
+    'Chromium',
+    'Basilisk',
+    'QQBrowser'
+
     ])
   of
     0   :  Result := 200;   // cpYandex
     1   :  Result := 201;   // cpChrome
-    2,15   :  Result := 202;   // SRwareIron   cpChromium
+    2,15:  Result := 202;   // SRwareIron   cpChromium
     3   :  Result := 203;   // cpSlimjet
     4   :  Result := 204;   // cpBrave
     5   :  Result := 205;   // cpMailRuAtom
@@ -580,7 +608,8 @@ begin
     12  :  Result := 212;   // cpiTopPrivateBrowser
     13  :  Result := 213;   // cpMSEdge
     14  :  Result := 214;   // cpVivaldi
-
+    16  :  Result := 215;   // cpBasilisk
+    17  :  Result := 216;   // cpQQBrowser
   else
     Result := RESULT_UNKNOWN_PROFILE;
   end;
@@ -622,6 +651,8 @@ begin
      212:  Result := 17;  //@ cpiTopPrivateBrowser
      213:  Result := 10;  //@ cpMSEdge
      214:  Result := 15;  //@ cpVivaldi
+     215:  Result := 1;   //@ cpBasilisk
+     216:  Result := 27;  //@ cpQQBrowser
 
      300:  Result := 14;  //@ Viber
 
@@ -793,6 +824,9 @@ begin
       else
       begin
         // item is a file
+        //if
+
+
         for Mask in MaskArray do
           if MatchesMask(rec.Name, Mask) then
            if MatchesMinSize(rec.Size, MinSize) then
@@ -810,6 +844,8 @@ begin
 
              Break;
            end;
+
+
       end;
     until FindNext(rec) <> 0;
     FindClose(rec);
@@ -963,9 +999,9 @@ initialization
   then
   begin
     {$IFDEF WIN32}
-      MessageDlg('You are using 32-bit Windows, please use the 32-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
-    {$ELSE}
       MessageDlg('You are using 64-bit Windows, please use the 64-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
+    {$ELSE}
+     MessageDlg('You are using 32-bit Windows, please use the 32-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
     {$IFEND}
     Halt(0);
   end;

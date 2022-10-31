@@ -57,13 +57,13 @@ var
   URL: string;
 begin
   URL := 'https://github.com/arctic-sun/apo';
-  //URL := StringReplace(URL, '"', '%22', [rfReplaceAll]);
   ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TfrmInfo.FormShow(Sender: TObject);
 begin
  Label2.Caption := 'SQLite: ' + FileVersion(sqlite3_lib);
+ Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '31/10/2022' ]  ) ;
  ActiveControl := nil;
 end;
 

@@ -1,14 +1,13 @@
 object FormMain: TFormMain
   Left = 0
   Top = 0
-  ClientHeight = 524
-  ClientWidth = 1000
+  ClientHeight = 603
+  ClientWidth = 1150
   Color = 14120960
   CustomTitleBar.CaptionAlignment = taCenter
   CustomTitleBar.Control = TitleBarPanel1
   CustomTitleBar.Enabled = True
-  CustomTitleBar.Height = 31
-  CustomTitleBar.SystemHeight = False
+  CustomTitleBar.Height = 45
   CustomTitleBar.SystemColors = False
   CustomTitleBar.BackgroundColor = 14120960
   CustomTitleBar.ForegroundColor = clGray
@@ -22,16 +21,16 @@ object FormMain: TFormMain
   CustomTitleBar.ButtonPressedBackgroundColor = 7159040
   CustomTitleBar.ButtonInactiveForegroundColor = 65793
   CustomTitleBar.ButtonInactiveBackgroundColor = 14120960
-  Constraints.MinHeight = 200
-  Constraints.MinWidth = 750
+  Constraints.MinHeight = 300
+  Constraints.MinWidth = 1125
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
+  Font.Height = -18
   Font.Name = 'Verdana'
   Font.Style = []
   GlassFrame.Enabled = True
-  GlassFrame.Top = 31
+  GlassFrame.Top = 45
   Position = poDesktopCenter
   ShowHint = True
   StyleElements = [seFont, seClient]
@@ -39,12 +38,17 @@ object FormMain: TFormMain
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
-  TextHeight = 14
+  PixelsPerInch = 144
+  TextHeight = 22
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 501
-    Width = 1000
-    Height = 23
+    Top = 569
+    Width = 1150
+    Height = 34
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     SimpleFrameStyle = fsNone
     BorderInner = fsNone
     BorderOuter = fsNone
@@ -55,9 +59,10 @@ object FormMain: TFormMain
     object RzStatusPane_AppVer: TRzStatusPane
       Left = 0
       Top = 0
-      Width = 148
-      Height = 23
+      Width = 222
+      Height = 34
       Hint = 'This application version'
+      Margins.Left = 5
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
@@ -65,66 +70,89 @@ object FormMain: TFormMain
       Align = alLeft
       Alignment = taCenter
       Caption = 'version 0.0.0'
+      ExplicitHeight = 35
     end
     object RzStatusPane_SQLiteVer: TRzStatusPane
-      Left = 157
+      Left = 236
       Top = 0
-      Width = 148
-      Height = 23
+      Width = 222
+      Height = 34
       Hint = 'Current sqlite3.dll version'
+      Margins.Left = 5
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
       Align = alLeft
       Alignment = taCenter
       Caption = 'SQL v:'
-      ExplicitTop = 3
+      ExplicitHeight = 35
     end
     object Bevel1: TBevel
       AlignWithMargins = True
-      Left = 151
-      Top = 3
-      Width = 3
-      Height = 17
+      Left = 227
+      Top = 5
+      Width = 4
+      Height = 24
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alLeft
       Shape = bsLeftLine
-      ExplicitLeft = 103
+      ExplicitHeight = 25
     end
     object RzStatusPane3: TRzStatusPane
-      Left = 321
+      Left = 483
       Top = 0
-      Width = 679
-      Height = 23
+      Width = 667
+      Height = 34
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alClient
       Caption = ''
-      ExplicitLeft = 324
-      ExplicitWidth = 597
+      ExplicitLeft = 482
+      ExplicitWidth = 949
+      ExplicitHeight = 35
     end
     object Bevel2: TBevel
       AlignWithMargins = True
-      Left = 308
-      Top = 3
-      Width = 10
-      Height = 17
+      Left = 463
+      Top = 5
+      Width = 15
+      Height = 24
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alLeft
       Shape = bsLeftLine
-      ExplicitLeft = 306
+      ExplicitLeft = 462
+      ExplicitHeight = 25
     end
   end
   object TitleBarPanel1: TTitleBarPanel
     Left = 0
     Top = 0
-    Width = 1000
-    Height = 30
+    Width = 1150
+    Height = 44
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     OnPaint = TitleBarPanel1Paint
     CustomButtons = <>
     object MenuButton: TRzToolButton
       AlignWithMargins = True
-      Left = 34
-      Top = 3
-      Width = 47
-      Height = 24
-      Margins.Left = 34
+      Left = 51
+      Top = 5
+      Width = 71
+      Height = 34
+      Margins.Left = 51
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       DropDownMenu = PopupMenu1
       Flat = False
       ImageIndex = 0
@@ -132,13 +160,17 @@ object FormMain: TFormMain
       ToolStyle = tsDropDown
       Align = alLeft
       OnMouseMove = MenuButtonMouseMove
-      ExplicitTop = 2
+      ExplicitHeight = 36
     end
     object Image1: TImage
-      Left = 308
-      Top = 7
-      Width = 316
-      Height = 20
+      Left = 462
+      Top = 11
+      Width = 474
+      Height = 30
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Center = True
       Picture.Data = {
         0B5453564747726170686963851600003C3F786D6C2076657273696F6E3D2231
@@ -327,10 +359,14 @@ object FormMain: TFormMain
     end
     object RzPanel1: TRzPanel
       AlignWithMargins = True
-      Left = 87
-      Top = 3
-      Width = 157
-      Height = 24
+      Left = 132
+      Top = 5
+      Width = 236
+      Height = 34
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alLeft
       AutoSize = True
       BorderOuter = fsNone
@@ -345,9 +381,13 @@ object FormMain: TFormMain
       object OptimizeBtn: TRzToolButton
         Left = 0
         Top = 0
-        Width = 157
-        Height = 24
+        Width = 236
+        Height = 34
         Hint = 'Start optimization'
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         SelectionColorStop = clBtnFace
         SelectionFrameColor = clBtnFace
         Flat = False
@@ -361,20 +401,28 @@ object FormMain: TFormMain
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -12
+        Font.Height = -18
         Font.Name = 'Verdana'
         Font.Style = []
         ParentFont = False
         OnClick = OptimizeBtnClick
-        ExplicitTop = -1
+        ExplicitHeight = 36
       end
     end
   end
   object RzToolbar1: TRzToolbar
     Left = 0
-    Top = 30
-    Width = 1000
-    Height = 29
+    Top = 44
+    Width = 1150
+    Height = 42
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    RowHeight = 38
+    ButtonWidth = 38
+    ButtonHeight = 38
+    TextOptions = ttoCustom
     BorderInner = fsNone
     BorderOuter = fsGroove
     BorderSides = [sdTop]
@@ -388,21 +436,37 @@ object FormMain: TFormMain
     object MenuButton2: TRzToolButton
       Left = 4
       Top = 2
-      Width = 39
+      Width = 59
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       DropDownMenu = PopupMenu1
       ImageIndex = 0
       Images = SVGIconImageList1
       ToolStyle = tsDropDown
     end
     object RzSpacer1: TRzSpacer
-      Left = 43
+      Left = 63
       Top = 2
+      Width = 12
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Grooved = True
     end
     object OptimizeBtn2: TRzToolButton
-      Left = 51
+      Left = 75
       Top = 2
-      Width = 133
+      Width = 188
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       ImageIndex = 9
       Images = SVGIconImageList1
       ShowCaption = True
@@ -414,26 +478,30 @@ object FormMain: TFormMain
   end
   object RzSplitter1: TRzSplitter
     Left = 0
-    Top = 59
-    Width = 1000
-    Height = 442
+    Top = 86
+    Width = 1150
+    Height = 483
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Orientation = orVertical
-    Position = 228
+    Position = 249
     Percent = 52
     UsePercent = True
     RealTimeDrag = True
     UpperLeft.Color = 2829099
     LowerRight.Color = 2829099
     SplitterStyle = ssGroupBar
-    SplitterWidth = 6
+    SplitterWidth = 9
     Align = alClient
     Color = 2829099
     TabOrder = 4
     BarSize = (
       0
-      228
-      1000
-      234)
+      249
+      1150
+      258)
     UpperLeftControls = (
       VirtualStringTree1)
     LowerRightControls = (
@@ -442,8 +510,12 @@ object FormMain: TFormMain
     object VirtualStringTree1: TVirtualStringTree
       Left = 0
       Top = 0
-      Width = 1000
-      Height = 228
+      Width = 1150
+      Height = 249
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alClient
       Colors.BorderColor = 2829099
       Colors.DisabledColor = clGray
@@ -462,23 +534,26 @@ object FormMain: TFormMain
       Colors.UnfocusedColor = clSilver
       Colors.UnfocusedSelectionColor = 2829099
       Colors.UnfocusedSelectionBorderColor = 2829099
-      DefaultNodeHeight = 24
+      DefaultNodeHeight = 36
       Header.AutoSizeIndex = 0
       Header.Font.Charset = DEFAULT_CHARSET
       Header.Font.Color = clWindowText
-      Header.Font.Height = -12
+      Header.Font.Height = -18
       Header.Font.Name = 'Verdana'
       Header.Font.Style = [fsBold]
-      Header.Height = 24
-      Header.MaxHeight = 30
-      Header.MinHeight = 24
+      Header.Height = 36
+      Header.MaxHeight = 45
+      Header.MinHeight = 36
       Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoAutoSpring]
       Header.ParentFont = False
       Header.PopupMenu = PopupMenu1
       HintMode = hmHintAndDefault
+      Indent = 27
       LineStyle = lsSolid
+      Margin = 6
       PopupMenu = PopupMenu1
       TabOrder = 0
+      TextMargin = 6
       TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoHideButtons, toAutoChangeScale]
       TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
       TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection, toUseExplorerTheme]
@@ -493,94 +568,125 @@ object FormMain: TFormMain
       Columns = <
         item
           Hint = 'Profile App\Path and settings for its optimization'
+          MaxWidth = 15000
+          MinWidth = 15
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus, coEditable, coStyleColor]
           Position = 0
+          Spacing = 5
           Text = 'Profile'
-          Width = 566
+          Width = 499
         end
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
           Hint = 'Number of files that have been optimized'
+          MaxWidth = 15000
+          MinWidth = 15
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 1
+          Spacing = 5
           Text = 'Files'
-          Width = 70
+          Width = 105
         end
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
           Hint = 'Size of all files before optimization'
+          MaxWidth = 15000
+          MinWidth = 15
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 2
+          Spacing = 5
           Text = 'Size before'
-          Width = 140
+          Width = 210
         end
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
           Hint = 'Size of all files after optimization'
+          MaxWidth = 15000
+          MinWidth = 15
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 3
+          Spacing = 5
           Text = 'Size after'
-          Width = 140
+          Width = 210
         end
         item
           Alignment = taCenter
           CaptionAlignment = taCenter
           Hint = 'Rate of optimization efficiency'
+          MaxWidth = 15000
+          MinWidth = 15
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 4
+          Spacing = 5
           Text = 'Rate'
-          Width = 80
+          Width = 120
         end>
     end
     object RzPanel2: TRzPanel
       Left = 0
       Top = 0
-      Width = 1000
-      Height = 25
+      Width = 1150
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       Alignment = taLeftJustify
       BorderOuter = fsNone
       Caption = 'LOG'
       Color = 2829099
       TextMargin = 6
-      Padding.Right = 6
+      Padding.Right = 9
       TabOrder = 0
       Transparent = True
       object RzToolButton1: TRzToolButton
         AlignWithMargins = True
-        Left = 930
-        Top = 3
-        Width = 61
-        Height = 19
+        Left = 1044
+        Top = 5
+        Width = 92
+        Height = 28
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         ShowCaption = True
         UseToolbarShowCaption = False
         Align = alRight
         Caption = 'hide'
         OnClick = RzToolButton1Click
-        ExplicitTop = 0
+        ExplicitLeft = 1326
       end
       object RzToolButton2: TRzToolButton
         AlignWithMargins = True
-        Left = 874
-        Top = 3
-        Width = 50
-        Height = 19
+        Left = 959
+        Top = 5
+        Width = 75
+        Height = 28
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         ShowCaption = True
         UseToolbarShowCaption = False
         Align = alRight
         Caption = 'clear'
         OnClick = RzToolButton2Click
-        ExplicitTop = 0
+        ExplicitLeft = 1242
       end
     end
     object VirtualStringTree2: TVirtualStringTree
       Left = 0
-      Top = 25
-      Width = 1000
-      Height = 183
+      Top = 38
+      Width = 1150
+      Height = 187
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alClient
       Colors.BorderColor = 2829099
       Colors.DisabledColor = clGray
@@ -599,12 +705,16 @@ object FormMain: TFormMain
       Colors.UnfocusedColor = clSilver
       Colors.UnfocusedSelectionColor = 2829099
       Colors.UnfocusedSelectionBorderColor = 2829099
+      DefaultNodeHeight = 27
       Header.AutoSizeIndex = 2
-      Header.Height = 24
-      Header.MaxHeight = 30
-      Header.MinHeight = 24
+      Header.Height = 36
+      Header.MaxHeight = 45
+      Header.MinHeight = 36
       Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+      Indent = 27
+      Margin = 6
       TabOrder = 1
+      TextMargin = 6
       TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection, toUseExplorerTheme]
       TreeOptions.SelectionOptions = [toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
       OnFreeNode = VirtualStringTree2FreeNode
@@ -613,72 +723,104 @@ object FormMain: TFormMain
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
       Columns = <
         item
-          MinWidth = 200
+          MaxWidth = 15000
+          MinWidth = 300
           Position = 0
+          Spacing = 5
           Text = 'process name'
-          Width = 200
+          Width = 300
         end
         item
+          MaxWidth = 15000
+          MinWidth = 15
           Position = 1
+          Spacing = 5
           Text = 'value'
-          Width = 200
+          Width = 300
         end
         item
+          MaxWidth = 15000
+          MinWidth = 15
           Position = 2
+          Spacing = 5
           Text = 'result'
-          Width = 596
+          Width = 894
         end>
     end
   end
   object RzPanelProgress: TRzPanel
-    Left = 265
-    Top = 161
-    Width = 359
-    Height = 113
+    Left = 398
+    Top = 242
+    Width = 538
+    Height = 169
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = 2829099
-    Padding.Left = 3
-    Padding.Top = 3
-    Padding.Right = 3
-    Padding.Bottom = 3
+    Padding.Left = 5
+    Padding.Top = 5
+    Padding.Right = 5
+    Padding.Bottom = 5
     TabOrder = 2
     Transparent = True
     Visible = False
     object Label2: TLabel
       AlignWithMargins = True
-      Left = 8
-      Top = 8
-      Width = 343
-      Height = 14
+      Left = 12
+      Top = 12
+      Width = 514
+      Height = 22
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       Caption = 'Profile'
-      ExplicitWidth = 39
+      ExplicitWidth = 57
     end
     object Label3: TLabel
       AlignWithMargins = True
-      Left = 8
-      Top = 52
-      Width = 343
-      Height = 14
+      Left = 12
+      Top = 80
+      Width = 514
+      Height = 22
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       Caption = 'Overall'
-      ExplicitWidth = 44
+      ExplicitWidth = 65
     end
     object RzProgressBar1: TRzProgressBar
-      Left = 5
-      Top = 25
-      Width = 349
+      Left = 7
+      Top = 39
+      Width = 524
+      Height = 36
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       BorderWidth = 0
       InteriorOffset = 0
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitTop = 39
+      ExplicitLeft = 8
+      ExplicitTop = 38
+      ExplicitWidth = 523
     end
     object RzProgressBar2: TRzProgressBar
-      Left = 5
-      Top = 69
-      Width = 349
+      Left = 7
+      Top = 107
+      Width = 524
+      Height = 36
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       BarColorStop = clHighlight
       BorderWidth = 0
@@ -686,10 +828,13 @@ object FormMain: TFormMain
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitTop = 99
+      ExplicitLeft = 8
+      ExplicitTop = 104
+      ExplicitWidth = 523
     end
   end
   object SVGIconImageList1: TSVGIconImageList
+    Size = 24
     SVGIconItems = <
       item
         IconName = 'icons8_menu_2'
@@ -959,8 +1104,8 @@ object FormMain: TFormMain
           '.5,30.493,29,33.499,24,33.499z"/></svg>'
       end>
     Scaled = True
-    Left = 232
-    Top = 336
+    Left = 564
+    Top = 312
   end
   object PopupMenu1: TPopupMenu
     Images = SVGIconImageList1
@@ -1059,6 +1204,7 @@ object FormMain: TFormMain
     Top = 176
   end
   object SVGIconImageList2: TSVGIconImageList
+    Size = 24
     SVGIconItems = <
       item
         IconName = 'atom'
@@ -22199,13 +22345,273 @@ object FormMain: TFormMain
           'FFFF"/>'#10'    </g>'#10'    <path d="M17.1656,5l-4.877,17H21.8c0.66,0,1' +
           '.2,-0.54,1.2,-0.2V6.6625C23,5.2966,22.7034,5,22.3375,5H17.1656z"' +
           ' fill="#231F20" opacity="0.06"/>'#10'  </g>'#10'</svg>'#10
+      end
+      item
+        IconName = 'qqbrowser'
+        SVGText = 
+          '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'#10'<!-- Crea' +
+          'ted with Inkscape (http://www.inkscape.org/) -->'#10#10'<svg'#10'   width=' +
+          '"41.336891mm"'#10'   height="41.392685mm"'#10'   viewBox="0 0 41.336891 ' +
+          '41.392685"'#10'   version="1.1"'#10'   id="svg5"'#10'   xml:space="preserve"' +
+          #10'   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"' +
+          #10'   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi' +
+          '-0.dtd"'#10'   xmlns="http://www.w3.org/2000/svg"'#10'   xmlns:svg="http' +
+          '://www.w3.org/2000/svg"><sodipodi:namedview'#10'     id="namedview7"' +
+          #10'     pagecolor="#ffffff"'#10'     bordercolor="#111111"'#10'     border' +
+          'opacity="1"'#10'     inkscape:showpageshadow="0"'#10'     inkscape:pageo' +
+          'pacity="0"'#10'     inkscape:pagecheckerboard="1"'#10'     inkscape:desk' +
+          'color="#d1d1d1"'#10'     inkscape:document-units="mm"'#10'     showgrid=' +
+          '"false" /><defs'#10'     id="defs2" /><g'#10'     inkscape:label="'#1057#1083#1086#1081' 1' +
+          '"'#10'     inkscape:groupmode="layer"'#10'     id="layer1"'#10'     transfor' +
+          'm="translate(-40.298043,-71.215948)"><path'#10'       style="fill:#1' +
+          '491f9;stroke:none;stroke-width:0.264583"'#10'       d="m 42.524655,9' +
+          '9.832385 c 1.152287,-2.09894 6.180984,-3.24009 8.466666,-3.43959' +
+          ' -0.913765,-2.80908 -1.40335,-5.32505 -0.384228,-8.20208 2.41038' +
+          '1,-6.8045 10.797275,-9.40284 16.523545,-5.05362 2.16694,1.64576 ' +
+          '3.98489,4.3955 4.20899,7.17029 0.0998,1.23785 -0.42439,3.01307 -' +
+          '0.0355,4.16057 0.40825,1.20438 2.88184,2.08227 3.70576,3.25173 1' +
+          '.34144,1.90368 1.23111,3.376875 3.76264,3.964775 2.36299,-5.6829' +
+          '75 3.49488,-11.221635 1.26233,-17.197905 -4.95856,-13.272849 -22' +
+          '.03215,-17.562299 -32.747749,-8.38724 -5.023432,4.30122 -7.59957' +
+          '4,11.13496 -6.865885,17.64765 0.209233,1.85738 0.419973,4.97311 ' +
+          '2.103385,6.08542 z"'#10'       id="path3394" /><g'#10'       id="g221316' +
+          '"'#10'       transform="translate(25.496051,6.5006489)"><path'#10'      ' +
+          '   fill="#feffff"'#10'         opacity="1"'#10'         stroke="none"'#10'  ' +
+          '       d="m 53.535556,95.490616 c 0.0736,0.0468 0.14728,0.0937 0' +
+          '.23513,0.31018 0.15112,0.57162 0.22574,1.00972 0.43482,1.36973 1' +
+          '.65564,2.850844 0.31564,6.861124 -3.28406,7.050704 -4.42394,0.23' +
+          '299 -8.86305,0.3007 -13.292992,0.24226 -2.044994,-0.027 -2.66404' +
+          '5,-0.91223 -2.621186,-2.95491 0.0284,-1.35378 0.311591,-2.715594' +
+          ' 0.217432,-4.055304 -0.127527,-1.8145 0.552175,-3.02553 2.139678' +
+          ',-3.79717 0.0024,0.006 -0.01037,0.002 0.06314,-0.0442 0.116843,-' +
+          '0.2673 0.16016,-0.48827 0.211249,-0.7833 0.0232,-0.12125 0.03863' +
+          ',-0.16844 0.148539,-0.21783 0.893564,-0.98004 1.692646,-1.95787 ' +
+          '2.507398,-2.99884 0.06565,-0.14474 0.138489,-0.18557 0.293022,-0' +
+          '.20272 0.13435,-0.0558 0.19074,-0.11334 0.28778,-0.21093 0.0598,' +
+          '-0.0213 0.18585,-0.036 0.29677,-0.0331 1.55039,-0.1757 2.98987,-' +
+          '0.35428 4.52473,-0.5147 2.45691,0.70213 4.36438,2.06566 4.96508,' +
+          '4.4747 0.42826,1.71752 1.49597,2.09223 2.87347,2.36545 z"'#10'      ' +
+          '   id="path220119"'#10'         style="stroke:none;stroke-width:0.26' +
+          '4583;stroke-opacity:1" /><path'#10'         fill="#f5fbff"'#10'         ' +
+          'opacity="1"'#10'         stroke="none"'#10'         d="m 37.361936,93.64' +
+          '9846 c -1.585061,0.7779 -2.264763,1.98893 -2.137236,3.80343 0.09' +
+          '416,1.33971 -0.189028,2.701524 -0.217432,4.055304 -0.04286,2.042' +
+          '68 0.576192,2.92794 2.621186,2.95491 4.429942,0.0584 8.869052,-0' +
+          '.009 13.292992,-0.24226 3.5997,-0.18958 4.9397,-4.19986 3.28406,' +
+          '-7.050704 -0.20908,-0.36001 -0.2837,-0.79811 -0.41809,-1.30496 0' +
+          '.7042,0.88684 1.40588,1.87862 2.12828,3.02988 0.0583,0.23615 0.1' +
+          '1549,0.29306 0.19234,0.33024 0.0159,0.11855 0.0317,0.23711 -0.02' +
+          '95,0.49587 -0.0388,0.368134 -5.3e-4,0.596064 0.0376,0.823984 0.0' +
+          '134,0.11796 0.0267,0.23593 -0.0729,0.46404 -0.29782,0.80814 -0.4' +
+          '8263,1.50614 -0.66744,2.20413 -0.0882,0.12176 -0.17645,0.24351 -' +
+          '0.34209,0.47117 -0.13891,0.16311 -0.17462,0.23342 -0.18452,0.316' +
+          '82 0,0 -0.008,-0.0155 -0.0636,0.0139 -0.10435,0.10353 -0.15284,0' +
+          '.1776 -0.20133,0.25167 0,0 -0.009,-0.0146 -0.0634,0.015 -0.10324' +
+          ',0.1026 -0.15233,0.17555 -0.20141,0.2485 0,0 -0.007,-0.0154 -0.0' +
+          '625,0.0126 -0.10422,0.0998 -0.15323,0.17143 -0.20223,0.24312 0,0' +
+          ' -0.008,-0.005 -0.119,-0.005 -2.48341,0.26409 -4.85292,0.71168 -' +
+          '7.22922,0.75109 -3.89589,0.0646 -7.801066,-0.0513 -11.69162,-0.2' +
+          '7629 -1.164847,-0.0674 -2.370257,-0.61379 -3.417493,-1.19308 -0.' +
+          '990926,-0.54815 -1.394477,-1.53821 -0.873859,-2.72118 0.912709,-' +
+          '2.073904 1.809939,-4.154794 2.690596,-6.242474 0.146971,-0.34841' +
+          ' 0.177351,-0.746 0.319883,-1.14112 0.05828,-0.0202 0.180989,-0.0' +
+          '335 0.273958,-0.0308 0.300165,-0.094 0.507359,-0.19075 0.766943,' +
+          '-0.38318 0.89726,-0.0287 1.742132,0.0383 2.587002,0.1053 z"'#10'    ' +
+          '     id="path220123"'#10'         style="stroke:none;stroke-width:0.' +
+          '264583;stroke-opacity:1" /><path'#10'         fill="#e8f6ff"'#10'       ' +
+          '  opacity="1"'#10'         stroke="none"'#10'         d="m 33.675756,93.' +
+          '978786 c -0.08425,0.37486 -0.114635,0.77244 -0.261606,1.12085 -0' +
+          '.880657,2.08769 -1.777887,4.16857 -2.690596,6.242484 -0.520618,1' +
+          '.18297 -0.117067,2.17302 0.873859,2.72117 1.047236,0.57929 2.252' +
+          '646,1.12573 3.417493,1.19309 3.890554,0.22498 7.79573,0.3409 11.' +
+          '69162,0.27628 2.3763,-0.0394 4.74581,-0.487 7.23153,-0.74691 -0.' +
+          '98202,1.03603 -2.31761,1.32614 -3.77412,1.3211 -4.30221,-0.0149 ' +
+          '-8.60473,0.0209 -12.906653,-0.0169 -1.821828,-0.016 -3.642475,-0' +
+          '.16642 -5.539499,-0.35633 -0.232005,-0.38357 -0.320765,-0.76106 ' +
+          '-0.558053,-0.93031 -0.529808,-0.37785 -1.173905,-0.59654 -1.6996' +
+          '66,-0.9788 -1.40506,-1.02154 -1.618132,-1.8204 -0.763119,-3.3493' +
+          '2 0.982264,-1.756464 2.079698,-3.448514 3.208668,-5.207394 0.644' +
+          '421,-0.45556 1.20728,-0.87227 1.770142,-1.28898 z"'#10'         id="' +
+          'path220137"'#10'         style="stroke:none;stroke-width:0.264583;st' +
+          'roke-opacity:1" /><path'#10'         fill="#b3e5ff"'#10'         opacity' +
+          '="1"'#10'         stroke="none"'#10'         d="m 22.551257,101.37267 c ' +
+          '-0.966591,-0.91469 -1.933182,-1.829384 -2.812948,-2.850814 0.479' +
+          '795,-0.68449 0.777254,-1.37179 1.286682,-1.81598 0.911049,-0.794' +
+          '4 1.946977,-1.44632 2.936039,-2.1503 1.022011,-0.72743 2.050375,' +
+          '-1.44594 3.091031,-2.18076 0.01507,-0.0124 0.02557,-0.05 0.12039' +
+          '3,-0.0395 0.56267,0.44539 1.030513,0.88025 1.418482,1.38646 -0.6' +
+          '62796,0.35734 -1.308536,0.56089 -1.815206,0.94695 -0.971858,0.74' +
+          '051 -1.826445,1.63499 -2.798643,2.37499 -1.875102,1.42727 -2.143' +
+          '986,2.15097 -1.42583,4.328924 z"'#10'         id="path220151"'#10'      ' +
+          '   style="stroke:none;stroke-width:0.264583;stroke-opacity:1" />' +
+          '<path'#10'         fill="#dff4ff"'#10'         opacity="1"'#10'         stro' +
+          'ke="none"'#10'         d="m 31.824052,95.306616 c -1.047408,1.72003 ' +
+          '-2.144842,3.41207 -3.127106,5.168534 -0.855013,1.52892 -0.641941' +
+          ',2.32779 0.763119,3.34933 0.525761,0.38226 1.169858,0.60094 1.69' +
+          '9666,0.9788 0.237288,0.16924 0.326048,0.54674 0.44464,0.90712 -0' +
+          '.942342,-0.17139 -1.847114,-0.42017 -2.852505,-0.79889 -0.605476' +
+          ',-0.73474 -1.033735,-1.43253 -1.631322,-1.92474 -1.202044,-0.990' +
+          '08 -1.459951,-1.61845 -0.543658,-2.84806 1.313112,-1.762114 2.78' +
+          '3732,-3.406854 4.281729,-5.097504 0.384895,0.0913 0.675167,0.178' +
+          '34 0.965437,0.26541 z"'#10'         id="path220153"'#10'         style="' +
+          'stroke:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'    ' +
+          '     fill="#84d5ff"'#10'         opacity="1"'#10'         stroke="none"'#10 +
+          '         d="m 18.053497,96.340606 c -0.436979,-0.7321 -0.873957,' +
+          '-1.46419 -1.233456,-2.33731 0.961279,-1.20085 2.161281,-1.61564 ' +
+          '3.456524,-1.95792 1.386253,-0.36633 2.714334,-0.94897 4.077509,-' +
+          '1.4084 0.518643,-0.1748 1.064275,-0.26951 1.638539,-0.3152 0.128' +
+          '235,0.37533 0.215535,0.66514 0.204974,0.96657 -2.20776,0.95967 -' +
+          '4.372415,1.80696 -6.399015,2.90829 -0.748897,0.40697 -1.172896,1' +
+          '.41181 -1.745075,2.14397 z"'#10'         id="path220157"'#10'         st' +
+          'yle="stroke:none;stroke-width:0.264583;stroke-opacity:1" /><path' +
+          #10'         fill="#d4f0ff"'#10'         opacity="1"'#10'         stroke="n' +
+          'one"'#10'         d="m 30.763991,95.037006 c -1.403373,1.69485 -2.87' +
+          '3993,3.33959 -4.187105,5.101704 -0.916293,1.22961 -0.658386,1.85' +
+          '798 0.543658,2.84806 0.597587,0.49221 1.025846,1.19 1.532469,1.8' +
+          '9053 -0.913022,-0.31135 -1.827812,-0.71843 -2.865667,-1.21536 -0' +
+          '.182492,-0.15 -0.254291,-0.18415 -0.338462,-0.19231 0,0 0.0187,-' +
+          '0.0108 0.01658,-0.10128 -0.05793,-0.29883 -0.05024,-0.56533 -0.1' +
+          '79466,-0.70644 -1.158933,-1.26561 -0.88101,-2.47261 0.149654,-3.' +
+          '618174 1.38865,-1.54346 2.813149,-3.05465 4.264189,-4.49445 0.38' +
+          '267,0.2194 0.723412,0.35356 1.064153,0.48772 z"'#10'         id="pat' +
+          'h220159"'#10'         style="stroke:none;stroke-width:0.264583;strok' +
+          'e-opacity:1" /><path'#10'         fill="#92daff"'#10'         opacity="1' +
+          '"'#10'         stroke="none"'#10'         d="m 18.05771,96.431376 c 0.56' +
+          '7966,-0.82293 0.991965,-1.82777 1.740862,-2.23474 2.0266,-1.1013' +
+          '3 4.191255,-1.94862 6.479668,-2.87638 0.385473,0.34836 0.59243,0' +
+          '.67646 0.799386,1.00455 0,0 -0.01049,0.0376 -0.130622,0.0356 -0.' +
+          '46532,0.0314 -0.869864,-0.0408 -1.14645,0.11467 -2.536793,1.4259' +
+          '3 -5.59067,2.16944 -6.954907,5.17197 -0.26124,-0.37496 -0.522483' +
+          ',-0.7499 -0.787937,-1.21563 z"'#10'         id="path220161"'#10'        ' +
+          ' style="stroke:none;stroke-width:0.264583;stroke-opacity:1" /><p' +
+          'ath'#10'         fill="#caedff"'#10'         opacity="1"'#10'         stroke' +
+          '="none"'#10'         d="m 29.657911,94.464046 c -1.409113,1.52504 -2' +
+          '.833612,3.03623 -4.222262,4.57969 -1.030664,1.145564 -1.308588,2' +
+          '.352564 -0.149655,3.618174 0.129227,0.14111 0.121538,0.40761 0.1' +
+          '74592,0.71607 -0.674606,-0.29466 -1.346459,-0.68945 -2.062923,-1' +
+          '.28206 -0.08397,-1.46669 -0.156054,-2.729114 0.918669,-3.709944 ' +
+          '1.256215,-1.14646 2.496017,-2.31299 3.695992,-3.51759 0.311171,-' +
+          '0.31236 0.447078,-0.79933 0.764914,-1.15238 0.361174,0.28516 0.6' +
+          '20922,0.5166 0.880673,0.74804 z"'#10'         id="path220163"'#10'      ' +
+          '   style="stroke:none;stroke-width:0.264583;stroke-opacity:1" />' +
+          '<path'#10'         fill="#bfeaff"'#10'         opacity="1"'#10'         stro' +
+          'ke="none"'#10'         d="m 28.675813,93.662296 c -0.216411,0.40676 ' +
+          '-0.352318,0.89373 -0.663489,1.20609 -1.199975,1.2046 -2.439777,2' +
+          '.37113 -3.695992,3.51759 -1.074723,0.98083 -1.002641,2.243254 -0' +
+          '.965735,3.631364 -0.24995,-0.0838 -0.497444,-0.2869 -0.77214,-0.' +
+          '56732 -0.745356,-2.255304 -0.476472,-2.979004 1.39863,-4.406274 ' +
+          '0.972198,-0.74 1.826785,-1.63448 2.798643,-2.37499 0.50667,-0.38' +
+          '606 1.15241,-0.58961 1.806882,-0.93984 0.07155,-0.0643 0.0932,-0' +
+          '.0666 0.0932,-0.0666 z"'#10'         id="path220167"'#10'         style=' +
+          '"stroke:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'   ' +
+          '      fill="#9fdeff"'#10'         opacity="1"'#10'         stroke="none"' +
+          #10'         d="m 18.865386,97.727076 c 1.344498,-3.0826 4.398375,-' +
+          '3.82611 6.935168,-5.25204 0.276586,-0.15547 0.68113,-0.0833 1.13' +
+          '1379,-0.10226 -0.920528,0.73686 -1.948892,1.45537 -2.970903,2.18' +
+          '28 -0.989062,0.70398 -2.02499,1.3559 -2.936039,2.1503 -0.509428,' +
+          '0.44419 -0.806887,1.13149 -1.296579,1.72317 -0.345575,-0.19802 -' +
+          '0.594431,-0.40996 -0.863026,-0.70197 z"'#10'         id="path220169"' +
+          #10'         style="stroke:none;stroke-width:0.264583;stroke-opacit' +
+          'y:1" /><path'#10'         fill="#63c9ff"'#10'         opacity="1"'#10'      ' +
+          '   stroke="none"'#10'         d="m 15.945953,91.916326 c 0.931377,-1' +
+          '.59979 2.620161,-1.47535 4.039155,-1.90583 1.32015,-0.4005 2.670' +
+          '908,-0.71134 4.023702,-0.98497 0.331191,-0.067 0.722959,0.16551 ' +
+          '1.095475,0.42164 -0.972557,0.45557 -1.956327,0.74142 -2.934325,1' +
+          '.0458 -1.9787,0.61583 -3.95427,1.24172 -5.988575,1.85538 -0.0574' +
+          '4,-0.008 -0.173103,-0.0172 -0.173103,-0.0172 -0.01935,-0.11015 -' +
+          '0.0387,-0.22029 -0.06233,-0.41484 z"'#10'         id="path220171"'#10'  ' +
+          '       style="stroke:none;stroke-width:0.264583;stroke-opacity:1' +
+          '" /><path'#10'         fill="#6fcdff"'#10'         opacity="1"'#10'         ' +
+          'stroke="none"'#10'         d="m 16.238828,92.356436 c 1.976862,-0.62' +
+          '175 3.952432,-1.24764 5.931132,-1.86347 0.977998,-0.30438 1.9617' +
+          '68,-0.59023 2.989502,-0.97072 0.151917,-0.0822 0.257257,-0.0782 ' +
+          '0.467536,0.011 0.178188,0.29111 0.251434,0.49708 0.324682,0.7030' +
+          '4 -0.533331,0.13122 -1.078963,0.22593 -1.597606,0.40073 -1.36317' +
+          '5,0.45943 -2.691256,1.04207 -4.077509,1.40839 -1.295243,0.34229 ' +
+          '-2.495245,0.75708 -3.457605,1.86112 -0.253299,-0.33386 -0.428038' +
+          ',-0.71195 -0.598155,-1.25239 0.0091,-0.20746 0.01356,-0.25256 0.' +
+          '01802,-0.29767 z"'#10'         id="path220173"'#10'         style="strok' +
+          'e:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'         ' +
+          'fill="#e8f6ff"'#10'         opacity="1"'#10'         stroke="none"'#10'     ' +
+          '    d="m 55.463616,103.17121 c 0.097,-0.65549 0.28181,-1.35349 0' +
+          '.56,-2.0742 -0.0951,0.66208 -0.28367,1.34688 -0.56,2.0742 z"'#10'   ' +
+          '      id="path220175"'#10'         style="stroke:none;stroke-width:0' +
+          '.264583;stroke-opacity:1" /><path'#10'         fill="#e8f6ff"'#10'      ' +
+          '   opacity="1"'#10'         stroke="none"'#10'         d="m 56.137326,10' +
+          '0.44821 c -0.0594,-0.13059 -0.0976,-0.35852 -0.0786,-0.638374 0.' +
+          '0714,0.14572 0.0855,0.343384 0.0786,0.638374 z"'#10'         id="pat' +
+          'h220177"'#10'         style="stroke:none;stroke-width:0.264583;strok' +
+          'e-opacity:1" /><path'#10'         fill="#52c2ff"'#10'         opacity="1' +
+          '"'#10'         stroke="none"'#10'         d="m 16.181385,92.348346 c 0.0' +
+          '5298,0.0532 0.04851,0.0983 0.03622,0.21103 -0.08127,0.0152 -0.15' +
+          '471,-0.0373 -0.218736,-0.15901 0.0094,-0.0692 0.125077,-0.0601 0' +
+          '.182519,-0.052 z"'#10'         id="path220181"'#10'         style="strok' +
+          'e:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'         ' +
+          'fill="#0266e0"'#10'         opacity="1"'#10'         stroke="none"'#10'     ' +
+          '    d="m 55.352596,91.482756 c -0.0425,-0.006 -0.0692,-0.075 -0.' +
+          '0557,-0.16734 0.0401,-0.0231 0.0716,0.10388 0.0557,0.16734 z"'#10'  ' +
+          '       id="path220183"'#10'         style="stroke:none;stroke-width:' +
+          '0.264583;stroke-opacity:1" /><path'#10'         fill="#e8f6ff"'#10'     ' +
+          '    opacity="1"'#10'         stroke="none"'#10'         d="m 56.121076,9' +
+          '9.156306 c -0.0899,0.0322 -0.14709,-0.0247 -0.2003,-0.16077 0.06' +
+          '07,-0.009 0.13702,0.0411 0.2003,0.16077 z"'#10'         id="path2201' +
+          '85"'#10'         style="stroke:none;stroke-width:0.264583;stroke-opa' +
+          'city:1" /><path'#10'         fill="#caedff"'#10'         opacity="1"'#10'   ' +
+          '      stroke="none"'#10'         d="m 25.470139,103.53667 c 0.06292,' +
+          '-0.0589 0.134715,-0.0247 0.228474,0.0854 -0.04618,0.0272 -0.1267' +
+          '02,0.004 -0.228474,-0.0854 z"'#10'         id="path220187"'#10'         ' +
+          'style="stroke:none;stroke-width:0.264583;stroke-opacity:1" /><pa' +
+          'th'#10'         fill="#e8f6ff"'#10'         opacity="1"'#10'         stroke=' +
+          '"none"'#10'         d="m 54.918696,103.98524 c -0.0596,-0.0669 -0.02' +
+          '39,-0.13725 0.0877,-0.22773 0.0273,0.0482 0.005,0.12974 -0.0877,' +
+          '0.22773 z"'#10'         id="path220189"'#10'         style="stroke:none;' +
+          'stroke-width:0.264583;stroke-opacity:1" /><path'#10'         fill="#' +
+          'e8f6ff"'#10'         opacity="1"'#10'         stroke="none"'#10'         d="' +
+          'm 54.650896,104.24718 c -0.0181,-0.054 0.0304,-0.12805 0.14205,-' +
+          '0.2269 0.017,0.0524 -0.0292,0.12961 -0.14205,0.2269 z"'#10'         ' +
+          'id="path220191"'#10'         style="stroke:none;stroke-width:0.26458' +
+          '3;stroke-opacity:1" /><path'#10'         fill="#e8f6ff"'#10'         opa' +
+          'city="1"'#10'         stroke="none"'#10'         d="m 54.388726,104.5148' +
+          '9 c -0.0202,-0.057 0.0289,-0.12999 0.13999,-0.22895 0.0178,0.053' +
+          '7 -0.0265,0.13336 -0.13999,0.22895 z"'#10'         id="path220193"'#10' ' +
+          '        style="stroke:none;stroke-width:0.264583;stroke-opacity:' +
+          '1" /><path'#10'         fill="#e8f6ff"'#10'         opacity="1"'#10'        ' +
+          ' stroke="none"'#10'         d="m 54.121846,104.77051 c -0.0181,-0.05' +
+          '56 0.0309,-0.12734 0.14227,-0.22241 0.0165,0.0532 -0.0293,0.1297' +
+          '9 -0.14227,0.22241 z"'#10'         id="path220195"'#10'         style="s' +
+          'troke:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'     ' +
+          '    fill="#f5fbff"'#10'         opacity="1"'#10'         stroke="none"'#10' ' +
+          '        d="m 37.787307,92.610776 c 0.70571,-0.96806 1.5059,-1.93' +
+          '831 2.398913,-2.92214 -0.706265,0.96427 -1.505347,1.9421 -2.3989' +
+          '13,2.92214 z"'#10'         id="path220199"'#10'         style="stroke:no' +
+          'ne;stroke-width:0.264583;stroke-opacity:1" /><path'#10'         fill' +
+          '="#f5fbff"'#10'         opacity="1"'#10'         stroke="none"'#10'         ' +
+          'd="m 41.172276,89.165166 c 1.17502,-0.94224 2.66535,-0.77537 4.2' +
+          '4038,-0.78539 0.11735,-1.6e-4 0.15558,0.12549 0.17227,0.189 -1.4' +
+          '2278,0.24211 -2.86226,0.42069 -4.41265,0.59639 z"'#10'         id="p' +
+          'ath220201"'#10'         style="stroke:none;stroke-width:0.264583;str' +
+          'oke-opacity:1" /><path'#10'         fill="#f5fbff"'#10'         opacity=' +
+          '"1"'#10'         stroke="none"'#10'         d="m 37.427521,93.611906 c -' +
+          '0.03111,-0.17796 0.0113,-0.40226 0.128601,-0.6679 0.03156,0.1796' +
+          '3 -0.01175,0.4006 -0.128601,0.6679 z"'#10'         id="path220203"'#10' ' +
+          '        style="stroke:none;stroke-width:0.264583;stroke-opacity:' +
+          '1" /><path'#10'         fill="#f5fbff"'#10'         opacity="1"'#10'        ' +
+          ' stroke="none"'#10'         d="m 40.587726,89.409216 c -0.0101,-0.06' +
+          '14 0.0386,-0.13978 0.15768,-0.20392 0.0331,0.0906 -0.0233,0.1480' +
+          '9 -0.15768,0.20392 z"'#10'         id="path220205"'#10'         style="s' +
+          'troke:none;stroke-width:0.264583;stroke-opacity:1" /><path'#10'     ' +
+          '    fill="#e8f6ff"'#10'         opacity="1"'#10'         stroke="none"'#10' ' +
+          '        d="m 34.007991,93.927726 c 0.114629,-0.0886 0.322227,-0.' +
+          '17448 0.62219,-0.27393 -0.114831,0.0832 -0.322025,0.17988 -0.622' +
+          '19,0.27393 z"'#10'         id="path220207"'#10'         style="stroke:no' +
+          'ne;stroke-width:0.264583;stroke-opacity:1" /></g></g></svg>'#10
       end>
     Scaled = True
-    Left = 368
-    Top = 336
+    Left = 648
+    Top = 304
   end
   object SVGIconImageList3: TSVGIconImageList
-    Size = 29
+    Size = 44
     SVGIconItems = <
       item
         IconName = 'text790'
@@ -22295,7 +22701,7 @@ object FormMain: TFormMain
           '806" /></g></svg>'#13#10
       end>
     Scaled = True
-    Left = 536
-    Top = 368
+    Left = 444
+    Top = 320
   end
 end

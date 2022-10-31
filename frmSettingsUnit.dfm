@@ -1,22 +1,22 @@
 object frmSettings: TfrmSettings
   Left = 0
-  Top = 0
+  Top = 27
   BorderStyle = bsDialog
   Caption = 'Settings'
-  ClientHeight = 274
-  ClientWidth = 459
+  ClientHeight = 299
+  ClientWidth = 492
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poScreenCenter
+  Position = poDesktopCenter
   TextHeight = 15
   object RzDialogButtons1: TRzDialogButtons
     Left = 0
-    Top = 238
-    Width = 459
+    Top = 263
+    Width = 492
     Color = 2829099
     TabOrder = 0
     ExplicitTop = 237
@@ -128,8 +128,8 @@ object frmSettings: TfrmSettings
   object RzGroupBox2: TRzGroupBox
     Left = 221
     Top = 132
-    Width = 233
-    Height = 72
+    Width = 260
+    Height = 117
     Caption = 'Search profiles'
     CaptionFont.Charset = DEFAULT_CHARSET
     CaptionFont.Color = clWindowText
@@ -146,6 +146,13 @@ object frmSettings: TfrmSettings
       Height = 15
       Caption = 'Search profiles through desktop shortcuts'
     end
+    object Label9: TLabel
+      Left = 8
+      Top = 72
+      Width = 232
+      Height = 15
+      Caption = 'Search profiles through startmenu shortcuts'
+    end
     object ToggleSwitch5: TToggleSwitch
       Left = 8
       Top = 45
@@ -154,11 +161,19 @@ object frmSettings: TfrmSettings
       TabOrder = 0
       ThumbWidth = 20
     end
+    object ToggleSwitch6: TToggleSwitch
+      Left = 8
+      Top = 93
+      Width = 73
+      Height = 20
+      TabOrder = 1
+      ThumbWidth = 20
+    end
   end
   object RzGroupBox3: TRzGroupBox
     Left = 221
     Top = 8
-    Width = 233
+    Width = 260
     Height = 118
     Caption = 'Misc'
     CaptionFont.Charset = DEFAULT_CHARSET

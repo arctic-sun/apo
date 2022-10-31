@@ -6,7 +6,7 @@ Yandex, Chrome, Chromium, SRwareIron, Slimjet, Brave, (Mail.Ru)Atom,
 CentBrowser, Comodo Dragon, Twinkstar, URBrowser, Maxthon, Decentr,
 iTop Private Browser, Edge, Vivaldi, 
 FireFox, PaleMoon, Thunderbird, SeaMonkey, SlimBrowser, Basilisk, IceDragon, WaterFox, Viber,
-Opera and many others using sqlite database. 
+Opera, QQBrowser and many others using sqlite database. 
 
 
 ##

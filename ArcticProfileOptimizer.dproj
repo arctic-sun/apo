@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>ArcticProfileOptimizer.dpr</MainSource>
@@ -126,10 +126,10 @@
         <Icon_MainIcon>ProjectX.ico</Icon_MainIcon>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.2.7.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.2.7.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.2.10.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.2.10.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>res\logo-icon\path491.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
-        <VerInfo_Release>7</VerInfo_Release>
+        <VerInfo_Release>10</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -140,8 +140,8 @@
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.2.8.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.2.8.0;Comments=</VerInfo_Keys>
-        <VerInfo_Release>8</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.2.10.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.2.10.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>10</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -157,6 +157,15 @@
             <Form>frmSettings</Form>
         </DCCReference>
         <DCCReference Include="UtilsUnit.pas"/>
+        <DCCReference Include="frmAddProfileUnit.pas">
+            <Form>AddProfileDlgForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataModuleUnit.pas">
+            <Form>DataModule1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

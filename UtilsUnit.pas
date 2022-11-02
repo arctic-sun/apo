@@ -2,8 +2,12 @@
 
 interface
 
-{.$DEFINE sqlite3_STATIC_DLL_LOAD}
 
+{$IFDEF WIN32}
+ {$DEFINE sqlite3_STATIC_DLL_LOAD}
+{$ELSE}
+ // nothing
+{$IFEND}
 
 uses
   Winapi.Windows,
@@ -11,7 +15,6 @@ uses
   Winapi.ShlObj,
 
   System.SysUtils,
-  //System.Variants,
   System.Classes,
   System.Types,
   System.IOUtils,
@@ -35,19 +38,20 @@ uses
     PSQLite3 = type Pointer;
     PPAnsiCharArray = ^TPAnsiCharArray;
     TPAnsiCharArray = array[0..MaxInt div SizeOf(PAnsiChar) - 1] of PAnsiChar;
-    TSQLite3Callback = function(pArg: Pointer; nCol: Integer; argv: PPAnsiCharArray; colv: PPAnsiCharArray): Integer; cdecl;
+    TSQLite3Callback = function(pArg: Pointer; nCol: Integer; argv: PPAnsiCharArray; colv: PPAnsiCharArray): Integer; {$IFDEF sqlite3_STATIC_DLL_LOAD} cdecl;  {$ELSE} stdcall; {$IFEND}
 
-
+  // cdecl static
+  // stdcall dynamic
  {$IFDEF sqlite3_STATIC_DLL_LOAD}
     function sqlite3_open(const filename: PAnsiChar; var ppDb: PSQLite3): Integer; cdecl; external sqlite3_lib;
     function sqlite3_exec(db: PSQLite3; const sql: PAnsiChar; callback: TSQLite3Callback; pArg: Pointer; errmsg: PPAnsiChar): Integer; cdecl; external sqlite3_lib;
     function sqlite3_close(db: PSQLite3): Integer; cdecl; external sqlite3_lib;
  {$ELSE}
-  type
     Tsqlite3_open = function(const filename: PAnsiChar; var ppDb: PSQLite3): Integer;
     Tsqlite3_exec = function(db: PSQLite3; const sql: PAnsiChar; callback: TSQLite3Callback; pArg: Pointer; errmsg: PPAnsiChar): Integer;
     Tsqlite3_close = function(db: PSQLite3): Integer;
  {$IFEND}
+
 
   type
    { TSSearchRec = record
@@ -62,15 +66,16 @@ uses
     end;
 
     TChromiumProfileType = (cpYandex, cpChrome, cpChromiumOrSRwareIron, cpSlimjet, cpBrave, cpMailRuAtom,
-                          cpCentBrowser, cpComodoDragon, cpTwinkstar, cpURBrowser, cpMaxthon, cpDecentr,
-                          cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, cpBasilisk, cpQQBrowser   );
+                            cpCentBrowser, cpComodoDragon, cpTwinkstar, cpURBrowser, cpMaxthon, cpDecentr,
+                            cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, cpBasilisk, cpQQBrowser);
 
     TMozillaProfileType  = (mpFireFox, mpPaleMoon, mpThunderbird, mpSeaMonkey, mpSlimBrowser, mpBasilisk, mpIceDragon, mpWaterFox);
 
-    TMiscProfileType     = ( opViber );
+    TMiscProfileType     = (opViber);
 
 
     // GetProfiles
+    procedure SetAppNameAndType(const ProfileIndex, EngineIndex: Integer; var appType: Integer; var appName: string);
     procedure FreeSearchProfilesResult(List: TList<TAProfiles>);
     function  GetProfilesA:TList<TAProfiles>;
 
@@ -305,7 +310,7 @@ begin
           cpiTopPrivateBrowser    :  begin appType := 212; appName:= 'iTop Private Browser';  end;
           cpMSEdge                :  begin appType := 213; appName:= 'Edge';                  end;
           cpVivaldi               :  begin appType := 214; appName:= 'Vivaldi';               end;
-          cpBasilisk              :  begin appType := 215; appName:= 'Basilisk';              end;
+          cpBasilisk              :  begin appType := 215; appName:= 'Basilisk(chromium)';    end;
           cpQQBrowser             :  begin appType := 216; appName:= 'QQBrowser';             end;
         end;
 
@@ -448,6 +453,8 @@ begin
      212: Result:= 'iTop Private Browser';
      213: Result:= 'Edge';
      214: Result:= 'Vivaldi';
+     215: Result:= 'Basilisk(chromium)';
+     216: Result:= 'QQBrowser';
 
      300: Result:= 'Viber';
      400: Result:= 'Opera';
@@ -734,7 +741,7 @@ begin
    try
     if FHandle <> nil then
       if @sqlite3_exec <> nil then
-    sqlite3_exec(FHandle, PAnsiChar(UTF8Encode('VACUUM;')), nil, nil, nil);
+           sqlite3_exec(FHandle, PAnsiChar(UTF8Encode('VACUUM;')), nil, nil, nil);
    finally
       if FHandle <> nil then
       begin
@@ -742,7 +749,7 @@ begin
                          sqlite3_close(FHandle);
         FHandle := nil;
       end;
-   end;
+   end;        { }
 end;
 
     {$IFEND}
@@ -995,13 +1002,13 @@ end;
 initialization
 
   if System.SysUtils.TOSVersion.Architecture in
-   {$IFDEF WIN32} [arARM64, arIntelX64] {$ELSE} [arIntelX86, arARM32] {$IFEND}
+    {$IFDEF WIN32} [arARM64, arIntelX64] {$ELSE} [arIntelX86, arARM32] {$IFEND}
   then
   begin
     {$IFDEF WIN32}
       MessageDlg('You are using 64-bit Windows, please use the 64-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
     {$ELSE}
-     MessageDlg('You are using 32-bit Windows, please use the 32-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
+      MessageDlg('You are using 32-bit Windows, please use the 32-bit version of the Arctic Profile Optimizer', mtInformation, [mbOk], 0, mbOk);
     {$IFEND}
     Halt(0);
   end;
@@ -1063,6 +1070,7 @@ initialization
   end
   else
     raise Exception.CreateFmt('Unable to load DLL %s!', [sqlite3_lib]);
+
 {$ENDREGION}
 
 {$IFEND}

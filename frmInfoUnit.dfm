@@ -99,7 +99,7 @@ object frmInfo: TfrmInfo
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
             ParentFont = False
-            ExplicitLeft = -5
+            ExplicitWidth = 438
           end
           object Button1: TButton
             AlignWithMargins = True

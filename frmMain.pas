@@ -51,7 +51,6 @@ uses
 
 type
   TFormMain = class(TForm)
-    SVGIconImageList1: TSVGIconImageList;
     RzStatusBar1: TRzStatusBar;
     TitleBarPanel1: TTitleBarPanel;
     PopupMenu1: TPopupMenu;
@@ -84,18 +83,17 @@ type
     RzProgressBar1: TRzProgressBar;
     RzProgressBar2: TRzProgressBar;
     Image1: TImage;
-    SVGIconImageList2: TSVGIconImageList;
     RzToolbar1: TRzToolbar;
     MenuButton2: TRzToolButton;
     RzSpacer1: TRzSpacer;
     OptimizeBtn2: TRzToolButton;
-    SVGIconImageList3: TSVGIconImageList;
     VirtualStringTree1: TVirtualStringTree;
     RzSplitter1: TRzSplitter;
     RzPanel2: TRzPanel;
     RzToolButton1: TRzToolButton;
     RzToolButton2: TRzToolButton;
     VirtualStringTree2: TVirtualStringTree;
+    dlg1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -115,6 +113,7 @@ type
     procedure VirtualStringTree2FreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure RzToolButton1Click(Sender: TObject);
     procedure RzToolButton2Click(Sender: TObject);
+    procedure dlg1Click(Sender: TObject);
   private
     { Private declarations }
     procedure WMDropFiles(var Msg: TWMDropFiles);  message WM_DROPFILES;
@@ -190,10 +189,10 @@ var
 
 implementation
 
-uses
+uses DataModuleUnit,
     UtilsUnit,
     frmInfoUnit,
-    frmSettingsUnit;
+    frmSettingsUnit, frmAddProfileUnit;
 
 var
     CustomProfilePaths     : TStringList;
@@ -284,6 +283,7 @@ begin
 
   tmp_str := GetAppSettingsPath; // GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
   ForceDirectories(tmp_str);
+
 
   CustomProfilePaths.SaveToFile(tmp_str + APP_CUSTOM_PROFILES_FILENAME);
 
@@ -423,6 +423,7 @@ begin
 
   CustomProfilePaths := TStringList.Create;
   CustomProfilePaths.NameValueSeparator := '|';
+  CustomProfilePaths.DefaultEncoding := TEncoding.UTF8;
 
   if IsAeroEnabled.ToInteger = 0 then
   begin
@@ -433,7 +434,7 @@ begin
      TitleBarPanel1.Enabled := False;
      TitleBarPanel1.Visible := False;
      TitleBarPanel1.Hide;
-   end;
+  end;
 
   VirtualStringTree1.NodeDataSize := SizeOf(TItemNodeData);
   VirtualStringTree2.NodeDataSize := SizeOf(TLOGItemNodeData);
@@ -611,6 +612,10 @@ begin
   Application.ProcessMessages;
 end;
 
+
+
+
+
 procedure TFormMain.ProcOptimize;
 var
  aTask: ITask;
@@ -781,6 +786,9 @@ begin
    end);
    aTask.Start;
 end;
+
+
+
 
 procedure TFormMain.ProcOptimizeLOG;
 var
@@ -1133,8 +1141,17 @@ begin
     // Delete selected profile
     begin
       i := KeyIndexOf(CustomProfilePaths, ItemNodeData^.v_ProfileName );
-      if i > -1 then CustomProfilePaths.Delete(i);
-      VirtualStringTree1.DeleteSelectedNodes;
+      if i > -1 then
+      begin
+        CustomProfilePaths.Delete(i);
+
+        if VirtualStringTree1.FocusedNode.Parent.ChildCount = 1 then
+          VirtualStringTree1.DeleteNode(VirtualStringTree1.FocusedNode.Parent)
+        else
+          VirtualStringTree1.DeleteSelectedNodes;
+
+      end;
+
     end;
   finally
     VirtualStringTree1.EndUpdate;
@@ -1142,6 +1159,11 @@ begin
 
   OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
   OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
+end;
+
+procedure TFormMain.dlg1Click(Sender: TObject);
+begin
+  AddProfileDlgForm.ShowModal;
 end;
 
 procedure TFormMain.AddProfileDlg;
@@ -1194,13 +1216,13 @@ begin
           v_RateStr     := '';
        end;
        // ------------------------------------------------
-        for i := 0 to  SearchProfilesResult[j].appProfiles.Count-1 do
+        for i := 0 to SearchProfilesResult[j].appProfiles.Count-1 do
         begin
           VTNode := VirtualStringTree1.AddChild(VTRootNode);
           VTNode.CheckType := ctCheckBox;
 
           // Bug-fix
-         VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
+          VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
 
           if ProfilePathIsDisabled(SearchProfilesResult[j].appProfiles[i], DisabledProfiles)
           then VirtualStringTree1.CheckState[VTNode] := csUnCheckedNormal
@@ -1211,7 +1233,7 @@ begin
           with ItemNodeData^ do
           begin
             v_ProfileName   := SearchProfilesResult[j].appProfiles[i];
-            h_AppType   := SearchProfilesResult[j].appType;
+            h_AppType       := SearchProfilesResult[j].appType;
             v_FilesCount    := '';
             v_SizeBefore    := '';
             v_SizeAfter     := '';
@@ -1683,7 +1705,7 @@ begin
 
   if not Assigned(ItemNodeData) then Exit;
 
-  ImageList := SVGIconImageList2;
+  ImageList := DataModule1.SVGIconImageList2;
 
   if Node.ChildCount = 0 then
     ImageIndex :=  26

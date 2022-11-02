@@ -7,7 +7,9 @@ uses
   Vcl.Styles,
   frmInfoUnit in 'frmInfoUnit.pas' {frmInfo},
   frmSettingsUnit in 'frmSettingsUnit.pas' {frmSettings},
-  UtilsUnit in 'UtilsUnit.pas';
+  UtilsUnit in 'UtilsUnit.pas',
+  frmAddProfileUnit in 'frmAddProfileUnit.pas' {AddProfileDlgForm},
+  DataModuleUnit in 'DataModuleUnit.pas' {DataModule1: TDataModule};
 
 {$R *.res}
 
@@ -34,5 +36,7 @@ begin
   Application.CreateForm(TFormMain, FormMain);
   Application.CreateForm(TfrmInfo, frmInfo);
   Application.CreateForm(TfrmSettings, frmSettings);
+  Application.CreateForm(TAddProfileDlgForm, AddProfileDlgForm);
+  Application.CreateForm(TDataModule1, DataModule1);
   Application.Run;
 end.

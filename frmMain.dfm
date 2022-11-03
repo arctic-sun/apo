@@ -728,7 +728,6 @@ object FormMain: TFormMain
       OnGetText = VirtualStringTree2GetText
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-      ExplicitTop = 33
       Columns = <
         item
           MaxWidth = 15000
@@ -864,10 +863,6 @@ object FormMain: TFormMain
       ImageName = 'icons8_add_folder'
       ShortCut = 16449
       OnClick = ActionsClickClick
-    end
-    object dlg1: TMenuItem
-      Caption = 'Add profile path2...'
-      OnClick = dlg1Click
     end
     object DelCustomProfileBtn: TMenuItem
       Tag = 3

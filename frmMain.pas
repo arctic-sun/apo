@@ -96,7 +96,6 @@ type
     RzToolButton1: TRzToolButton;
     RzToolButton2: TRzToolButton;
     VirtualStringTree2: TVirtualStringTree;
-    dlg1: TMenuItem;
     PopupMenu2: TPopupMenu;
     Copy1: TMenuItem;
     Gotofile1: TMenuItem;
@@ -119,7 +118,6 @@ type
     procedure VirtualStringTree2FreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure RzToolButton1Click(Sender: TObject);
     procedure RzToolButton2Click(Sender: TObject);
-    procedure dlg1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
     procedure Gotofile1Click(Sender: TObject);
     procedure PopupMenu2Popup(Sender: TObject);
@@ -1210,21 +1208,21 @@ begin
   OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
 end;
 
-procedure TFormMain.dlg1Click(Sender: TObject);
+procedure TFormMain.AddProfileDlg;
 begin
+{  if not FileOpenDialog1.Execute then Exit;
+
+  AddProfile(FileOpenDialog1.FileName, 0, True); }
+
    if AddProfileDlgForm.ShowModal <> mrOk then Exit;
 
    var ProfilePath: string := AddProfileDlgForm.ProfileDirectory;
    var appType: integer := AddProfileDlgForm.ProfileAppType;
 
    AddProfile(ProfilePath, appType, true);
-end;
 
-procedure TFormMain.AddProfileDlg;
-begin
-  if not FileOpenDialog1.Execute then Exit;
 
-  AddProfile(FileOpenDialog1.FileName, 0, True);
+
 end;
 
 procedure TFormMain.AddProfile(const pPath: String; const AppType: Integer = 0; const ManualAdded: Boolean = false);

@@ -32,6 +32,7 @@ object FormMain: TFormMain
   GlassFrame.Enabled = True
   GlassFrame.Top = 45
   Position = poDesktopCenter
+  PrintScale = poPrintToFit
   ShowHint = True
   StyleElements = [seFont, seClient]
   OnClose = FormClose
@@ -361,14 +362,13 @@ object FormMain: TFormMain
       AlignWithMargins = True
       Left = 132
       Top = 5
-      Width = 205
+      Width = 217
       Height = 34
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alLeft
-      AutoSize = True
       BorderOuter = fsNone
       BorderSides = []
       Color = 2829099
@@ -381,7 +381,7 @@ object FormMain: TFormMain
       object OptimizeBtn: TRzToolButton
         Left = 0
         Top = 0
-        Width = 205
+        Width = 217
         Height = 34
         Hint = 'Start optimization'
         Margins.Left = 5
@@ -396,7 +396,7 @@ object FormMain: TFormMain
         ShowCaption = True
         UseToolbarButtonSize = False
         UseToolbarShowCaption = False
-        Align = alLeft
+        Align = alClient
         Caption = 'Optimize profiles'
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
@@ -406,6 +406,8 @@ object FormMain: TFormMain
         Font.Style = []
         ParentFont = False
         OnClick = OptimizeBtnClick
+        ExplicitTop = -3
+        ExplicitWidth = 205
       end
     end
   end
@@ -460,16 +462,21 @@ object FormMain: TFormMain
     object OptimizeBtn2: TRzToolButton
       Left = 75
       Top = 2
-      Width = 202
+      Width = 197
       Height = 38
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
+      GradientColorStyle = gcsSystem
       ImageIndex = 9
       Images = DataModule1.SVGIconImageList1
       ShowCaption = True
+      UseToolbarButtonLayout = False
+      UseToolbarButtonSize = False
       UseToolbarShowCaption = False
+      UseToolbarVisualStyle = False
+      VisualStyle = vsWinXP
       Caption = 'Optimize profiles'
       Enabled = False
       OnClick = OptimizeBtnClick
@@ -712,6 +719,7 @@ object FormMain: TFormMain
       Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
       Indent = 27
       Margin = 6
+      PopupMenu = PopupMenu2
       TabOrder = 1
       TextMargin = 6
       TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection, toUseExplorerTheme]
@@ -720,6 +728,7 @@ object FormMain: TFormMain
       OnGetText = VirtualStringTree2GetText
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+      ExplicitTop = 33
       Columns = <
         item
           MaxWidth = 15000
@@ -856,6 +865,10 @@ object FormMain: TFormMain
       ShortCut = 16449
       OnClick = ActionsClickClick
     end
+    object dlg1: TMenuItem
+      Caption = 'Add profile path2...'
+      OnClick = dlg1Click
+    end
     object DelCustomProfileBtn: TMenuItem
       Tag = 3
       Caption = 'Remove selected profile'
@@ -920,11 +933,6 @@ object FormMain: TFormMain
       Caption = 'Info'
       OnClick = ActionsClickClick
     end
-    object dlg1: TMenuItem
-      Caption = 'dlg'
-      Visible = False
-      OnClick = dlg1Click
-    end
   end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
@@ -932,5 +940,18 @@ object FormMain: TFormMain
     Options = [fdoPickFolders]
     Left = 136
     Top = 176
+  end
+  object PopupMenu2: TPopupMenu
+    OnPopup = PopupMenu2Popup
+    Left = 676
+    Top = 425
+    object Copy1: TMenuItem
+      Caption = 'Copy'
+      OnClick = Copy1Click
+    end
+    object Gotofile1: TMenuItem
+      Caption = 'Goto file'
+      OnClick = Gotofile1Click
+    end
   end
 end

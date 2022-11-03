@@ -3,8 +3,8 @@ object AddProfileDlgForm: TAddProfileDlgForm
   Top = 0
   BorderStyle = bsDialog
   Caption = ' Add profile path'
-  ClientHeight = 171
-  ClientWidth = 531
+  ClientHeight = 159
+  ClientWidth = 517
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,12 +13,13 @@ object AddProfileDlgForm: TAddProfileDlgForm
   Font.Style = []
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
   object ComboBoxEx1: TComboBoxEx
     Left = 12
-    Top = 60
-    Width = 496
+    Top = 58
+    Width = 494
     Height = 34
     Margins.Left = 5
     Margins.Top = 5
@@ -47,44 +48,42 @@ object AddProfileDlgForm: TAddProfileDlgForm
     Padding.Bottom = 2
     ShowCaption = False
     TabOrder = 1
-    object RzToolButton1: TRzToolButton
-      AlignWithMargins = True
-      Left = 457
+    object SpeedButton1: TSpeedButton
+      Left = 469
       Top = 2
-      Width = 41
+      Width = 34
       Height = 37
       Margins.Left = 5
-      Margins.Top = 0
+      Margins.Top = 5
       Margins.Right = 5
-      Margins.Bottom = 0
-      ImageIndex = 11
-      Images = DataModule1.SVGIconImageList1
+      Margins.Bottom = 5
       Align = alRight
-      ExplicitLeft = 456
-      ExplicitTop = 3
-      ExplicitHeight = 35
+      ImageIndex = 12
+      ImageName = 'icons8_opened_folder'
+      Images = DataModule1.SVGIconImageList1
+      OnClick = SpeedButton1Click
+      ExplicitLeft = 336
     end
-    object RzToolButton2: TRzToolButton
-      AlignWithMargins = True
-      Left = 414
+    object SpeedButton2: TSpeedButton
+      Left = 435
       Top = 2
-      Width = 38
+      Width = 34
       Height = 37
       Margins.Left = 5
-      Margins.Top = 0
-      Margins.Right = 0
-      Margins.Bottom = 0
-      ImageIndex = 12
-      Images = DataModule1.SVGIconImageList1
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alRight
-      ExplicitLeft = 408
-      ExplicitTop = 3
-      ExplicitHeight = 35
+      ImageIndex = 11
+      ImageName = 'icons8_paste'
+      Images = DataModule1.SVGIconImageList1
+      OnClick = SpeedButton2Click
+      ExplicitLeft = 445
     end
     object Edit1: TEdit
       Left = 2
       Top = 2
-      Width = 407
+      Width = 433
       Height = 37
       Margins.Left = 5
       Margins.Top = 5
@@ -93,24 +92,66 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Align = alClient
       TabOrder = 0
       Text = 'Edit1'
-      ExplicitHeight = 33
+      ExplicitLeft = -8
     end
   end
-  object RzDialogButtons1: TRzDialogButtons
+  object Panel2: TPanel
     Left = 0
-    Top = 114
-    Width = 531
-    Height = 57
+    Top = 111
+    Width = 517
+    Height = 48
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    WidthOk = 113
-    WidthCancel = 113
-    WidthHelp = 113
-    Color = 2829099
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    Padding.Top = 3
+    Padding.Right = 3
+    Padding.Bottom = 3
+    ShowCaption = False
     TabOrder = 2
-    ExplicitTop = 238
-    ExplicitWidth = 928
+    ExplicitLeft = -203
+    ExplicitWidth = 734
+    object Button1: TButton
+      AlignWithMargins = True
+      Left = 349
+      Top = 3
+      Width = 160
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 0
+      Align = alRight
+      Caption = 'Cancel'
+      ModalResult = 2
+      TabOrder = 0
+      ExplicitLeft = 571
+    end
+    object Button2: TButton
+      AlignWithMargins = True
+      Left = 184
+      Top = 3
+      Width = 160
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 0
+      Align = alRight
+      Caption = 'OK'
+      ModalResult = 1
+      TabOrder = 1
+      ExplicitLeft = 406
+    end
+  end
+  object FileOpenDialog1: TFileOpenDialog
+    FavoriteLinks = <>
+    FileTypes = <>
+    Options = [fdoPickFolders]
+    Left = 268
+    Top = 21
   end
 end

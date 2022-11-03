@@ -45,9 +45,12 @@ uses
   VirtualTrees.BaseAncestorVCL,
   VirtualTrees.BaseTree,
   VirtualTrees.AncestorVCL,
-  VirtualTrees.Header
+  VirtualTrees.Header, Vcl.Samples.Spin
 
   ;
+
+const
+  WM_DPICHANGED = 736; // 0x02E0
 
 type
   TFormMain = class(TForm)
@@ -94,6 +97,9 @@ type
     RzToolButton2: TRzToolButton;
     VirtualStringTree2: TVirtualStringTree;
     dlg1: TMenuItem;
+    PopupMenu2: TPopupMenu;
+    Copy1: TMenuItem;
+    Gotofile1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -114,8 +120,12 @@ type
     procedure RzToolButton1Click(Sender: TObject);
     procedure RzToolButton2Click(Sender: TObject);
     procedure dlg1Click(Sender: TObject);
+    procedure Copy1Click(Sender: TObject);
+    procedure Gotofile1Click(Sender: TObject);
+    procedure PopupMenu2Popup(Sender: TObject);
   private
     { Private declarations }
+    procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
     procedure WMDropFiles(var Msg: TWMDropFiles);  message WM_DROPFILES;
 
     procedure VSTSetCheckState(const b: Boolean);
@@ -284,7 +294,6 @@ begin
   tmp_str := GetAppSettingsPath; // GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
   ForceDirectories(tmp_str);
 
-
   CustomProfilePaths.SaveToFile(tmp_str + APP_CUSTOM_PROFILES_FILENAME);
 
   System.IOUtils.TFile.WriteAllText( tmp_str + APP_SETTINGS_FILENAME, s, TEncoding.ANSI );
@@ -293,7 +302,9 @@ begin
 end;
 
 procedure LoadingSettings;
-var s, tmp_str: string; str_items : TArray<string>;
+var s, tmp_str: string;
+    str_items : TArray<string>;
+    slines : TArray<string>;
 begin
   tmp_str := GetAppSettingsPath;// GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
 
@@ -305,26 +316,30 @@ begin
 
   if not FileExists(tmp_str + APP_SETTINGS_FILENAME) then exit;
 
-  s := System.IOUtils.TFile.ReadAllText(tmp_str+ APP_SETTINGS_FILENAME, TEncoding.ANSI );
-  str_items := S.Split([',']);
-  if Length(str_items)>0 then
-  settings_minfilesizeValue:= str_items[0].ToInt64;
-  if Length(str_items)>1 then
-  settings_minfilesizeType:=  str_items[1].ToInteger;
-  if Length(str_items)>2 then
-  settings_maxscanndepth:=    str_items[2].ToInteger;
-  if Length(str_items)>3 then
-  settings_delete_wal:=       str_items[3].ToBoolean;
-  if Length(str_items)>4 then
-  settings_delete_shm:=       str_items[4].ToBoolean;
-  if Length(str_items)>5 then
-  settings_showhint:=         str_items[5].ToBoolean;
-  if Length(str_items)>6 then
-  settings_showlog:=          str_items[6].ToBoolean;
-  if Length(str_items)>7 then
-  settings_searchlnkdesktop:= str_items[7].ToBoolean;
-  if Length(str_items)>8 then
-  settings_searchlnksmenu:=   str_items[8].ToBoolean;
+   s := System.IOUtils.TFile.ReadAllText(tmp_str+ APP_SETTINGS_FILENAME, TEncoding.ANSI );
+
+
+    str_items := s.Split([',']);
+    if Length(str_items)>0 then
+    settings_minfilesizeValue:= str_items[0].ToInt64;
+    if Length(str_items)>1 then
+    settings_minfilesizeType:=  str_items[1].ToInteger;
+    if Length(str_items)>2 then
+    settings_maxscanndepth:=    str_items[2].ToInteger;
+    if Length(str_items)>3 then
+    settings_delete_wal:=       str_items[3].ToBoolean;
+    if Length(str_items)>4 then
+    settings_delete_shm:=       str_items[4].ToBoolean;
+    if Length(str_items)>5 then
+    settings_showhint:=         str_items[5].ToBoolean;
+    if Length(str_items)>6 then
+    settings_showlog:=          str_items[6].ToBoolean;
+    if Length(str_items)>7 then
+    settings_searchlnkdesktop:= str_items[7].ToBoolean;
+    if Length(str_items)>8 then
+    settings_searchlnksmenu:=   str_items[8].ToBoolean;
+
+
 end;
 
 function GetMinSizeAsBytes: Int64;
@@ -341,6 +356,40 @@ end;
 {$ENDREGION}
 
 {$REGION ' Form events  '}
+
+
+{-$DEFINE DELPHI_STYLE_SCALING}
+procedure TFormMain.WMDpiChanged(var Message: TMessage);
+// from https://docwiki.embarcadero.com/RADStudio/Sydney/en/Customizing_the_Windows_Application_Manifest_File
+  {$IFDEF DELPHI_STYLE_SCALING}
+  function FontHeightAtDpi(aDPI, aFontSize: integer): integer;
+  var
+    tmpCanvas: TCanvas;
+  begin
+    tmpCanvas := TCanvas.Create;
+    try
+      tmpCanvas.Handle := GetDC(0);
+      tmpCanvas.Font.Assign(self.Font);
+      tmpCanvas.Font.PixelsPerInch := aDPI; //must be set BEFORE size
+      tmpCanvas.Font.size := aFontSize;
+      result := tmpCanvas.TextHeight('0');
+    finally
+      tmpCanvas.free;
+    end;
+  end;
+  {$ENDIF}
+
+begin
+  inherited;
+  {$IFDEF DELPHI_STYLE_SCALING}
+  ChangeScale(FontHeightAtDpi(LOWORD(Message.wParam), self.Font.Size), FontHeightAtDpi(self.PixelsPerInch, self.Font.Size));
+  {$ELSE}
+  ChangeScale(LOWORD(Message.wParam), self.PixelsPerInch);
+  {$ENDIF}
+  self.PixelsPerInch := LOWORD(Message.wParam);
+ // Caption := Format('Monitor #%d (%d dpi, %d x %d)', [self.Monitor.MonitorNum, self.PixelsPerInch, self.Monitor.Width, self.Monitor.Height]);
+end;
+
 
 procedure TFormMain.WMDropFiles(var Msg: TWMDropFiles);
 // from https://habr.com/ru/post/179131/
@@ -476,6 +525,16 @@ procedure TFormMain.FormShow(Sender: TObject);
 begin
   if FirstShow then Exit;
 
+  if IsAeroEnabled.ToInteger = 0  then
+  begin
+     RzToolbar1.Visible := True ;
+     Caption := APP_CAPTION;
+  end
+  else
+     RzToolbar1.Visible := False ;
+
+
+
   RzStatusPane_SQLiteVer.Caption :=
      Format(SQLStatusVerCaption, [FileVersion(sqlite3_lib)]);
 
@@ -505,19 +564,9 @@ begin
 
   FormMain.ShowHint := settings_showhint;
   Application.ShowHint := settings_showhint;
-
-
   RzSplitter1.LowerRight.Visible := settings_showlog;
 
   SearchProfilesResult := nil;
-
-  if IsAeroEnabled.ToInteger = 0  then
-  begin
-     RzToolbar1.Visible := True ;
-     Caption := APP_CAPTION;
-  end
-  else
-     RzToolbar1.Visible := False ;
 
   ProcSearchProfiles;
 
@@ -1163,7 +1212,12 @@ end;
 
 procedure TFormMain.dlg1Click(Sender: TObject);
 begin
-  AddProfileDlgForm.ShowModal;
+   if AddProfileDlgForm.ShowModal <> mrOk then Exit;
+
+   var ProfilePath: string := AddProfileDlgForm.ProfileDirectory;
+   var appType: integer := AddProfileDlgForm.ProfileAppType;
+
+   AddProfile(ProfilePath, appType, true);
 end;
 
 procedure TFormMain.AddProfileDlg;
@@ -1745,7 +1799,123 @@ end;
 
 {$ENDREGION}
 
-{$REGION ' LOG VST '}
+{$REGION ' LOG, VST '}
+
+procedure TFormMain.PopupMenu2Popup(Sender: TObject);
+begin
+  //
+  Gotofile1.Enabled := False;
+  Copy1.Enabled := False;
+  Copy1.Caption :='Copy';
+  Gotofile1.Caption :=  'Open';
+
+  if VirtualStringTree2.FocusedNode = nil then Exit;
+  if VirtualStringTree2.RootNodeCount = 0 then Exit;
+
+  Copy1.Enabled := True;
+
+  var gLevel: integer := VirtualStringTree2.GetNodeLevel( VirtualStringTree2.FocusedNode )  ;
+  Gotofile1.Enabled := gLevel in [2, 1];
+  case gLevel of
+    2: begin Gotofile1.Caption :=  'Open selected file in explorer';   Copy1.Caption :='Copy selected file';    end;
+    1: begin Gotofile1.Caption :=  'Open selected path in explorer';   Copy1.Caption :='Copy all profile file(s)';    end;
+    0: Copy1.Caption :='Copy all profile(s) and files';
+  end;
+
+end;
+
+
+procedure TFormMain.Gotofile1Click(Sender: TObject);
+var
+  LOGItemNodeData : PLOGItemNodeData;
+  NodeLevel1, NodeLevel2: PVirtualNode;
+  list, ProfileRootPath: string;
+begin
+  // GotoFile
+  LOGItemNodeData := VirtualStringTree2.GetNodeData(VirtualStringTree2.FocusedNode.Parent );
+  if Assigned(LOGItemNodeData) then
+    ProfileRootPath :=  LOGItemNodeData^.ProcValue;
+
+  LOGItemNodeData := VirtualStringTree2.GetNodeData(VirtualStringTree2.FocusedNode);
+  if Assigned(LOGItemNodeData) then
+     list := ProfileRootPath + LOGItemNodeData^.ProcValue;
+
+  Vcl.Clipbrd.Clipboard.SetTextBuf( PWideChar(list) );
+end;
+
+procedure TFormMain.Copy1Click(Sender: TObject);
+var
+  LOGItemNodeData : PLOGItemNodeData;
+  NodeLevel1, NodeLevel2: PVirtualNode;
+  list, ProfileRootPath: string;
+begin
+  case VirtualStringTree2.GetNodeLevel( VirtualStringTree2.FocusedNode )  of
+
+   // Copy all profiles
+   0: begin
+         list := '';
+
+         NodeLevel1 := VirtualStringTree2.GetFirstChild( VirtualStringTree2.FocusedNode );
+         while NodeLevel1 <> nil do
+         begin
+           LOGItemNodeData := VirtualStringTree2.GetNodeData(NodeLevel1);
+           if Assigned(LOGItemNodeData) then
+           begin
+              list :=  list  + '===================='+ #13#10 + LOGItemNodeData^.ProcName + ' | ' +  LOGItemNodeData^.ProcValue + ' | ' + LOGItemNodeData^.ProcResult  + #13#10 + '====================' + #13#10;
+              ProfileRootPath := LOGItemNodeData^.ProcValue;
+           end;
+
+               NodeLevel2 := VirtualStringTree2.GetFirstChild( NodeLevel1 );
+               while NodeLevel2 <> nil do
+               begin
+                 LOGItemNodeData := VirtualStringTree2.GetNodeData(NodeLevel2);
+                   if Assigned(LOGItemNodeData) then
+                     list := list + ProfileRootPath + LOGItemNodeData^.ProcValue + #13#10;
+
+                 NodeLevel2:= VirtualStringTree2.GetNextSibling(NodeLevel2);
+               end;
+
+           NodeLevel1:= VirtualStringTree2.GetNextSibling(NodeLevel1);
+         end;
+
+        Vcl.Clipbrd.Clipboard.SetTextBuf( PWideChar(list) );
+      end;
+
+   // Copy all files
+   1: begin
+       LOGItemNodeData := VirtualStringTree2.GetNodeData(VirtualStringTree2.FocusedNode);
+          if Assigned(LOGItemNodeData) then
+             ProfileRootPath := LOGItemNodeData^.ProcValue; // Rootpath
+
+       NodeLevel2 := VirtualStringTree2.GetFirstChild( VirtualStringTree2.FocusedNode );
+       while NodeLevel2 <> nil do
+       begin
+         LOGItemNodeData := VirtualStringTree2.GetNodeData(NodeLevel2);
+         if Assigned(LOGItemNodeData) then
+            list := list + ProfileRootPath + LOGItemNodeData^.ProcValue + #13#10;
+
+         NodeLevel2:= VirtualStringTree2.GetNextSibling(NodeLevel2);
+       end;
+
+       Vcl.Clipbrd.Clipboard.SetTextBuf( PWideChar(list) );
+      end;
+
+   // Copy selected file
+   2: begin
+          LOGItemNodeData := VirtualStringTree2.GetNodeData(VirtualStringTree2.FocusedNode.Parent );
+          if Assigned(LOGItemNodeData) then
+            ProfileRootPath :=  LOGItemNodeData^.ProcValue;
+
+          LOGItemNodeData := VirtualStringTree2.GetNodeData(VirtualStringTree2.FocusedNode);
+          if Assigned(LOGItemNodeData) then
+             list := ProfileRootPath + LOGItemNodeData^.ProcValue;
+
+          Vcl.Clipbrd.Clipboard.SetTextBuf( PWideChar(list) );
+      end;
+
+  end;
+
+end;
 
 procedure TFormMain.RzToolButton1Click(Sender: TObject);
 begin

@@ -1000,6 +1000,7 @@ end;
 
 
 initialization
+ // SetProcessDPIAware;
 
   if System.SysUtils.TOSVersion.Architecture in
     {$IFDEF WIN32} [arARM64, arIntelX64] {$ELSE} [arIntelX86, arARM32] {$IFEND}

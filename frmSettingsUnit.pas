@@ -13,15 +13,13 @@ uses
   Vcl.ExtCtrls,
   Vcl.StdCtrls,
   Vcl.WinXCtrls,
-                   //Vcl.Graphics, //Vcl.Dialogs,
-  RzPanel,
-  RzDlgBtn,
-  RzLabel
+
+  RzPanel
+
   ;
 
 type
   TfrmSettings = class(TForm)
-    RzDialogButtons1: TRzDialogButtons;
     Edit1: TEdit;
     ComboBox1: TComboBox;
     Label1: TLabel;
@@ -43,6 +41,10 @@ type
     RzGroupBox3: TRzGroupBox;
     ToggleSwitch6: TToggleSwitch;
     Label9: TLabel;
+    Panel2: TPanel;
+    Button1: TButton;
+    Button2: TButton;
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,5 +64,10 @@ Write-ahead Log (WAL) files
 Shared-Memory Files
 }
 
+
+procedure TfrmSettings.FormShow(Sender: TObject);
+begin
+ ActiveControl := Button2;
+end;
 
 end.

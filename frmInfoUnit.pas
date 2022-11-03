@@ -63,8 +63,8 @@ end;
 procedure TfrmInfo.FormShow(Sender: TObject);
 begin
  Label2.Caption := 'SQLite: ' + FileVersion(sqlite3_lib);
- Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '03/11/2022' ]  ) ;
- ActiveControl := nil;
+ Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '04/11/2022' ]  ) ;
+ ActiveControl  := Button1;
 end;
 
 end.

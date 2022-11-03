@@ -3,7 +3,7 @@ object frmSettings: TfrmSettings
   Top = 27
   BorderStyle = bsDialog
   Caption = ' Settings'
-  ClientHeight = 451
+  ClientHeight = 444
   ClientWidth = 734
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,23 +12,9 @@ object frmSettings: TfrmSettings
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
-  object RzDialogButtons1: TRzDialogButtons
-    Left = 0
-    Top = 396
-    Width = 734
-    Height = 55
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    WidthOk = 113
-    WidthCancel = 113
-    WidthHelp = 113
-    Color = 2829099
-    TabOrder = 0
-  end
   object RzGroupBox1: TRzGroupBox
     Left = 12
     Top = 12
@@ -46,7 +32,7 @@ object frmSettings: TfrmSettings
     CaptionFont.Style = [fsBold]
     Color = 2829099
     GroupStyle = gsUnderline
-    TabOrder = 1
+    TabOrder = 0
     object Label1: TLabel
       Left = 12
       Top = 186
@@ -197,7 +183,7 @@ object frmSettings: TfrmSettings
     CaptionFont.Style = [fsBold]
     Color = 2829099
     GroupStyle = gsUnderline
-    TabOrder = 2
+    TabOrder = 1
     object Label8: TLabel
       Left = 12
       Top = 36
@@ -266,7 +252,7 @@ object frmSettings: TfrmSettings
     CaptionFont.Style = [fsBold]
     Color = 2829099
     GroupStyle = gsUnderline
-    TabOrder = 3
+    TabOrder = 2
     object Label6: TLabel
       Left = 12
       Top = 36
@@ -316,6 +302,58 @@ object frmSettings: TfrmSettings
       SwitchWidth = 75
       TabOrder = 1
       ThumbWidth = 30
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 396
+    Width = 734
+    Height = 48
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    Padding.Top = 3
+    Padding.Right = 3
+    Padding.Bottom = 3
+    ShowCaption = False
+    TabOrder = 3
+    ExplicitTop = 414
+    object Button1: TButton
+      AlignWithMargins = True
+      Left = 566
+      Top = 3
+      Width = 160
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 0
+      Align = alRight
+      Caption = 'Cancel'
+      ModalResult = 2
+      TabOrder = 0
+      ExplicitLeft = 576
+      ExplicitTop = -4
+    end
+    object Button2: TButton
+      AlignWithMargins = True
+      Left = 401
+      Top = 3
+      Width = 160
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 0
+      Align = alRight
+      Caption = 'OK'
+      ModalResult = 1
+      TabOrder = 1
+      ExplicitTop = -4
     end
   end
 end

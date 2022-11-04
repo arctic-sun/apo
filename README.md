@@ -18,11 +18,11 @@ The mentioned programs start working much more slowly with the passage of time. 
 </p>
 
 ## How ArcticProfileOptimizer works
-With the passage of time SQLITE databases slow down considerably. It takes time to start apps that use such databases and the overall speed is affected. This is a very common problem and it occurs largely because of fragmentation of databases.
+With the passage of time, SQLITE databases slow down considerably. It takes time to start apps that use such databases, and the overall speed is affected. This is a very common problem, and it occurs largely because of the fragmentation of databases.
 
-ArcticProfileOptimizer is able to fix this problem with a single click! It seems unbelievable but after you optimize your Firefox with this tool, you will get a fresh newly-installed feel because the speed indeed gets considerably faster. You will get up to 3 times faster startup speeds, browsing history will become faster, and performing operations with cookies will be quicker than before.
+ArcticProfileOptimizer is able to fix this problem with a single click! It seems unbelievable, but after you optimize your Firefox with this tool, you will get the feel of a newly-installed browser because the speed indeed gets considerably faster. You will get up to three times faster startup speeds; browsing history will become faster; and performing operations with cookies will be quicker than before.
 
-ArcticProfileOptimizer compacts those databases without losing any data. Databases are optimized to operate faster and are decreased in size.
+ArcticProfileOptimizer compacts those databases without losing any data. Databases are optimized to operate faster and are reduced in size.
 
 ## How to use ArcticProfileOptimizer
 Once installed, ArcticProfileOptimizer can automatically detects profiles of the supported apps. If you have more than one profile, you can select the one you want to optimize from the list. If you have a portable version of any of the supported app, choose your profile path manually by selecting 'Add profile...' from the context menu in the list. All you have to do is hit the 'Optimize profiles' button.

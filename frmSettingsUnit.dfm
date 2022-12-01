@@ -11,7 +11,7 @@ object frmSettings: TfrmSettings
   Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
@@ -321,7 +321,8 @@ object frmSettings: TfrmSettings
     Padding.Bottom = 3
     ShowCaption = False
     TabOrder = 3
-    ExplicitTop = 414
+    ExplicitTop = 394
+    ExplicitWidth = 724
     object Button1: TButton
       AlignWithMargins = True
       Left = 566
@@ -336,8 +337,7 @@ object frmSettings: TfrmSettings
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 0
-      ExplicitLeft = 576
-      ExplicitTop = -4
+      ExplicitLeft = 556
     end
     object Button2: TButton
       AlignWithMargins = True
@@ -353,7 +353,7 @@ object frmSettings: TfrmSettings
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 1
-      ExplicitTop = -4
+      ExplicitLeft = 391
     end
   end
 end

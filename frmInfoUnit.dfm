@@ -11,7 +11,7 @@ object frmInfo: TfrmInfo
   Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poOwnerFormCenter
+  Position = poMainFormCenter
   OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25

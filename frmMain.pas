@@ -1,4 +1,4 @@
-unit frmMain;
+п»їunit frmMain;
 
 interface
 
@@ -30,6 +30,7 @@ uses
   Vcl.TitleBarCtrls,
   Vcl.Clipbrd,
   Vcl.WinXCtrls,
+  Vcl.ExtDlgs,
 
   SVGIconImageListBase,
   SVGIconImageList,
@@ -45,12 +46,16 @@ uses
   VirtualTrees.BaseAncestorVCL,
   VirtualTrees.BaseTree,
   VirtualTrees.AncestorVCL,
-  VirtualTrees.Header, Vcl.Samples.Spin
+  VirtualTrees.Header
 
   ;
 
 const
   WM_DPICHANGED = 736; // 0x02E0
+
+type
+   TUIProfilesState = (pChecked,  pSelected);
+
 
 type
   TFormMain = class(TForm)
@@ -99,6 +104,9 @@ type
     PopupMenu2: TPopupMenu;
     Copy1: TMenuItem;
     Gotofile1: TMenuItem;
+    CreateBATfile1: TMenuItem;
+    FileSaveDialog1: TFileSaveDialog;
+    Edit1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -132,6 +140,7 @@ type
     procedure BeforeProcOptimize;
     procedure AfterProcOptimize;
 
+    procedure ProcCreateBAT(const outfile : string);
     procedure ProcOptimize;
     procedure ProcOptimizeLOG;
 
@@ -139,7 +148,7 @@ type
     procedure CollectDisabledProfiles;
 
     procedure CustomProfileDeleteSelected;
-    procedure AddProfileDlg;
+    procedure AddProfileDlg(const DefProfilePath : string = ''; defAppType: Integer = 0);
     procedure AddProfile(const pPath: String; const AppType: Integer = 0; const ManualAdded: Boolean = false);
     function  AddProfileToList(const pPath: string; const pAppType: Integer): Integer;
     function  AddProfileToVST(const pPath: string; const pAppType: Integer; const ManualAdded: Boolean = false): Integer;
@@ -198,9 +207,11 @@ var
 implementation
 
 uses DataModuleUnit,
-    UtilsUnit,
-    frmInfoUnit,
-    frmSettingsUnit, frmAddProfileUnit;
+     UtilsUnit,
+     BatScriptUnt,
+     frmInfoUnit,
+     frmSettingsUnit,
+     frmAddProfileUnit;
 
 var
     CustomProfilePaths     : TStringList;
@@ -275,7 +286,6 @@ begin
    Result := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
 end;
 
-
 procedure SaveSettings;
 var s, tmp_str: string;
 begin
@@ -302,7 +312,6 @@ end;
 procedure LoadingSettings;
 var s, tmp_str: string;
     str_items : TArray<string>;
-    slines : TArray<string>;
 begin
   tmp_str := GetAppSettingsPath;// GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
 
@@ -388,36 +397,38 @@ begin
  // Caption := Format('Monitor #%d (%d dpi, %d x %d)', [self.Monitor.MonitorNum, self.PixelsPerInch, self.Monitor.Width, self.Monitor.Height]);
 end;
 
-
 procedure TFormMain.WMDropFiles(var Msg: TWMDropFiles);
 // from https://habr.com/ru/post/179131/
 var
-  DropH: HDROP;               // дескриптор операции перетаскивания
-  DroppedFileCount: Integer;  // количество переданных файлов
-  FileNameLength: Integer;    // длина имени файла
-  FileName: string;           // буфер, принимающий имя файла
-  I: Integer;                 // итератор для прохода по списку
-  DropPoint: TPoint;          // структура с координатами операции Drop
+  DropH: HDROP;               // РґРµСЃРєСЂРёРїС‚РѕСЂ РѕРїРµСЂР°С†РёРё РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёСЏ
+  DroppedFileCount: Integer;  // РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРґР°РЅРЅС‹С… С„Р°Р№Р»РѕРІ
+  FileNameLength: Integer;    // РґР»РёРЅР° РёРјРµРЅРё С„Р°Р№Р»Р°
+  FileName: string;           // Р±СѓС„РµСЂ, РїСЂРёРЅРёРјР°СЋС‰РёР№ РёРјСЏ С„Р°Р№Р»Р°
+  I: Integer;                 // РёС‚РµСЂР°С‚РѕСЂ РґР»СЏ РїСЂРѕС…РѕРґР° РїРѕ СЃРїРёСЃРєСѓ
+  DropPoint: TPoint;          // СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё РѕРїРµСЂР°С†РёРё Drop
 begin
   inherited;
-  // Сохраняем дескриптор
+  // РЎРѕС…СЂР°РЅСЏРµРј РґРµСЃРєСЂРёРїС‚РѕСЂ
   DropH := Msg.Drop;
   try
-    // Получаем количество переданных файлов
+    // РџРѕР»СѓС‡Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРґР°РЅРЅС‹С… С„Р°Р№Р»РѕРІ
     DroppedFileCount := DragQueryFile(DropH, $FFFFFFFF, nil, 0);
-    // Получаем имя каждого файла и обрабатываем его
+    // РџРѕР»СѓС‡Р°РµРј РёРјСЏ РєР°Р¶РґРѕРіРѕ С„Р°Р№Р»Р° Рё РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј РµРіРѕ
     for I := 0 to Pred(DroppedFileCount) do
     begin
-      // получаем размер буфера
+      // РїРѕР»СѓС‡Р°РµРј СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°
       FileNameLength := DragQueryFile(DropH, I, nil, 0);
-      // создаем буфер, который может принять в себя строку с именем файла
-      // (Delphi добавляет терминирующий ноль автоматически в конец строки)
+      // СЃРѕР·РґР°РµРј Р±СѓС„РµСЂ, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РµС‚ РїСЂРёРЅСЏС‚СЊ РІ СЃРµР±СЏ СЃС‚СЂРѕРєСѓ СЃ РёРјРµРЅРµРј С„Р°Р№Р»Р°
+      // (Delphi РґРѕР±Р°РІР»СЏРµС‚ С‚РµСЂРјРёРЅРёСЂСѓСЋС‰РёР№ РЅРѕР»СЊ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РІ РєРѕРЅРµС† СЃС‚СЂРѕРєРё)
       SetLength(FileName, FileNameLength);
-      // получаем имя файла
+      // РїРѕР»СѓС‡Р°РµРј РёРјСЏ С„Р°Р№Р»Р°
       DragQueryFile(DropH, I, PChar(FileName), FileNameLength + 1);
 
        if ( FileGetAttr(FileName) and faDirectory = faDirectory) then
-         AddProfile(FileName, 0, True)
+       begin
+         //AddProfile(FileName, 0, True)
+         AddProfileDlg(FileName, -1);
+       end
        else
         if CompareText( ExtractFileExt(FileName) , '.lnk' ) = 0 then
         begin
@@ -442,15 +453,15 @@ begin
           end;
         end;
     end;
-    // Опционально: получаем координаты, по которым произошла операция Drop
+    // РћРїС†РёРѕРЅР°Р»СЊРЅРѕ: РїРѕР»СѓС‡Р°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹, РїРѕ РєРѕС‚РѕСЂС‹Рј РїСЂРѕРёР·РѕС€Р»Р° РѕРїРµСЂР°С†РёСЏ Drop
     // DragQueryPoint(DropH, DropPoint);
-    // ... что-то делаем с данными координатами здесь
+    // ... С‡С‚Рѕ-С‚Рѕ РґРµР»Р°РµРј СЃ РґР°РЅРЅС‹РјРё РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё Р·РґРµСЃСЊ
   finally
-    // Финализация - разрушаем дескриптор
-    // не используйте DropH после выполнения данного кода...
+    // Р¤РёРЅР°Р»РёР·Р°С†РёСЏ - СЂР°Р·СЂСѓС€Р°РµРј РґРµСЃРєСЂРёРїС‚РѕСЂ
+    // РЅРµ РёСЃРїРѕР»СЊР·СѓР№С‚Рµ DropH РїРѕСЃР»Рµ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕРіРѕ РєРѕРґР°...
     DragFinish(DropH);
   end;
-  // Говорим о том, что сообщение обработано
+  // Р“РѕРІРѕСЂРёРј Рѕ С‚РѕРј, С‡С‚Рѕ СЃРѕРѕР±С‰РµРЅРёРµ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ
   Msg.Result := 0;
 end;
 
@@ -466,7 +477,10 @@ end;
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   FileOpenDialog1.FileName := '';
-  FileOpenDialog1.DefaultFolder := '';
+
+  FileSaveDialog1.FileName := 'OptimizationJob.bat';
+  FileSaveDialog1.DefaultFolder := ExtractFilePath(ParamStr(0));
+
 
   CustomProfilePaths := TStringList.Create;
   CustomProfilePaths.NameValueSeparator := '|';
@@ -581,16 +595,16 @@ begin
    Canvas.Font.Color := clWhite;
    DrawText(Canvas.Handle, PChar(s), Length(s), ARect, DT_SINGLELINE or DT_CENTER or DT_VCENTER);
    }
-
    Canvas.Draw((ARect.Width div 2)-100 , (ARect.Height div 2)-5 ,Image1.Picture.Graphic)
    //  Canvas.StretchDraw(ARect, Image1.Picture.Graphic) ;
 end;
 
 procedure TFormMain.MenuButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
+ { OFF
    var Pt: TPoint;
    Pt := TRzToolButton(Sender).ClientToScreen(Point(0, TRzToolButton(Sender).ClientHeight));
-   TRzToolButton(Sender).DropDownMenu.Popup(Pt.X, Pt.Y );
+   TRzToolButton(Sender).DropDownMenu.Popup(Pt.X, Pt.Y );  }
 end;
 
 {$ENDREGION}
@@ -661,7 +675,76 @@ end;
 
 
 
+type
+  TUTF8EncodingNoBOM = class(TUTF8Encoding)
+  public
+    function GetPreamble: TBytes; override;
+  end;
 
+function TUTF8EncodingNoBOM.GetPreamble: TBytes;
+begin
+  SetLength(Result, 0);
+end;
+
+procedure TFormMain.ProcCreateBAT(const outfile : string);
+var
+ aTask: ITask;
+begin
+
+   aTask := TTask.Create(
+   procedure
+   var
+    i, ProfileNo    : Integer;
+    Node            : PVirtualNode;
+    BatOut: TArray<string>;
+   begin
+     TThread.Synchronize(TThread.Current, procedure begin VirtualStringTree1.BeginUpdate; end);
+
+     try
+       {$REGION ' Cout checked profiles '}
+         var TP: Integer := 0;
+         Node :=  VirtualStringTree1.GetFirstLevel(1);
+         while Assigned(Node) do
+         begin
+           if Node.CheckState = csCheckedNormal then Inc(TP);
+           Node := VirtualStringTree1.GetNextLevel(Node, 1);
+         end;
+       {$ENDREGION}
+
+       SetLength(BatOut, 0);
+       StaticBatchBegin1( TP.ToString, BatOut);
+       ProfileNo := 1;
+
+           Node :=  VirtualStringTree1.GetFirstLevel(1);
+           while Assigned(Node) do
+           begin
+              if Node.CheckState.IsChecked then
+              begin
+                var ItemNodeData: PItemNodeData;
+                ItemNodeData := VirtualStringTree1.GetNodeData(Node);
+
+                StaticBatchAddProfile1(ItemNodeData^.v_ProfileName,
+                                        AppNameFromType(ItemNodeData^.h_AppType),
+                                        ProfileNo,
+                                        IsAppTypeFF(ItemNodeData^.h_AppType),
+                                        BatOut
+                                       );
+                Inc(ProfileNo);
+              end;
+              Node := VirtualStringTree1.GetNextLevel(Node, 1);
+           end;
+           StaticBatchEnd1(BatOut);
+     finally
+        TThread.Synchronize(TThread.Current, procedure begin VirtualStringTree1.EndUpdate; end);
+
+        var EncodingUTF8NoBoom: TEncoding;
+        EncodingUTF8NoBoom := TUTF8EncodingNoBOM.Create;
+        System.IOUtils.TFile.WriteAllLines( outfile, BatOut, EncodingUTF8NoBoom );
+        FreeAndNil(EncodingUTF8NoBoom);
+     end;
+   end);
+   aTask.Start;
+end;
 
 procedure TFormMain.ProcOptimize;
 var
@@ -789,14 +872,17 @@ begin
               // *********** Process optimization ********** //
               For i := 0 to FilesCount-1 do
               begin
-                 tmpFileName := {ProfileFileList[i].Path + } ProfileFileList[i].Name ;
-                 if IsSQLiteFile(tmpFileName) then
-                 begin
-                   SizeBefore := SizeBefore + ProfileFileList[i].Size;
-                   SQLiteOptimizeFile( tmpFileName );
-                   inc(FilesProcessed);
-                   SizeAfter := SizeAfter + System.IOUtils.TFile.GetSize( tmpFileName );
-                 end;
+                if ProfileFileList[i].Size > 16 then
+                begin
+                   tmpFileName := {ProfileFileList[i].Path + } ProfileFileList[i].Name ;
+                   if IsSQLiteFile(tmpFileName) then
+                   begin
+                     SizeBefore := SizeBefore + ProfileFileList[i].Size;
+                     SQLiteOptimizeFile( tmpFileName );
+                     inc(FilesProcessed);
+                     SizeAfter := SizeAfter + System.IOUtils.TFile.GetSize( tmpFileName );
+                   end;
+                end;
                  // *********** Progress bar Profile ********** //
                  TThread.Synchronize(TThread.Current, procedure begin  RzProgressBar1.IncPartsByOne; end);
               end;
@@ -833,9 +919,6 @@ begin
    end);
    aTask.Start;
 end;
-
-
-
 
 procedure TFormMain.ProcOptimizeLOG;
 var
@@ -1044,22 +1127,25 @@ begin
                 // *********** Process optimization ********** //
                 For i := 0 to profileFilesCount-1 do
                 begin
-                   tmpFileName := {ProfileFileList[i].Path +} ProfileFileList[i].Name ;
-                   if IsSQLiteFile(tmpFileName) then
+                   if ProfileFileList[i].Size > 16 then
                    begin
-                     logFileSizeAfter := 0;
-                     ProfileSizeBefore := ProfileSizeBefore + ProfileFileList[i].Size;
-                     SQLiteOptimizeFile( tmpFileName );
-                     inc(profileFilesProcessed);
-                     logFileSizeAfter := System.IOUtils.TFile.GetSize( tmpFileName );
-                     ProfileSizeAfter := ProfileSizeAfter + logFileSizeAfter;
+                       tmpFileName := {ProfileFileList[i].Path +} ProfileFileList[i].Name ;
+                       if IsSQLiteFile(tmpFileName) then
+                       begin
+                         logFileSizeAfter := 0;
+                         ProfileSizeBefore := ProfileSizeBefore + ProfileFileList[i].Size;
+                         SQLiteOptimizeFile( tmpFileName );
+                         inc(profileFilesProcessed);
+                         logFileSizeAfter := System.IOUtils.TFile.GetSize( tmpFileName );
+                         ProfileSizeAfter := ProfileSizeAfter + logFileSizeAfter;
 
-                     //TThread.Synchronize(nil, procedure begin    end);
-                     LogAdd(LogNodeProfile,
-                            Format('#%d Optimization',[(profileFilesProcessed)]),
-                            DeletePartPath(tmpFileName, Length(ItemNodeData^.v_ProfileName) ),
-                            Format( 'Done. Size before: %s, Size after: %s', [ FormatByteSize(ProfileFileList[i].Size), FormatByteSize(logFileSizeAfter) ])
-                            );
+                         //TThread.Synchronize(nil, procedure begin    end);
+                         LogAdd(LogNodeProfile,
+                                Format('#%d Optimization',[(profileFilesProcessed)]),
+                                DeletePartPath(tmpFileName, Length(ItemNodeData^.v_ProfileName) ),
+                                Format( 'Done. Size before: %s, Size after: %s', [ FormatByteSize(ProfileFileList[i].Size), FormatByteSize(logFileSizeAfter) ])
+                                );
+                       end;
                    end;
                    // *********** Progress bar Profile ********** //
                    TThread.Synchronize(TThread.Current, procedure begin  RzProgressBar1.IncPartsByOne; end);
@@ -1208,27 +1294,23 @@ begin
   OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
 end;
 
-procedure TFormMain.AddProfileDlg;
+procedure TFormMain.AddProfileDlg(const DefProfilePath : string = ''; defAppType: Integer = 0);
 begin
-{  if not FileOpenDialog1.Execute then Exit;
-
-  AddProfile(FileOpenDialog1.FileName, 0, True); }
+   AddProfileDlgForm.Edit1.Text := DefProfilePath;
+   if defAppType > -1 then
+   AddProfileDlgForm.ComboBoxEx1.ItemIndex := defAppType;
 
    if AddProfileDlgForm.ShowModal <> mrOk then Exit;
 
    var ProfilePath: string := AddProfileDlgForm.ProfileDirectory;
    var appType: integer := AddProfileDlgForm.ProfileAppType;
-
    AddProfile(ProfilePath, appType, true);
-
-
-
 end;
 
 procedure TFormMain.AddProfile(const pPath: String; const AppType: Integer = 0; const ManualAdded: Boolean = false);
 begin
-   if AddProfileToList(pPath, appType) = -1 {RESULT_PROFILE_ADDED}
-      then AddProfileToVST(pPath, appType, ManualAdded);
+  if AddProfileToList(pPath, appType) = -1 {RESULT_PROFILE_ADDED}
+    then AddProfileToVST(pPath, appType, ManualAdded);
 
   OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
   OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
@@ -1608,6 +1690,11 @@ begin
      8:  SettingsBtnClick(nil); //settings
 
      9:  frmInfo.ShowModal;
+
+     10: if FileSaveDialog1.Execute then
+            // if createdfile then
+             ProcCreateBAT( FileSaveDialog1.FileName );
+
    end;
 end;
 
@@ -1793,8 +1880,6 @@ begin
 end;
 
 
-
-
 {$ENDREGION}
 
 {$REGION ' LOG, VST '}
@@ -1816,12 +1901,11 @@ begin
   Gotofile1.Enabled := gLevel in [2, 1];
   case gLevel of
     2: begin Gotofile1.Caption :=  'Open selected file in explorer';   Copy1.Caption :='Copy selected file';    end;
-    1: begin Gotofile1.Caption :=  'Open selected path in explorer';   Copy1.Caption :='Copy all profile file(s)';    end;
-    0: Copy1.Caption :='Copy all profile(s) and files';
+    1: begin Gotofile1.Caption :=  'Open selected path in explorer';   Copy1.Caption :='Copy profile file(s)';    end;
+    0: Copy1.Caption :='Copy profile(s) and files';
   end;
 
 end;
-
 
 procedure TFormMain.Gotofile1Click(Sender: TObject);
 var
@@ -1932,7 +2016,7 @@ procedure TFormMain.LogEdit(Node: PVirtualNode; const p1: string = ''; p2: strin
 var
   LOGItemNodeData : PLOGItemNodeData;
 begin
-  LOGItemNodeData := VirtualStringTree1.GetNodeData(Node);
+  LOGItemNodeData := VirtualStringTree2.GetNodeData(Node);
   if Assigned(LOGItemNodeData) then
   with LOGItemNodeData^ do
   begin

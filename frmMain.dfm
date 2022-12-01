@@ -853,6 +853,13 @@ object FormMain: TFormMain
       ShortCut = 116
       OnClick = ActionsClickClick
     end
+    object CreateBATfile1: TMenuItem
+      Tag = 10
+      Caption = 'Generate .BAT script for checked profile(s)...'
+      ImageIndex = 14
+      ImageName = 'icons8_console_2'
+      OnClick = ActionsClickClick
+    end
     object aa1: TMenuItem
       Caption = '-'
     end
@@ -863,6 +870,10 @@ object FormMain: TFormMain
       ImageName = 'icons8_add_folder'
       ShortCut = 16449
       OnClick = ActionsClickClick
+    end
+    object Edit1: TMenuItem
+      Caption = 'Edit...'
+      Visible = False
     end
     object DelCustomProfileBtn: TMenuItem
       Tag = 3
@@ -878,16 +889,16 @@ object FormMain: TFormMain
     object Checkallprofiles1: TMenuItem
       Tag = 4
       Caption = 'Check all profiles'
-      ImageIndex = 5
-      ImageName = 'icons8_Checked_Checkbox_1'
+      ImageIndex = 15
+      ImageName = 'icons8_Checked_Checkbox'
       ShortCut = 16471
       OnClick = ActionsClickClick
     end
     object UnCheckallprofiles1: TMenuItem
       Tag = 5
       Caption = 'UnCheck all profiles'
-      ImageIndex = 6
-      ImageName = 'icons8_Unchecked_Checkbox_1'
+      ImageIndex = 16
+      ImageName = 'icons8_Unchecked_Checkbox'
       ShortCut = 16453
       OnClick = ActionsClickClick
     end
@@ -905,8 +916,8 @@ object FormMain: TFormMain
     object Copyprofiledirectorypath1: TMenuItem
       Tag = 7
       Caption = 'Copy profile path'
-      ImageIndex = 10
-      ImageName = 'icons8_user_folder'
+      ImageIndex = 13
+      ImageName = 'icons8_folders'
       ShortCut = 16451
       OnClick = ActionsClickClick
     end
@@ -925,7 +936,9 @@ object FormMain: TFormMain
     end
     object info1: TMenuItem
       Tag = 9
-      Caption = 'Info'
+      Caption = 'Info...'
+      ImageIndex = 19
+      ImageName = 'icons8_fish_skeleton'
       OnClick = ActionsClickClick
     end
   end
@@ -934,7 +947,7 @@ object FormMain: TFormMain
     FileTypes = <>
     Options = [fdoPickFolders]
     Left = 136
-    Top = 176
+    Top = 188
   end
   object PopupMenu2: TPopupMenu
     OnPopup = PopupMenu2Popup
@@ -948,5 +961,21 @@ object FormMain: TFormMain
       Caption = 'Goto file'
       OnClick = Gotofile1Click
     end
+  end
+  object FileSaveDialog1: TFileSaveDialog
+    FavoriteLinks = <>
+    FileName = 'D:\Projects\ArcticLIB\Compression'
+    FileTypes = <
+      item
+        DisplayName = 'Bat file (*.bat)'
+        FileMask = '*.bat'
+      end
+      item
+        DisplayName = 'All files (*.*)'
+        FileMask = '*.*'
+      end>
+    Options = []
+    Left = 128
+    Top = 265
   end
 end

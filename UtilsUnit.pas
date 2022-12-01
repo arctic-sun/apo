@@ -2,7 +2,7 @@
 
 interface
 
-
+{$DEFINE sqlite3_checkfilefast}
 {$IFDEF WIN32}
  {$DEFINE sqlite3_STATIC_DLL_LOAD}
 {$ELSE}
@@ -67,7 +67,7 @@ uses
 
     TChromiumProfileType = (cpYandex, cpChrome, cpChromiumOrSRwareIron, cpSlimjet, cpBrave, cpMailRuAtom,
                             cpCentBrowser, cpComodoDragon, cpTwinkstar, cpURBrowser, cpMaxthon, cpDecentr,
-                            cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, cpBasilisk, cpQQBrowser);
+                            cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, {cpBasilisk,} cpQQBrowser);
 
     TMozillaProfileType  = (mpFireFox, mpPaleMoon, mpThunderbird, mpSeaMonkey, mpSlimBrowser, mpBasilisk, mpIceDragon, mpWaterFox);
 
@@ -85,6 +85,7 @@ uses
     function GetChromedProfileInfo(const srcFileName: string; const srcCMD: string; var ProfilePath: string): Integer;
 
     // Misc
+    function IsAppTypeFF(const appType: integer): Boolean;
     function AppImageIndexFromType(const appType: integer): Integer;
     function ProfilePathIsDisabled(const Path: string; const DisProfiles: TArray<string>): Boolean;
 
@@ -112,7 +113,7 @@ uses
      ENGINE_OPERA    = 3;
 
      MozillaBasedAppCount   = 8;
-     ChromiumBasedAppCount  = 17;
+     ChromiumBasedAppCount  = 16;
      MiscEngineAppCount     = 1;
 
 
@@ -212,7 +213,7 @@ begin
     cpMSEdge                : tmp_str := tmp_str + 'Microsoft\Edge\User Data';
     cpVivaldi               : tmp_str := tmp_str + 'Vivaldi\User Data';
 
-    cpBasilisk              : tmp_str := tmp_str + 'Basilisk-Dev\Basilisk\Profiles';
+  //  cpBasilisk              : tmp_str := tmp_str + 'Basilisk-Dev\Basilisk\Profiles';
     cpQQBrowser             : tmp_str := tmp_str + 'Tencent\QQBrowser\User Data';
   end;
   if DirectoryExists( tmp_str ) then Result := tmp_str else Result := '';
@@ -310,8 +311,8 @@ begin
           cpiTopPrivateBrowser    :  begin appType := 212; appName:= 'iTop Private Browser';  end;
           cpMSEdge                :  begin appType := 213; appName:= 'Edge';                  end;
           cpVivaldi               :  begin appType := 214; appName:= 'Vivaldi';               end;
-          cpBasilisk              :  begin appType := 215; appName:= 'Basilisk(chromium)';    end;
-          cpQQBrowser             :  begin appType := 216; appName:= 'QQBrowser';             end;
+        //  cpBasilisk              :  begin appType := 215; appName:= 'Basilisk(chromium)';    end;
+          cpQQBrowser             :  begin appType := 215; appName:= 'QQBrowser';             end;
         end;
 
    ENGINE_UNKNOWN        :
@@ -429,6 +430,8 @@ end;
 function AppNameFromType(const appType: Integer): string;
 begin
    case appType of
+     0: Result := 'Undefined profile(s)';
+
      100: Result:= 'FireFox';
      101: Result:= 'PaleMoon';
      102: Result:= 'Thunderbird';
@@ -453,8 +456,8 @@ begin
      212: Result:= 'iTop Private Browser';
      213: Result:= 'Edge';
      214: Result:= 'Vivaldi';
-     215: Result:= 'Basilisk(chromium)';
-     216: Result:= 'QQBrowser';
+    // 215: Result:= 'Basilisk(chromium)';
+     215: Result:= 'QQBrowser';
 
      300: Result:= 'Viber';
      400: Result:= 'Opera';
@@ -595,7 +598,7 @@ begin
     'Microsoft Edge',
     'Vivaldi',
     'Chromium',
-    'Basilisk',
+  //  'Basilisk',
     'QQBrowser'
 
     ])
@@ -615,8 +618,8 @@ begin
     12  :  Result := 212;   // cpiTopPrivateBrowser
     13  :  Result := 213;   // cpMSEdge
     14  :  Result := 214;   // cpVivaldi
-    16  :  Result := 215;   // cpBasilisk
-    17  :  Result := 216;   // cpQQBrowser
+   // 16  :  Result := 215;   // cpBasilisk
+    16  :  Result := 215;   // cpQQBrowser
   else
     Result := RESULT_UNKNOWN_PROFILE;
   end;
@@ -627,6 +630,11 @@ end;
 {$ENDREGION}
 
 {$REGION ' Misc '}
+
+function IsAppTypeFF(const appType: integer): Boolean;
+begin
+  Result := appType in [100..107];
+end;
 
 function AppImageIndexFromType(const appType: integer): Integer;
 begin
@@ -658,8 +666,8 @@ begin
      212:  Result := 17;  //@ cpiTopPrivateBrowser
      213:  Result := 10;  //@ cpMSEdge
      214:  Result := 15;  //@ cpVivaldi
-     215:  Result := 1;   //@ cpBasilisk
-     216:  Result := 27;  //@ cpQQBrowser
+   //  215:  Result := 1;   //@ cpBasilisk
+     215:  Result := 27;  //@ cpQQBrowser
 
      300:  Result := 14;  //@ Viber
 
@@ -685,17 +693,29 @@ end;
 
 function IsSQLiteFile(const Path: string): Boolean;
 const
-  SQL3Header: array[0..5] of byte = ( $53, $51, $4C, $69, $74, $65 );
-// $53, $51, $4C, $69, $74, $65, $20, $66, $6F, $72, $6D, $61, $74, $20, $33
+{$IFDEF sqlite3_checkfilefast}
+  SQL3HeaderShort: array[0..5] of byte = ( $53, $51, $4C, $69, $74, $65 );
+{$ELSE}
+  SQL3HeaderFull : array[0..15] of byte = ($53, $51, $4C, $69, $74, $65, $20, $66, $6F, $72, $6D, $61, $74, $20, $33, $00)  ;
+{$IFEND}
 var
   hFile: THandle;
+{$IFDEF sqlite3_checkfilefast}
   Buffer: array[0..5] of byte;
+{$ELSE}
+  Buffer: array[0..15] of byte;
+{$IFEND}
   lpNumberOfBytesRead: DWORD;
 begin
   hFile:=CreateFile( PWideChar( Path ), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
   try
+{$IFDEF sqlite3_checkfilefast}
     ReadFile(hFile, Buffer[0], 6, lpNumberOfBytesRead, nil);
-    Result := CompareMem(@Buffer[0],  @SQL3Header[0], 6 );
+    Result := CompareMem(@Buffer[0],  @SQL3HeaderShort[0], 6 );
+{$ELSE}
+    ReadFile(hFile, Buffer[0], 16, lpNumberOfBytesRead, nil);
+    Result := CompareMem(@Buffer[0],  @SQL3HeaderShort[0], 16 );
+{$IFEND}
   finally
    CloseHandle(hFile);
   end;

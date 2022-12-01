@@ -2,10 +2,6 @@ unit frmInfoUnit;
 
 interface
 
-// https://stackoverflow.com/questions/23329531/php-making-a-download-counter-without-leaving-the-current-page
-// https://github.com/Xeroday/PHP-Download-Counter
-// https://tooomm.github.io/github-release-stats/?username=arctic-sun&repository=b2fh
-
 
 uses
   Winapi.Windows,
@@ -63,7 +59,7 @@ end;
 procedure TfrmInfo.FormShow(Sender: TObject);
 begin
  Label2.Caption := 'SQLite: ' + FileVersion(sqlite3_lib);
- Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '04/11/2022' ]  ) ;
+ Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '01/12/2022' ]  ) ;
  ActiveControl  := Button1;
 end;
 

@@ -8,6 +8,7 @@ uses
 
   Winapi.Windows,
   Winapi.Messages,
+  Clipbrd,
 
   System.SysUtils,
   System.Variants,
@@ -85,10 +86,10 @@ begin
     21: result :=  'iTop Private Browser';
     22: result :=  'Edge';
     23: result :=  'Vivaldi';
-    24: result :=  'Basilisk(chromium)';
-    25: result :=  'QQBrowser';
-    26: result :=  'Viber';
-    27: result :=  'Opera';
+   // 24: result :=  'Basilisk(chromium)';
+    24: result :=  'QQBrowser';
+    25: result :=  'Viber';
+    26: result :=  'Opera';
   end;
 end;
 
@@ -119,22 +120,22 @@ begin
     21 : result := 212; // 'iTop Private Browser';
     22 : result := 213; // 'Edge';
     23 : result := 214; // 'Vivaldi';
-    24 : result := 215; // 'Basilisk(chromium)';
-    25 : result := 216; // 'QQBrowser';
-    26 : result := 300; // 'Viber';
-    27 : result := 400; // 'Opera';
+   // 24 : result := 215; // 'Basilisk(chromium)';
+    24 : result := 215; // 'QQBrowser';
+    25 : result := 300; // 'Viber';
+    26 : result := 400; // 'Opera';
   end;
 end;
 
 
 function TAddProfileDlgForm.GetProfileDirectory: string;
 begin
-  Result :=   Edit1.Text ;
+  Result := Edit1.Text ;
 end;
 
 function TAddProfileDlgForm.GetProfileAppType: Integer;
 begin
-  Result :=   GetAppIndexFromOrdIndex(ComboBoxEx1.ItemIndex);
+  Result := GetAppIndexFromOrdIndex(ComboBoxEx1.ItemIndex);
 end;
 
 procedure TAddProfileDlgForm.FormCreate(Sender: TObject);
@@ -143,23 +144,18 @@ var
   appImgIndex: Integer;
   appName: string;
 begin
-   for I := 0 to 27 do
+   for I := 0 to 26 do
    begin
       appName:=  GetAppNameFromOrdIndex(I);
       appImgIndex:=  AppImageIndexFromType( GetAppIndexFromOrdIndex(I) );
       ComboBoxEx1.ItemsEx.AddItem( appName, appImgIndex, appImgIndex, appImgIndex, 0, nil );
    end;
    ComboBoxEx1.ItemIndex := 0;
-
-
 end;
 
 procedure TAddProfileDlgForm.FormShow(Sender: TObject);
 begin
   ActiveControl := Button2;
-
-  Edit1.Text := '';
-
 end;
 
 procedure TAddProfileDlgForm.SpeedButton1Click(Sender: TObject);
@@ -170,6 +166,7 @@ end;
 
 procedure TAddProfileDlgForm.SpeedButton2Click(Sender: TObject);
 begin
+   if Clipbrd.Clipboard.AsText.Length > 0 then Edit1.SelectAll;  // for Undo
    Edit1.PasteFromClipboard;
 end;
 

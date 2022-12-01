@@ -17,7 +17,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
   PixelsPerInch = 144
   TextHeight = 25
   object ComboBoxEx1: TComboBoxEx
-    Left = 12
+    Left = 13
     Top = 58
     Width = 494
     Height = 34
@@ -91,8 +91,8 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Margins.Bottom = 5
       Align = alClient
       TabOrder = 0
-      Text = 'Edit1'
-      ExplicitLeft = -8
+      TextHint = 'Profile path...'
+      ExplicitHeight = 33
     end
   end
   object Panel2: TPanel
@@ -112,8 +112,8 @@ object AddProfileDlgForm: TAddProfileDlgForm
     Padding.Bottom = 3
     ShowCaption = False
     TabOrder = 2
-    ExplicitLeft = -203
-    ExplicitWidth = 734
+    ExplicitTop = 109
+    ExplicitWidth = 507
     object Button1: TButton
       AlignWithMargins = True
       Left = 349
@@ -128,7 +128,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 0
-      ExplicitLeft = 571
+      ExplicitLeft = 339
     end
     object Button2: TButton
       AlignWithMargins = True
@@ -144,7 +144,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 1
-      ExplicitLeft = 406
+      ExplicitLeft = 174
     end
   end
   object FileOpenDialog1: TFileOpenDialog

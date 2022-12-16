@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899 12 30 00:00:00.000.397,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.811,C:\Users\c1\Documents\Embarcadero\Studio\Projects\Project2.dproj=D:\Projects\SQLVacuum\SQLProfileOptimizer.dproj</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.690,D:\Projects\SQLVacuum\frmAddProfileUnit.dfm=D:\Projects\SQLVacuum\Unit1.dfm</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.239,D:\Projects\SQLVacuum\DataModuleUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.407,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.965,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.177,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.912,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.449,D:\Projects\SQLVacuum\frmSettingsUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.239,D:\Projects\SQLVacuum\DataModuleUnit.dfm=D:\Projects\SQLVacuum\Unit1.dfm</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.766,D:\Projects\SQLVacuum\ApoThrUnit.pas=</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.827,D:\Projects\SQLVacuum\ApoThrUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.690,D:\Projects\SQLVacuum\frmAddProfileUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.454,D:\Projects\SQLVacuum\BatScriptUnt.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.112,D:\Projects\SQLVacuum\frmMain.pas=C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899 12 30 00:00:00.000.962,D:\Projects\SQLVacuum\frmSettingsUnit.pas=</Transaction>
     <Transaction>1899 12 30 00:00:00.000.846,=D:\Projects\SQLVacuum\frmSettingsUnit.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.523,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.449,D:\Projects\SQLVacuum\frmSettingsUnit.dfm=D:\Projects\SQLVacuum\Unit1.dfm</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.112,C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.dfm=D:\Projects\SQLVacuum\frmMain.dfm</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.479,D:\Projects\SQLVacuum\ArcticProfileOptimizer.dproj=D:\Projects\SQLVacuum\SQLProfileOptimizer.dproj</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.112,C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.pas=D:\Projects\SQLVacuum\frmMain.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.690,D:\Projects\SQLVacuum\Unit1.dfm=D:\Projects\SQLVacuum\frmAddProfileUnit.dfm</Transaction>
     <Transaction>1899 12 30 00:00:00.000.943,D:\Projects\SQLVacuum\FileUtils.pas=</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.401,=D:\Projects\SQLVacuum\FileUtils.pas</Transaction>
     <Transaction>1899 12 30 00:00:00.000.188,D:\Projects\SQLVacuum\ProfileUtilsUnit.pas=</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.844,D:\Projects\SQLVacuum\UtilsUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.179,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\ProfileUtilsUnit.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.882,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.034,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.188,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.179,D:\Projects\SQLVacuum\ProfileUtilsUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.112,D:\Projects\SQLVacuum\frmMain.dfm=C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.479,D:\Projects\SQLVacuum\SQLProfileOptimizer.dproj=D:\Projects\SQLVacuum\ArcticProfileOptimizer.dproj</Transaction>
     <Transaction>1899 12 30 00:00:00.000.249,=C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899 12 30 00:00:00.000.065,=C:\Users\c1\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.385,D:\Projects\SQLVacuum\frmInfoUnit.pas=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
-    <Transaction>1899 12 30 00:00:00.000.385,D:\Projects\SQLVacuum\frmInfoUnit.dfm=D:\Projects\SQLVacuum\Unit1.dfm</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.766,D:\Projects\SQLVacuum\ApoThrUnit.pas=</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.239,D:\Projects\SQLVacuum\Unit1.dfm=D:\Projects\SQLVacuum\DataModuleUnit.dfm</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.449,D:\Projects\SQLVacuum\Unit1.dfm=D:\Projects\SQLVacuum\frmSettingsUnit.dfm</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.385,D:\Projects\SQLVacuum\Unit1.dfm=D:\Projects\SQLVacuum\frmInfoUnit.dfm</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.811,D:\Projects\SQLVacuum\SQLProfileOptimizer.dproj=C:\Users\c1\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.401,=D:\Projects\SQLVacuum\FileUtils.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.034,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.188,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.449,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\frmSettingsUnit.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.827,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\ApoThrUnit.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.523,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.239,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\DataModuleUnit.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.965,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.882,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.177,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.912,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.397,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.385,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\frmInfoUnit.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.690,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\frmAddProfileUnit.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.454,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\BatScriptUnt.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.407,=D:\Projects\SQLVacuum\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.844,D:\Projects\SQLVacuum\Unit1.pas=D:\Projects\SQLVacuum\UtilsUnit.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="frmMain.pas"/>

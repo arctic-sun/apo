@@ -31,11 +31,12 @@ object FormMain: TFormMain
   Font.Color = clWindowText
   Font.Height = -18
   Font.Name = 'Verdana'
+  Font.Pitch = fpVariable
   Font.Style = []
+  Font.Quality = fqAntialiased
   GlassFrame.Enabled = True
   GlassFrame.Top = 45
-  Position = poDesktopCenter
-  PrintScale = poPrintToFit
+  Position = poScreenCenter
   ShowHint = True
   StyleElements = [seFont, seClient]
   OnClose = FormClose
@@ -389,7 +390,7 @@ object FormMain: TFormMain
         Margins.Right = 5
         Margins.Bottom = 5
         Flat = False
-        ImageIndex = 9
+        ImageIndex = 4
         Images = DataModule1.SVGIconImageList1
         ShowCaption = True
         UseToolbarShowCaption = False
@@ -400,7 +401,9 @@ object FormMain: TFormMain
         Font.Color = clBlack
         Font.Height = -18
         Font.Name = 'Verdana'
+        Font.Pitch = fpVariable
         Font.Style = []
+        Font.Quality = fqAntialiased
         ParentFont = False
         OnClick = OptimizeBtnClick
         ExplicitTop = 1
@@ -472,7 +475,7 @@ object FormMain: TFormMain
       Margins.Right = 5
       Margins.Bottom = 5
       GradientColorStyle = gcsSystem
-      ImageIndex = 9
+      ImageIndex = 4
       Images = DataModule1.SVGIconImageList1
       ShowCaption = True
       UseToolbarButtonLayout = False
@@ -493,7 +496,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 2
+      ImageIndex = 1
       Images = DataModule1.SVGIconImageList1
       OnClick = ActionsClickClick
     end
@@ -506,7 +509,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 15
+      ImageIndex = 9
       OnClick = ActionsClickClick
     end
     object UnCheckallprofiles2: TRzToolButton
@@ -518,7 +521,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 16
+      ImageIndex = 10
       OnClick = ActionsClickClick
     end
     object RzToolButton_OpenProfileDir2: TRzToolButton
@@ -530,7 +533,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 4
+      ImageIndex = 13
       OnClick = ActionsClickClick
     end
     object Copyprofiledirectorypath2: TRzToolButton
@@ -542,7 +545,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 21
+      ImageIndex = 14
       OnClick = ActionsClickClick
     end
     object RzToolButton10: TRzToolButton
@@ -554,7 +557,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 8
+      ImageIndex = 3
       OnClick = ActionsClickClick
     end
     object RzToolButton11: TRzToolButton
@@ -566,7 +569,7 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 1
+      ImageIndex = 15
       OnClick = ActionsClickClick
     end
     object RzLabel1: TRzLabel
@@ -585,7 +588,9 @@ object FormMain: TFormMain
       Font.Color = 6052956
       Font.Height = -18
       Font.Name = 'Verdana'
+      Font.Pitch = fpVariable
       Font.Style = []
+      Font.Quality = fqAntialiased
       ParentFont = False
       StyleElements = [seClient, seBorder]
     end
@@ -605,7 +610,9 @@ object FormMain: TFormMain
       Font.Color = 6052956
       Font.Height = -18
       Font.Name = 'Verdana'
+      Font.Pitch = fpVariable
       Font.Style = []
+      Font.Quality = fqAntialiased
       ParentFont = False
       StyleElements = [seClient, seBorder]
     end
@@ -625,7 +632,9 @@ object FormMain: TFormMain
       Font.Color = 6052956
       Font.Height = -18
       Font.Name = 'Verdana'
+      Font.Pitch = fpVariable
       Font.Style = []
+      Font.Quality = fqAntialiased
       ParentFont = False
       StyleElements = [seClient, seBorder]
     end
@@ -645,7 +654,9 @@ object FormMain: TFormMain
       Font.Color = 6052956
       Font.Height = -18
       Font.Name = 'Verdana'
+      Font.Pitch = fpVariable
       Font.Style = []
+      Font.Quality = fqAntialiased
       ParentFont = False
       StyleElements = [seClient, seBorder]
     end
@@ -665,7 +676,9 @@ object FormMain: TFormMain
       Font.Color = 6052956
       Font.Height = -18
       Font.Name = 'Verdana'
+      Font.Pitch = fpVariable
       Font.Style = []
+      Font.Quality = fqAntialiased
       ParentFont = False
       StyleElements = [seClient, seBorder]
     end
@@ -676,7 +689,6 @@ object FormMain: TFormMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ImageIndex = 18
       Visible = False
       OnClick = RzToolButton3Click
     end
@@ -745,7 +757,9 @@ object FormMain: TFormMain
       Header.Font.Color = clWindowText
       Header.Font.Height = -18
       Header.Font.Name = 'Verdana'
+      Header.Font.Pitch = fpVariable
       Header.Font.Style = [fsBold]
+      Header.Font.Quality = fqAntialiased
       Header.Height = 36
       Header.MaxHeight = 45
       Header.MinHeight = 36
@@ -1048,6 +1062,8 @@ object FormMain: TFormMain
     Top = 120
     object Optimizeselectedprofile1: TMenuItem
       Caption = 'Optimize this profile'
+      ImageIndex = 4
+      ImageName = 'icons8_flash_on'
       OnClick = Optimizeselectedprofile1Click
     end
     object N5: TMenuItem
@@ -1056,15 +1072,15 @@ object FormMain: TFormMain
     object ScannProfiles: TMenuItem
       Tag = 1
       Caption = 'Search for existing profiles'
-      ImageIndex = 1
-      ImageName = 'icons8_search_folder'
+      ImageIndex = 15
+      ImageName = 'icons8_browse_folder'
       ShortCut = 116
       OnClick = ActionsClickClick
     end
     object CreateBATfile1: TMenuItem
       Tag = 10
       Caption = 'Generate .BAT script for checked profile(s)...'
-      ImageIndex = 14
+      ImageIndex = 8
       ImageName = 'icons8_console_2'
       OnClick = ActionsClickClick
     end
@@ -1074,7 +1090,7 @@ object FormMain: TFormMain
     object AddCustomProfileBtn: TMenuItem
       Tag = 2
       Caption = 'Add profile path...'
-      ImageIndex = 2
+      ImageIndex = 1
       ImageName = 'icons8_add_folder'
       ShortCut = 16449
       OnClick = ActionsClickClick
@@ -1086,7 +1102,7 @@ object FormMain: TFormMain
     object DelCustomProfileBtn: TMenuItem
       Tag = 3
       Caption = 'Remove selected profile'
-      ImageIndex = 3
+      ImageIndex = 2
       ImageName = 'icons8_delete_folder'
       ShortCut = 46
       OnClick = ActionsClickClick
@@ -1097,7 +1113,7 @@ object FormMain: TFormMain
     object Checkallprofiles1: TMenuItem
       Tag = 4
       Caption = 'Check all profiles'
-      ImageIndex = 15
+      ImageIndex = 9
       ImageName = 'icons8_Checked_Checkbox'
       ShortCut = 16471
       OnClick = ActionsClickClick
@@ -1105,7 +1121,7 @@ object FormMain: TFormMain
     object UnCheckallprofiles1: TMenuItem
       Tag = 5
       Caption = 'UnCheck all profiles'
-      ImageIndex = 16
+      ImageIndex = 10
       ImageName = 'icons8_Unchecked_Checkbox'
       ShortCut = 16453
       OnClick = ActionsClickClick
@@ -1115,17 +1131,17 @@ object FormMain: TFormMain
     end
     object Openprofiledirectory1: TMenuItem
       Tag = 6
-      Caption = 'Open profile directory'
-      ImageIndex = 4
-      ImageName = 'icons8_move_to_folder'
+      Caption = 'Open profile directory in Explorer'
+      ImageIndex = 13
+      ImageName = 'icons8_file_explorer'
       ShortCut = 16452
       OnClick = ActionsClickClick
     end
     object Copyprofiledirectorypath1: TMenuItem
       Tag = 7
       Caption = 'Copy profile path'
-      ImageIndex = 21
-      ImageName = 'icons8_copy_to_clipboard_1'
+      ImageIndex = 14
+      ImageName = 'icons8_symlink_directory_1'
       ShortCut = 16451
       OnClick = ActionsClickClick
     end
@@ -1135,7 +1151,7 @@ object FormMain: TFormMain
     object SettingsBtn: TMenuItem
       Tag = 8
       Caption = 'Settings ...'
-      ImageIndex = 8
+      ImageIndex = 3
       ImageName = 'icons8_settings_1'
       OnClick = ActionsClickClick
     end
@@ -1145,7 +1161,7 @@ object FormMain: TFormMain
     object info1: TMenuItem
       Tag = 9
       Caption = 'Info...'
-      ImageIndex = 19
+      ImageIndex = 12
       ImageName = 'icons8_fish_skeleton'
       OnClick = ActionsClickClick
     end

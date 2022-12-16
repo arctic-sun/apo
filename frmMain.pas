@@ -150,7 +150,7 @@ type
   private
     { Private declarations }
     add_profiledlg_last_cbindex: integer;
-    procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
+//   procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
     procedure WMDropFiles(var Msg: TWMDropFiles);  message WM_DROPFILES;
     procedure updateButtonsState(const ccs: boolean = False );
     procedure VSTSetCheckState(const b: Boolean);
@@ -375,8 +375,8 @@ end;
 {$ENDREGION}
 
 {$REGION ' Form events  '}
-
-{-$DEFINE DELPHI_STYLE_SCALING}
+       (*
+{$DEFINE DELPHI_STYLE_SCALING}
 procedure TFormMain.WMDpiChanged(var Message: TMessage);
 // from https://docwiki.embarcadero.com/RADStudio/Sydney/en/Customizing_the_Windows_Application_Manifest_File
   {$IFDEF DELPHI_STYLE_SCALING}
@@ -407,6 +407,8 @@ begin
   self.PixelsPerInch := LOWORD(Message.wParam);
  // Caption := Format('Monitor #%d (%d dpi, %d x %d)', [self.Monitor.MonitorNum, self.PixelsPerInch, self.Monitor.Width, self.Monitor.Height]);
 end;
+
+*)
 
 procedure TFormMain.WMDropFiles(var Msg: TWMDropFiles);
 // from https://habr.com/ru/post/179131/
@@ -2190,7 +2192,7 @@ end;
 
 procedure TFormMain.RzToolButton3Click(Sender: TObject);
 begin
-//dbg   ShowObjectInspectorForm(VirtualStringTree1, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
+ //dbg  ShowObjectInspectorForm(FormMain, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
 end;
 
 procedure TFormMain.LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');

@@ -58,7 +58,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alRight
-      ImageIndex = 12
+      ImageIndex = 7
       ImageName = 'icons8_opened_folder'
       Images = DataModule1.SVGIconImageList1
       OnClick = SpeedButton1Click
@@ -74,7 +74,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alRight
-      ImageIndex = 11
+      ImageIndex = 6
       ImageName = 'icons8_paste'
       Images = DataModule1.SVGIconImageList1
       OnClick = SpeedButton2Click

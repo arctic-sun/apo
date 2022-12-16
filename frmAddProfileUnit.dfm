@@ -92,6 +92,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Align = alClient
       TabOrder = 0
       TextHint = 'Profile path...'
+      OnChange = Edit1Change
       ExplicitHeight = 33
     end
   end

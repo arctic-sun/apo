@@ -44,6 +44,8 @@ type
     Panel2: TPanel;
     Button1: TButton;
     Button2: TButton;
+    Label10: TLabel;
+    ToggleSwitch7: TToggleSwitch;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }

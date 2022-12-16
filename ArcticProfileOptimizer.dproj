@@ -126,10 +126,10 @@
         <Icon_MainIcon>ProjectX.ico</Icon_MainIcon>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.12.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.12.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.13.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.13.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>res\logo-icon\path491.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
-        <VerInfo_Release>12</VerInfo_Release>
+        <VerInfo_Release>13</VerInfo_Release>
         <Manifest_File>apo.manifest</Manifest_File>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
@@ -141,8 +141,8 @@
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.12.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.12.0;Comments=</VerInfo_Keys>
-        <VerInfo_Release>12</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.13.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.13.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>13</VerInfo_Release>
         <Manifest_File>apo.manifest</Manifest_File>
     </PropertyGroup>
     <ItemGroup>

@@ -39,6 +39,7 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
   private
     { Private declarations }
     function GetProfileDirectory: string;
@@ -130,12 +131,17 @@ end;
 
 function TAddProfileDlgForm.GetProfileDirectory: string;
 begin
-  Result := Edit1.Text ;
+  Result := Trim(Edit1.Text);
 end;
 
 function TAddProfileDlgForm.GetProfileAppType: Integer;
 begin
   Result := GetAppIndexFromOrdIndex(ComboBoxEx1.ItemIndex);
+end;
+
+procedure TAddProfileDlgForm.Edit1Change(Sender: TObject);
+begin
+  Button2.Enabled := String(Trim(Edit1.Text)).Length > 0;
 end;
 
 procedure TAddProfileDlgForm.FormCreate(Sender: TObject);
@@ -156,6 +162,7 @@ end;
 procedure TAddProfileDlgForm.FormShow(Sender: TObject);
 begin
   ActiveControl := Button2;
+  Button2.Enabled := String(Trim(Edit1.Text)).Length > 0;
 end;
 
 procedure TAddProfileDlgForm.SpeedButton1Click(Sender: TObject);

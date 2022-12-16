@@ -1,6 +1,7 @@
 object FormMain: TFormMain
   Left = 0
   Top = 0
+  Caption = 'Arctic Profile Optimizer'
   ClientHeight = 603
   ClientWidth = 1150
   Color = 14120960
@@ -8,6 +9,7 @@ object FormMain: TFormMain
   CustomTitleBar.Control = TitleBarPanel1
   CustomTitleBar.Enabled = True
   CustomTitleBar.Height = 45
+  CustomTitleBar.ShowCaption = False
   CustomTitleBar.SystemColors = False
   CustomTitleBar.BackgroundColor = 14120960
   CustomTitleBar.ForegroundColor = clGray
@@ -23,6 +25,7 @@ object FormMain: TFormMain
   CustomTitleBar.ButtonInactiveBackgroundColor = 14120960
   Constraints.MinHeight = 300
   Constraints.MinWidth = 1125
+  DefaultMonitor = dmPrimary
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -362,7 +365,7 @@ object FormMain: TFormMain
       AlignWithMargins = True
       Left = 132
       Top = 5
-      Width = 217
+      Width = 215
       Height = 34
       Margins.Left = 5
       Margins.Top = 5
@@ -372,33 +375,27 @@ object FormMain: TFormMain
       BorderOuter = fsNone
       BorderSides = []
       Color = 2829099
-      FlatColor = clNavy
-      FlatColorAdjustment = 0
-      FrameControllerNotifications = [fcpColor, fcpFocusColor, fcpDisabledColor, fcpReadOnlyColor, fcpReadOnlyColorOnFocus, fcpParentColor, fcpFlatButtonColor, fcpFlatButtons, fcpFrameColor, fcpFrameHotColor, fcpFrameHotTrack, fcpFrameHotStyle, fcpFrameSides, fcpFrameStyle, fcpFramingPreference]
       TabOrder = 0
       Transparent = True
-      VisualStyle = vsGradient
+      VisualStyle = vsClassic
       object OptimizeBtn: TRzToolButton
         Left = 0
         Top = 0
-        Width = 217
+        Width = 215
         Height = 34
-        Hint = 'Start optimization'
+        Hint = 'Start optimization for all checked profile(s)'
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
-        SelectionColorStop = clBtnFace
-        SelectionFrameColor = clBtnFace
         Flat = False
         ImageIndex = 9
         Images = DataModule1.SVGIconImageList1
         ShowCaption = True
-        UseToolbarButtonSize = False
         UseToolbarShowCaption = False
         Align = alClient
         Caption = 'Optimize profiles'
-        Enabled = False
+        Color = 2829099
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -18
@@ -406,8 +403,9 @@ object FormMain: TFormMain
         Font.Style = []
         ParentFont = False
         OnClick = OptimizeBtnClick
-        ExplicitTop = -3
-        ExplicitWidth = 205
+        ExplicitTop = 1
+        ExplicitWidth = 251
+        ExplicitHeight = 30
       end
     end
   end
@@ -420,20 +418,35 @@ object FormMain: TFormMain
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
+    AutoStyle = False
+    Images = DataModule1.SVGIconImageList1
     RowHeight = 38
     ButtonWidth = 38
     ButtonHeight = 38
     TextOptions = ttoCustom
     BorderInner = fsNone
     BorderOuter = fsGroove
-    BorderSides = [sdTop]
+    BorderSides = [sdRight]
     BorderWidth = 0
     Color = 2829099
     TabOrder = 3
+    Transparent = True
     ToolbarControls = (
       MenuButton2
-      RzSpacer1
-      OptimizeBtn2)
+      RzLabel1
+      OptimizeBtn2
+      RzLabel2
+      RzToolButton11
+      RzLabel3
+      RzToolButton4
+      RzToolButton_OpenProfileDir2
+      Copyprofiledirectorypath2
+      RzLabel5
+      Checkallprofiles2
+      UnCheckallprofiles2
+      RzLabel6
+      RzToolButton10
+      RzToolButton3)
     object MenuButton2: TRzToolButton
       Left = 4
       Top = 2
@@ -448,22 +461,12 @@ object FormMain: TFormMain
       Images = DataModule1.SVGIconImageList1
       ToolStyle = tsDropDown
     end
-    object RzSpacer1: TRzSpacer
-      Left = 63
-      Top = 2
-      Width = 12
-      Height = 38
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Grooved = True
-    end
     object OptimizeBtn2: TRzToolButton
-      Left = 75
+      Left = 80
       Top = 2
-      Width = 197
+      Width = 204
       Height = 38
+      Hint = 'Start optimization for all checked profile(s)'
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -480,6 +483,202 @@ object FormMain: TFormMain
       Caption = 'Optimize profiles'
       Enabled = False
       OnClick = OptimizeBtnClick
+    end
+    object RzToolButton4: TRzToolButton
+      Tag = 2
+      Left = 356
+      Top = 2
+      Hint = 'Add new profile path...'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 2
+      Images = DataModule1.SVGIconImageList1
+      OnClick = ActionsClickClick
+    end
+    object Checkallprofiles2: TRzToolButton
+      Tag = 4
+      Left = 487
+      Top = 2
+      Hint = 'Set check On for all profiles'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 15
+      OnClick = ActionsClickClick
+    end
+    object UnCheckallprofiles2: TRzToolButton
+      Tag = 5
+      Left = 525
+      Top = 2
+      Hint = 'Set check Off for all profiles'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 16
+      OnClick = ActionsClickClick
+    end
+    object RzToolButton_OpenProfileDir2: TRzToolButton
+      Tag = 6
+      Left = 394
+      Top = 2
+      Hint = 'Open profile directory in explorer'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 4
+      OnClick = ActionsClickClick
+    end
+    object Copyprofiledirectorypath2: TRzToolButton
+      Tag = 7
+      Left = 432
+      Top = 2
+      Hint = 'Copy profile path to clipboard'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 21
+      OnClick = ActionsClickClick
+    end
+    object RzToolButton10: TRzToolButton
+      Tag = 8
+      Left = 580
+      Top = 2
+      Hint = 'Settings'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 8
+      OnClick = ActionsClickClick
+    end
+    object RzToolButton11: TRzToolButton
+      Tag = 1
+      Left = 301
+      Top = 2
+      Hint = 'Search for existing profiles'
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 1
+      OnClick = ActionsClickClick
+    end
+    object RzLabel1: TRzLabel
+      AlignWithMargins = True
+      Left = 65
+      Top = 10
+      Width = 13
+      Height = 22
+      Margins.Left = 2
+      Margins.Top = 0
+      Margins.Right = 2
+      Margins.Bottom = 0
+      Alignment = taCenter
+      Caption = #9474
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6052956
+      Font.Height = -18
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      StyleElements = [seClient, seBorder]
+    end
+    object RzLabel2: TRzLabel
+      AlignWithMargins = True
+      Left = 286
+      Top = 10
+      Width = 13
+      Height = 22
+      Margins.Left = 2
+      Margins.Top = 0
+      Margins.Right = 2
+      Margins.Bottom = 0
+      Alignment = taCenter
+      Caption = #9474
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6052956
+      Font.Height = -18
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      StyleElements = [seClient, seBorder]
+    end
+    object RzLabel5: TRzLabel
+      AlignWithMargins = True
+      Left = 472
+      Top = 10
+      Width = 13
+      Height = 22
+      Margins.Left = 2
+      Margins.Top = 0
+      Margins.Right = 2
+      Margins.Bottom = 0
+      Alignment = taCenter
+      Caption = #9474
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6052956
+      Font.Height = -18
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      StyleElements = [seClient, seBorder]
+    end
+    object RzLabel6: TRzLabel
+      AlignWithMargins = True
+      Left = 565
+      Top = 10
+      Width = 13
+      Height = 22
+      Margins.Left = 2
+      Margins.Top = 0
+      Margins.Right = 2
+      Margins.Bottom = 0
+      Alignment = taCenter
+      Caption = #9474
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6052956
+      Font.Height = -18
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      StyleElements = [seClient, seBorder]
+    end
+    object RzLabel3: TRzLabel
+      AlignWithMargins = True
+      Left = 341
+      Top = 10
+      Width = 13
+      Height = 22
+      Margins.Left = 2
+      Margins.Top = 0
+      Margins.Right = 2
+      Margins.Bottom = 0
+      Alignment = taCenter
+      Caption = #9474
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6052956
+      Font.Height = -18
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      StyleElements = [seClient, seBorder]
+    end
+    object RzToolButton3: TRzToolButton
+      Left = 618
+      Top = 2
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 18
+      Visible = False
+      OnClick = RzToolButton3Click
     end
   end
   object RzSplitter1: TRzSplitter
@@ -518,7 +717,7 @@ object FormMain: TFormMain
       Top = 0
       Width = 1150
       Height = 249
-      Margins.Left = 5
+      Margins.Left = 2
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
@@ -562,13 +761,15 @@ object FormMain: TFormMain
       TextMargin = 6
       TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoHideButtons, toAutoChangeScale]
       TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
-      TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection, toUseExplorerTheme]
+      TreeOptions.PaintOptions = [toHideFocusRect, toHideSelection, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
       TreeOptions.SelectionOptions = [toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
       OnBeforeCellPaint = VirtualStringTree1BeforeCellPaint
+      OnChecked = VirtualStringTree1Checked
       OnDrawText = VirtualStringTree1DrawText
       OnFreeNode = VirtualStringTree1FreeNode
       OnGetText = VirtualStringTree1GetText
       OnGetImageIndexEx = VirtualStringTree1GetImageIndexEx
+      OnNodeClick = VirtualStringTree1NodeClick
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
       Columns = <
@@ -845,9 +1046,16 @@ object FormMain: TFormMain
     OnPopup = PopupMenu1Popup
     Left = 136
     Top = 120
+    object Optimizeselectedprofile1: TMenuItem
+      Caption = 'Optimize this profile'
+      OnClick = Optimizeselectedprofile1Click
+    end
+    object N5: TMenuItem
+      Caption = '-'
+    end
     object ScannProfiles: TMenuItem
       Tag = 1
-      Caption = 'Search existing profile(s)'
+      Caption = 'Search for existing profiles'
       ImageIndex = 1
       ImageName = 'icons8_search_folder'
       ShortCut = 116
@@ -916,8 +1124,8 @@ object FormMain: TFormMain
     object Copyprofiledirectorypath1: TMenuItem
       Tag = 7
       Caption = 'Copy profile path'
-      ImageIndex = 13
-      ImageName = 'icons8_folders'
+      ImageIndex = 21
+      ImageName = 'icons8_copy_to_clipboard_1'
       ShortCut = 16451
       OnClick = ActionsClickClick
     end

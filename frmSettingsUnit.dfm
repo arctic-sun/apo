@@ -3,7 +3,7 @@ object frmSettings: TfrmSettings
   Top = 27
   BorderStyle = bsDialog
   Caption = ' Settings'
-  ClientHeight = 444
+  ClientHeight = 513
   ClientWidth = 734
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,7 +11,7 @@ object frmSettings: TfrmSettings
   Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poMainFormCenter
+  Position = poOwnerFormCenter
   OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
@@ -167,8 +167,8 @@ object frmSettings: TfrmSettings
     end
   end
   object RzGroupBox2: TRzGroupBox
-    Left = 332
-    Top = 198
+    Left = 334
+    Top = 275
     Width = 390
     Height = 176
     Margins.Left = 5
@@ -236,10 +236,10 @@ object frmSettings: TfrmSettings
     end
   end
   object RzGroupBox3: TRzGroupBox
-    Left = 332
-    Top = 12
+    Left = 334
+    Top = 11
     Width = 390
-    Height = 177
+    Height = 254
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -275,6 +275,17 @@ object frmSettings: TfrmSettings
       Margins.Bottom = 5
       Caption = 'Show LOG (slow procesing)'
     end
+    object Label10: TLabel
+      Left = 12
+      Top = 186
+      Width = 108
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Caption = 'Titlebar menu'
+    end
     object ToggleSwitch3: TToggleSwitch
       Left = 12
       Top = 68
@@ -303,10 +314,24 @@ object frmSettings: TfrmSettings
       TabOrder = 1
       ThumbWidth = 30
     end
+    object ToggleSwitch7: TToggleSwitch
+      Left = 12
+      Top = 216
+      Width = 107
+      Height = 30
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      SwitchHeight = 30
+      SwitchWidth = 75
+      TabOrder = 2
+      ThumbWidth = 30
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 396
+    Top = 465
     Width = 734
     Height = 48
     Margins.Left = 5
@@ -321,7 +346,7 @@ object frmSettings: TfrmSettings
     Padding.Bottom = 3
     ShowCaption = False
     TabOrder = 3
-    ExplicitTop = 394
+    ExplicitTop = 463
     ExplicitWidth = 724
     object Button1: TButton
       AlignWithMargins = True

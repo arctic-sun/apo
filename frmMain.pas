@@ -3,6 +3,8 @@
 interface
 
 uses
+  //dbg  ObjectInspectorEh,
+
   Winapi.Windows,
   Winapi.Messages,
   Winapi.ShellAPI,
@@ -41,6 +43,7 @@ uses
   RzButton,
   RzPrgres,
   RzSplit,
+  RzLabel,
 
   VirtualTrees,
   VirtualTrees.BaseAncestorVCL,
@@ -52,9 +55,6 @@ uses
 
 const
   WM_DPICHANGED = 736; // 0x02E0
-
-type
-   TUIProfilesState = (pChecked,  pSelected);
 
 
 type
@@ -81,7 +81,6 @@ type
     RzStatusPane3: TRzStatusPane;
     Bevel2: TBevel;
     info1: TMenuItem;
-    RzPanel1: TRzPanel;
     FileOpenDialog1: TFileOpenDialog;
     SettingsBtn: TMenuItem;
     N4: TMenuItem;
@@ -93,7 +92,6 @@ type
     Image1: TImage;
     RzToolbar1: TRzToolbar;
     MenuButton2: TRzToolButton;
-    RzSpacer1: TRzSpacer;
     OptimizeBtn2: TRzToolButton;
     VirtualStringTree1: TVirtualStringTree;
     RzSplitter1: TRzSplitter;
@@ -107,6 +105,22 @@ type
     CreateBATfile1: TMenuItem;
     FileSaveDialog1: TFileSaveDialog;
     Edit1: TMenuItem;
+    RzToolButton4: TRzToolButton;
+    Checkallprofiles2: TRzToolButton;
+    UnCheckallprofiles2: TRzToolButton;
+    RzToolButton_OpenProfileDir2: TRzToolButton;
+    Copyprofiledirectorypath2: TRzToolButton;
+    RzToolButton10: TRzToolButton;
+    RzToolButton11: TRzToolButton;
+    RzLabel1: TRzLabel;
+    RzLabel2: TRzLabel;
+    RzLabel5: TRzLabel;
+    RzLabel6: TRzLabel;
+    RzLabel3: TRzLabel;
+    RzPanel1: TRzPanel;
+    Optimizeselectedprofile1: TMenuItem;
+    N5: TMenuItem;
+    RzToolButton3: TRzToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -129,30 +143,30 @@ type
     procedure Copy1Click(Sender: TObject);
     procedure Gotofile1Click(Sender: TObject);
     procedure PopupMenu2Popup(Sender: TObject);
+    procedure Optimizeselectedprofile1Click(Sender: TObject);
+    procedure VirtualStringTree1NodeClick(Sender: TBaseVirtualTree; const HitInfo: THitInfo);
+    procedure VirtualStringTree1Checked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+    procedure RzToolButton3Click(Sender: TObject);
   private
     { Private declarations }
+    add_profiledlg_last_cbindex: integer;
     procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
     procedure WMDropFiles(var Msg: TWMDropFiles);  message WM_DROPFILES;
-
+    procedure updateButtonsState(const ccs: boolean = False );
     procedure VSTSetCheckState(const b: Boolean);
     procedure ProgressDlgVisible(const b: Boolean);
-
     procedure BeforeProcOptimize;
     procedure AfterProcOptimize;
-
     procedure ProcCreateBAT(const outfile : string);
-    procedure ProcOptimize;
-    procedure ProcOptimizeLOG;
-
+    procedure ProcOptimize(const selectedOnly: Boolean = False);
+    procedure ProcOptimizeLOG(const selectedOnly: Boolean = False);
     procedure ProcSearchProfiles;
     procedure CollectDisabledProfiles;
-
     procedure CustomProfileDeleteSelected;
     procedure AddProfileDlg(const DefProfilePath : string = ''; defAppType: Integer = 0);
     procedure AddProfile(const pPath: String; const AppType: Integer = 0; const ManualAdded: Boolean = false);
     function  AddProfileToList(const pPath: string; const pAppType: Integer): Integer;
     function  AddProfileToVST(const pPath: string; const pAppType: Integer; const ManualAdded: Boolean = false): Integer;
-
     function  LogAdd(RootNode: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string =''): PVirtualNode;
     procedure LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');
   public
@@ -194,6 +208,7 @@ var
   settings_showlog          : Boolean;
   settings_searchlnkdesktop : Boolean;
   settings_searchlnksmenu   : Boolean;
+  settings_captiontoolbar   : boolean;
 
 
 // Decrease Exe size
@@ -206,7 +221,8 @@ var
 
 implementation
 
-uses DataModuleUnit,
+uses
+     DataModuleUnit,
      UtilsUnit,
      BatScriptUnt,
      frmInfoUnit,
@@ -218,8 +234,6 @@ var
     DisabledProfiles       : TArray<String>;
     SearchProfilesResult   : TList<TAProfiles>;
 
-
-
 const
      VST_PROGRESS_BAR_COLOR = $00598FFF;
 
@@ -229,16 +243,11 @@ const
      VST_SIZEAFTER_COLUMN_INDEX   = 3;
      VST_RATE_COLUMN_INDEX        = 4;
 
-    {RESULT_UNKNOWN_PROFILE}
-    {RESULT_PROFILE_ADDED}
-
 
      APP_CAPTION            = 'Arctic Profile Optimizer';
      SQLStatusVerCaption    = 'SQLite: %s';
      AppVerCaption          = 'apo: %sa'; //0.X.Xa'
      AppVerPortableCaption  = 'portable: %sa'; //0.X.Xa'
-
-
 
 
      APP_SETTINGS_PATH              = '\AppData\Local\Arctics\ProfileOptimizer\';
@@ -297,7 +306,8 @@ begin
   settings_showhint.ToString + ',' +
   settings_showlog.ToString + ',' +
   settings_searchlnkdesktop.ToString + ',' +
-  settings_searchlnksmenu.ToString ;
+  settings_searchlnksmenu.ToString + ',' +
+  settings_captiontoolbar.ToString;
 
   tmp_str := GetAppSettingsPath; // GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
   ForceDirectories(tmp_str);
@@ -345,6 +355,8 @@ begin
     settings_searchlnkdesktop:= str_items[7].ToBoolean;
     if Length(str_items)>8 then
     settings_searchlnksmenu:=   str_items[8].ToBoolean;
+    if Length(str_items)>9 then
+    settings_captiontoolbar:=   str_items[9].ToBoolean;
 
 
 end;
@@ -363,7 +375,6 @@ end;
 {$ENDREGION}
 
 {$REGION ' Form events  '}
-
 
 {-$DEFINE DELPHI_STYLE_SCALING}
 procedure TFormMain.WMDpiChanged(var Message: TMessage);
@@ -476,6 +487,7 @@ end;
 
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  add_profiledlg_last_cbindex := 0;
   FileOpenDialog1.FileName := '';
 
   FileSaveDialog1.FileName := 'OptimizationJob.bat';
@@ -495,7 +507,7 @@ begin
      TitleBarPanel1.Enabled := False;
      TitleBarPanel1.Visible := False;
      TitleBarPanel1.Hide;
-  end;
+  end; { }
 
   VirtualStringTree1.NodeDataSize := SizeOf(TItemNodeData);
   VirtualStringTree2.NodeDataSize := SizeOf(TLOGItemNodeData);
@@ -527,7 +539,6 @@ begin
    VirtualStringTree2.Header.Options := VirtualStringTree2.Header.Options + [hoAutoResize];
    VirtualStringTree2.Header.Options := VirtualStringTree2.Header.Options - [hoAutoResize];
 
-
    // Opt Progress panel centering
    RzPanelProgress.Top  :=  (ClientHeight - RzPanelProgress.Height) div 2 ;
    RzPanelProgress.Left :=  (ClientWidth - RzPanelProgress.Width) div 2;
@@ -537,14 +548,7 @@ procedure TFormMain.FormShow(Sender: TObject);
 begin
   if FirstShow then Exit;
 
-  if IsAeroEnabled.ToInteger = 0  then
-  begin
-     RzToolbar1.Visible := True ;
-     Caption := APP_CAPTION;
-  end
-  else
-     RzToolbar1.Visible := False ;
-
+  Caption := APP_CAPTION;
 
 
   RzStatusPane_SQLiteVer.Caption :=
@@ -556,7 +560,6 @@ begin
   else
     RzStatusPane_AppVer.Caption :=
        Format(AppVerCaption, [FileVersion(Application.ExeName)]);
-
 
   Application.HintHidePause := 10000;
 
@@ -570,17 +573,36 @@ begin
   settings_showlog          := False;
   settings_searchlnkdesktop := False;
   settings_searchlnksmenu   := False;
-
+  settings_captiontoolbar   := False;
 
   LoadingSettings;
 
-  FormMain.ShowHint := settings_showhint;
-  Application.ShowHint := settings_showhint;
+  // Apply some settings
+  FormMain.ShowHint              := settings_showhint;
+  Application.ShowHint           := settings_showhint;
   RzSplitter1.LowerRight.Visible := settings_showlog;
 
-  SearchProfilesResult := nil;
+  if settings_captiontoolbar then
+  begin
+    // If win7 w.o. aero then force show toolbar
+    if IsAeroEnabled.ToInteger = 0  then
+       RzToolbar1.Visible := True
+    else
+       RzToolbar1.Visible := False;
+  end else
+  begin
+     TitleBarPanel1.OnPaint          := nil;
+     FormMain.CustomTitleBar.Control := nil;
+     FormMain.CustomTitleBar.Enabled := False;
+     TitleBarPanel1.Enabled := False;
+     TitleBarPanel1.Visible := False;
+     TitleBarPanel1.Hide;
+     RzToolbar1.Visible := True;
+  end;
 
+  SearchProfilesResult := nil;
   ProcSearchProfiles;
+  updateButtonsState;
 
   FirstShow := False;
 end;
@@ -611,6 +633,65 @@ end;
 
 {$REGION ' Procedures and Functions   '}
 
+procedure TFormMain.updateButtonsState(const ccs: boolean = False );
+
+  function VSTHasCheckedNodes: Boolean;
+  var Node: PVirtualNode;
+  begin
+       Result := VirtualStringTree1.RootNodeCount > 0;
+       // Перебор это конечно вариант, но лучше всёже следить слежку, или найти более быстрый перебор
+       if not Result then Exit;
+       Node :=  VirtualStringTree1.GetFirstLevel(1);
+       while Assigned(Node) do
+       begin
+         if VirtualStringTree1.CheckState[Node] = csCheckedNormal then Exit(True);
+         Node := VirtualStringTree1.GetNextLevel(Node, 1);
+       end;
+       Result := False;
+  end;
+
+begin
+
+  if ccs then
+  OptimizeBtn.Enabled  := VSTHasCheckedNodes;
+  OptimizeBtn2.Enabled := OptimizeBtn.Enabled;
+
+  if Assigned(VirtualStringTree1.FocusedNode)
+  then
+   Openprofiledirectory1.Enabled :=
+       (VirtualStringTree1.RootNodeCount > 0 ) and
+       (VirtualStringTree1.GetNodeLevel(VirtualStringTree1.FocusedNode) = 1)
+  else
+   Openprofiledirectory1.Enabled := False;
+
+   Optimizeselectedprofile1.Enabled := Openprofiledirectory1.Enabled;
+
+   RzToolButton_OpenProfileDir2.Enabled := Openprofiledirectory1.Enabled;
+
+  Copyprofiledirectorypath1.Enabled := Openprofiledirectory1.Enabled;
+  Copyprofiledirectorypath2.Enabled := Copyprofiledirectorypath1.Enabled;
+
+  UnCheckallprofiles1.Enabled := (VirtualStringTree1.RootNodeCount > 0 );
+  Checkallprofiles1.Enabled := UnCheckallprofiles1.Enabled;
+
+  Checkallprofiles2.Enabled := Checkallprofiles1.Enabled;
+  UnCheckallprofiles2.Enabled := UnCheckallprofiles1.Enabled;
+
+
+  var ItemNodeData : PItemNodeData := nil;
+  var ManualAdded: Boolean := false;
+
+  if Assigned(VirtualStringTree1.FocusedNode) then
+      ItemNodeData := VirtualStringTree1.GetNodeData(VirtualStringTree1.FocusedNode);
+
+  if Assigned(ItemNodeData) then
+      ManualAdded := ItemNodeData^.h_ManualAdded ;
+
+  DelCustomProfileBtn.Enabled := (CustomProfilePaths.Count > 0) and
+  (VirtualStringTree1.RootNodeCount > 0 ) and  ManualAdded  ;
+
+end;
+
 procedure TFormMain.VSTSetCheckState(const b: Boolean);
 var
   Node         : PVirtualNode;
@@ -632,6 +713,7 @@ begin
    finally
      VirtualStringTree1.EndUpdate;
    end;
+   updateButtonsState(True);
 end;
 
 procedure TFormMain.ProgressDlgVisible(const b: Boolean);
@@ -640,7 +722,6 @@ begin
   RzProgressBar1.PartsComplete := 0;
   RzProgressBar2.PartsComplete := 0;
 end;
-
 
 procedure TFormMain.BeforeProcOptimize;
 begin
@@ -670,9 +751,10 @@ begin
 
   VirtualStringTree1.Refresh;
 
+  updateButtonsState;
+
   Application.ProcessMessages;
 end;
-
 
 
 type
@@ -746,7 +828,7 @@ begin
    aTask.Start;
 end;
 
-procedure TFormMain.ProcOptimize;
+procedure TFormMain.ProcOptimize(const selectedOnly: Boolean = False);
 var
  aTask: ITask;
 begin
@@ -782,15 +864,23 @@ begin
        // Setup progress =======================================
        {$REGION ' Setup progress '}
 
-         var TP: Integer := 0;
+       var TP: Integer := 0;
+       if selectedOnly then
+       begin
+         TP := 1;
+       end else
+       begin
          Node :=  VirtualStringTree1.GetFirstLevel(1);
          while Assigned(Node) do
          begin
            if Node.CheckState = csCheckedNormal then Inc(TP);
            Node := VirtualStringTree1.GetNextLevel(Node, 1);
          end;
+       end;
+
          RzProgressBar2.TotalParts := TP;
          RzProgressBar2.PartsComplete := 0;
+
 
          TThread.Synchronize(TThread.Current,
                   procedure
@@ -802,10 +892,14 @@ begin
        {$ENDREGION}
 
        // Enum Processing
-       Node :=  VirtualStringTree1.GetFirstLevel(1);
+       if selectedOnly then
+         Node :=  VirtualStringTree1.FocusedNode
+       else
+         Node :=  VirtualStringTree1.GetFirstLevel(1);
+
        while Assigned(Node) do
        begin
-          if Node.CheckState.IsChecked then
+          if Node.CheckState.IsChecked or selectedOnly then
           begin
             var ItemNodeData: PItemNodeData;
             ItemNodeData := VirtualStringTree1.GetNodeData(Node);
@@ -908,6 +1002,7 @@ begin
             end;
           end;
 
+        if selectedOnly then Node := nil else
         Node :=  VirtualStringTree1.GetNextLevel(Node, 1);
        end;
 
@@ -920,7 +1015,7 @@ begin
    aTask.Start;
 end;
 
-procedure TFormMain.ProcOptimizeLOG;
+procedure TFormMain.ProcOptimizeLOG(const selectedOnly: Boolean = False);
 var
  aTask: ITask;
 begin
@@ -993,6 +1088,13 @@ begin
 
        // Setup progress =======================================
        {$REGION ' Setup progress '}
+
+       if selectedOnly then
+       begin
+         logTotalCheckedProfiles := 1;
+         logTotalProfileCount := 1;
+       end else
+       begin
          Node :=  VirtualStringTree1.GetFirstLevel(1);
          while Assigned(Node) do
          begin
@@ -1000,6 +1102,8 @@ begin
            inc(logTotalProfileCount);
            Node := VirtualStringTree1.GetNextLevel(Node, 1);
          end;
+       end;
+
          RzProgressBar2.TotalParts := logTotalCheckedProfiles;
          RzProgressBar2.PartsComplete := 0;
 
@@ -1019,6 +1123,15 @@ begin
        logTotalProfilesSizeAfter  := 0;
 
 
+       if selectedOnly then
+
+       logNodeStart := LogAdd(nil,
+                             'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
+                             'selected profile',
+                             Format('Processed %s of %s, Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s', ['','','','','',''])
+                              )
+
+       else
        logNodeStart := LogAdd(nil,
                              'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
                              Format('Enabled profiles: %s of %s', [logTotalCheckedProfiles.ToString, logTotalProfileCount.ToString]),
@@ -1027,10 +1140,14 @@ begin
 
 
        // Enum Processing
-       Node :=  VirtualStringTree1.GetFirstLevel(1);
+       if selectedOnly then
+        Node :=  VirtualStringTree1.FocusedNode
+       else
+        Node :=  VirtualStringTree1.GetFirstLevel(1);
+
        while Assigned(Node) do
        begin
-          if Node.CheckState.IsChecked then
+          if Node.CheckState.IsChecked or selectedOnly then
           begin
              var ItemNodeData: PItemNodeData;
              ItemNodeData := VirtualStringTree1.GetNodeData(Node);
@@ -1193,6 +1310,7 @@ begin
                TThread.Synchronize(TThread.Current, procedure begin RzProgressBar2.IncPartsByOne; end);
              end;
           end;
+        if selectedOnly then Node := nil else
         Node :=  VirtualStringTree1.GetNextLevel(Node, 1);
        end;
 
@@ -1290,192 +1408,63 @@ begin
     VirtualStringTree1.EndUpdate;
   end;
 
-  OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
-  OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
+  updateButtonsState(true);
 end;
 
 procedure TFormMain.AddProfileDlg(const DefProfilePath : string = ''; defAppType: Integer = 0);
 begin
-   AddProfileDlgForm.Edit1.Text := DefProfilePath;
-   if defAppType > -1 then
-   AddProfileDlgForm.ComboBoxEx1.ItemIndex := defAppType;
+   Application.CreateForm(TAddProfileDlgForm, AddProfileDlgForm);
+   try
+     AddProfileDlgForm.Edit1.Text := DefProfilePath;
+     if defAppType = -1 then
+      AddProfileDlgForm.ComboBoxEx1.ItemIndex := add_profiledlg_last_cbindex
+     else
+      AddProfileDlgForm.ComboBoxEx1.ItemIndex := defAppType;
 
-   if AddProfileDlgForm.ShowModal <> mrOk then Exit;
 
-   var ProfilePath: string := AddProfileDlgForm.ProfileDirectory;
-   var appType: integer := AddProfileDlgForm.ProfileAppType;
-   AddProfile(ProfilePath, appType, true);
+     if AddProfileDlgForm.ShowModal <> mrOk then  Exit;
+
+     var ProfilePath: string := AddProfileDlgForm.ProfileDirectory;
+     var appType: integer := AddProfileDlgForm.ProfileAppType;
+     AddProfile(ProfilePath, appType, true);
+
+   finally
+     add_profiledlg_last_cbindex := AddProfileDlgForm.ComboBoxEx1.ItemIndex;
+     AddProfileDlgForm.Free;
+   end;
 end;
+
+//https://stackoverflow.com/questions/4618743/how-to-make-messagedlg-centered-on-owner-form
+function MessageDlgCenter(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons): Integer;
+var R: TRect;
+begin
+  if not Assigned(Screen.ActiveForm) then
+  begin
+    Result := MessageDlg(Msg, DlgType, Buttons, 0);
+  end else
+  begin
+    with CreateMessageDialog(Msg, DlgType, Buttons) do
+    try
+      GetWindowRect(Screen.ActiveForm.Handle, R);
+      Left := R.Left + ((R.Right - R.Left) div 2) - (Width div 2);
+      Top := R.Top + ((R.Bottom - R.Top) div 2) - (Height div 2);
+      Result := ShowModal;
+    finally
+      Free;
+    end;
+  end;
+end;
+
+const
+  CNST_PROFILE_ADD_OK = -1;
 
 procedure TFormMain.AddProfile(const pPath: String; const AppType: Integer = 0; const ManualAdded: Boolean = false);
 begin
-  if AddProfileToList(pPath, appType) = -1 {RESULT_PROFILE_ADDED}
-    then AddProfileToVST(pPath, appType, ManualAdded);
+  if AddProfileToList(pPath, appType) = CNST_PROFILE_ADD_OK
+    then AddProfileToVST(pPath, appType, ManualAdded) else
+    MessageDlgCenter('Profile path already in list', mtInformation, [mbOK]);
 
-  OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
-  OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
-end;
-
-procedure TFormMain.ProcSearchProfiles;
-var
- i, j               : Integer;
- VTNode, VTRootNode : PVirtualNode;
- ItemNodeData       : PItemNodeData;
-begin
-
-   VirtualStringTree1.RootNodeCount := 0;
-   VirtualStringTree1.Clear;
-
-   FreeSearchProfilesResult(SearchProfilesResult);
-   SearchProfilesResult := GetProfilesA;
-
-   // Add searched profiles
-   VirtualStringTree1.BeginUpdate;
-   try
-     // Found profiles
-     for j := 0 to SearchProfilesResult.Count-1 do
-     begin
-       VTRootNode := VirtualStringTree1.AddChild(nil);
-       VTRootNode.CheckType := ctTriStateCheckBox ;// ctCheckBox;
-       Include( VTRootNode.States, vsExpanded);
-       ItemNodeData := VirtualStringTree1.GetNodeData(VTRootNode);
-       if Assigned(ItemNodeData) then
-       with ItemNodeData^ do
-       begin
-          v_ProfileName := SearchProfilesResult[j].appName;
-          h_AppType     := SearchProfilesResult[j].appType;
-          v_FilesCount  := '';
-          v_SizeBefore  := '';
-          v_SizeAfter   := '';
-          v_RateStr     := '';
-       end;
-       // ------------------------------------------------
-        for i := 0 to SearchProfilesResult[j].appProfiles.Count-1 do
-        begin
-          VTNode := VirtualStringTree1.AddChild(VTRootNode);
-          VTNode.CheckType := ctCheckBox;
-
-          // Bug-fix
-          VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
-
-          if ProfilePathIsDisabled(SearchProfilesResult[j].appProfiles[i], DisabledProfiles)
-          then VirtualStringTree1.CheckState[VTNode] := csUnCheckedNormal
-          else VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
-
-          ItemNodeData := VirtualStringTree1.GetNodeData(VTNode);
-          if Assigned(ItemNodeData) then
-          with ItemNodeData^ do
-          begin
-            v_ProfileName   := SearchProfilesResult[j].appProfiles[i];
-            h_AppType       := SearchProfilesResult[j].appType;
-            v_FilesCount    := '';
-            v_SizeBefore    := '';
-            v_SizeAfter     := '';
-            v_RateStr       := '';
-            h_RateProgress  := 0;
-            h_PathNotFound  := False;
-          end;
-        end;
-     end;
-
-   finally
-    VirtualStringTree1.EndUpdate;
-   end;
-
-   // Add Undefined profiles
-   VirtualStringTree1.BeginUpdate;
-   try
-     if CustomProfilePaths.Count > 0 then
-     for i := 0 to CustomProfilePaths.Count-1 do
-     begin
-        var appInx: integer := {0} PROFILE_TYPE_UNDEFINED;
-        appInx := StrToIntDef( CustomProfilePaths.ValueFromIndex[i] , {0} PROFILE_TYPE_UNDEFINED);
-
-        if trim( CustomProfilePaths.Strings[i] ).Length > 0 then
-         AddProfileToVST( CustomProfilePaths.KeyNames[i], appInx, True);
-     end;
-   finally
-     VirtualStringTree1.EndUpdate;
-   end;
-
-  // Add profiles from Desktop shortcuts
-  if settings_searchlnkdesktop then
-  begin
-     var DesktopLNKListList : TList<TSearchRec{TSSearchRec}>;
-     DesktopLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_DESKTOP),
-                                            ['*.lnk'],
-                                            0,   // MinSize     0 - any size
-                                            1    // MaxDepth   -1 - any depth
-                                            );
-
-     VirtualStringTree1.BeginUpdate;
-     try
-       var profilePath: string := '';
-       var appType: Integer;
-       var _target, _argument: string;
-       for I := 0 to DesktopLNKListList.Count-1 do
-       if GetLnkFile({DesktopLNKListList[i].Path +} DesktopLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
-       begin
-         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
-         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR]   then
-           AddProfileToVST(ProfilePath, appType);
-       end;
-     finally
-       DesktopLNKListList.Free;
-       VirtualStringTree1.EndUpdate;
-     end;
-  end;
-
-  // Add profiles from StartMenu shortcuts
-  if settings_searchlnksmenu then
-  begin
-     var StartMenuLNKListList : TList<TSearchRec{TSSearchRec}>;
-     StartMenuLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_STARTMENU),
-                                              ['*.lnk'],
-                                              0,   // MinSize     0 - any size
-                                              2    // MaxDepth   -1 - any depth
-                                              );
-     VirtualStringTree1.BeginUpdate;
-     try
-       var profilePath: string := '';
-       var appType: Integer;
-       var _target, _argument: string;
-       for I := 0 to StartMenuLNKListList.Count-1 do
-       if GetLnkFile({StartMenuLNKListList[i].Path +} StartMenuLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
-       begin
-         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
-         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR] then
-          AddProfileToVST(ProfilePath, appType);
-       end;
-     finally
-       StartMenuLNKListList.Free;
-       VirtualStringTree1.EndUpdate;
-     end;
-  end;
-
-
- OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
- OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
-end;
-
-procedure TFormMain.CollectDisabledProfiles;
-var CliNode: PVirtualNode;
-    ItemNodeData : PItemNodeData;
-begin
- DisabledProfiles := [];
-    CliNode :=  VirtualStringTree1.GetFirstLevel(1);
-    while Assigned(CliNode) do
-    begin
-      if CliNode.CheckState.IsUnChecked then
-      begin
-        ItemNodeData := VirtualStringTree1.GetNodeData(CliNode);
-        if Assigned(ItemNodeData) then
-        begin
-           DisabledProfiles := DisabledProfiles + [ItemNodeData^.v_ProfileName];
-        end;
-      end;
-      CliNode := VirtualStringTree1.GetNextLevel(CliNode, 1);
-    end;
+  updateButtonsState;
 end;
 
 function TFormMain.AddProfileToList(const pPath: string; const pAppType: Integer): Integer;
@@ -1483,12 +1472,12 @@ begin
    CustomProfilePaths.NameValueSeparator := '|';
 
    Result:= CustomProfilePaths.IndexOfName(pPath);
-   if Result > -1 then Exit;
+   if Result > CNST_PROFILE_ADD_OK then Exit;
 
    Result:=  CustomProfilePaths.IndexOf(pPath);
-   if Result > -1 then Exit;
+   if Result > CNST_PROFILE_ADD_OK then Exit;
 
-   Result := -1;
+   Result := CNST_PROFILE_ADD_OK;
    CustomProfilePaths.Add( pPath + '|' + pAppType.ToString  );
 end;
 
@@ -1645,6 +1634,166 @@ begin
 
 end;
 
+procedure TFormMain.ProcSearchProfiles;
+var
+ i, j               : Integer;
+ VTNode, VTRootNode : PVirtualNode;
+ ItemNodeData       : PItemNodeData;
+begin
+
+   VirtualStringTree1.RootNodeCount := 0;
+   VirtualStringTree1.Clear;
+
+   FreeSearchProfilesResult(SearchProfilesResult);
+   SearchProfilesResult := GetProfilesA;
+
+   // Add searched profiles
+   VirtualStringTree1.BeginUpdate;
+   try
+     // Found profiles
+     for j := 0 to SearchProfilesResult.Count-1 do
+     begin
+       VTRootNode := VirtualStringTree1.AddChild(nil);
+       VTRootNode.CheckType := ctTriStateCheckBox ;// ctCheckBox;
+       Include( VTRootNode.States, vsExpanded);
+       ItemNodeData := VirtualStringTree1.GetNodeData(VTRootNode);
+       if Assigned(ItemNodeData) then
+       with ItemNodeData^ do
+       begin
+          v_ProfileName := SearchProfilesResult[j].appName;
+          h_AppType     := SearchProfilesResult[j].appType;
+          v_FilesCount  := '';
+          v_SizeBefore  := '';
+          v_SizeAfter   := '';
+          v_RateStr     := '';
+       end;
+       // ------------------------------------------------
+        for i := 0 to SearchProfilesResult[j].appProfiles.Count-1 do
+        begin
+          VTNode := VirtualStringTree1.AddChild(VTRootNode);
+          VTNode.CheckType := ctCheckBox;
+
+          // Bug-fix
+          VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
+
+          if ProfilePathIsDisabled(SearchProfilesResult[j].appProfiles[i], DisabledProfiles)
+          then VirtualStringTree1.CheckState[VTNode] := csUnCheckedNormal
+          else VirtualStringTree1.CheckState[VTNode] := csCheckedNormal;
+
+          ItemNodeData := VirtualStringTree1.GetNodeData(VTNode);
+          if Assigned(ItemNodeData) then
+          with ItemNodeData^ do
+          begin
+            v_ProfileName   := SearchProfilesResult[j].appProfiles[i];
+            h_AppType       := SearchProfilesResult[j].appType;
+            v_FilesCount    := '';
+            v_SizeBefore    := '';
+            v_SizeAfter     := '';
+            v_RateStr       := '';
+            h_RateProgress  := 0;
+            h_PathNotFound  := False;
+          end;
+        end;
+     end;
+
+   finally
+    VirtualStringTree1.EndUpdate;
+   end;
+
+   // Add Undefined profiles
+   VirtualStringTree1.BeginUpdate;
+   try
+     if CustomProfilePaths.Count > 0 then
+     for i := 0 to CustomProfilePaths.Count-1 do
+     begin
+        var appInx: integer := {0} PROFILE_TYPE_UNDEFINED;
+        appInx := StrToIntDef( CustomProfilePaths.ValueFromIndex[i] , {0} PROFILE_TYPE_UNDEFINED);
+
+        if trim( CustomProfilePaths.Strings[i] ).Length > 0 then
+         AddProfileToVST( CustomProfilePaths.KeyNames[i], appInx, True);
+     end;
+   finally
+     VirtualStringTree1.EndUpdate;
+   end;
+
+  // Add profiles from Desktop shortcuts
+  if settings_searchlnkdesktop then
+  begin
+     var DesktopLNKListList : TList<TSearchRec{TSSearchRec}>;
+     DesktopLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_DESKTOP),
+                                            ['*.lnk'],
+                                            0,   // MinSize     0 - any size
+                                            1    // MaxDepth   -1 - any depth
+                                            );
+
+     VirtualStringTree1.BeginUpdate;
+     try
+       var profilePath: string := '';
+       var appType: Integer;
+       var _target, _argument: string;
+       for I := 0 to DesktopLNKListList.Count-1 do
+       if GetLnkFile({DesktopLNKListList[i].Path +} DesktopLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
+       begin
+         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
+         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR]   then
+           AddProfileToVST(ProfilePath, appType);
+       end;
+     finally
+       DesktopLNKListList.Free;
+       VirtualStringTree1.EndUpdate;
+     end;
+  end;
+
+  // Add profiles from StartMenu shortcuts
+  if settings_searchlnksmenu then
+  begin
+     var StartMenuLNKListList : TList<TSearchRec{TSSearchRec}>;
+     StartMenuLNKListList := ScannDirectory( GetSpecialFolderPath(CSIDL_STARTMENU),
+                                              ['*.lnk'],
+                                              0,   // MinSize     0 - any size
+                                              2    // MaxDepth   -1 - any depth
+                                              );
+     VirtualStringTree1.BeginUpdate;
+     try
+       var profilePath: string := '';
+       var appType: Integer;
+       var _target, _argument: string;
+       for I := 0 to StartMenuLNKListList.Count-1 do
+       if GetLnkFile({StartMenuLNKListList[i].Path +} StartMenuLNKListList[i].Name, _target, _argument) = 1 {RESULT_LNK_TO_CHROMED_PROFILE} then
+       begin
+         appType := GetChromedProfileInfo(_target, _argument, ProfilePath);
+         if appType in [RESULT_LNK_TO_DIRECTORY, RESULT_LNK_TO_CHROMED_USERDATADIR] then
+          AddProfileToVST(ProfilePath, appType);
+       end;
+     finally
+       StartMenuLNKListList.Free;
+       VirtualStringTree1.EndUpdate;
+     end;
+  end;
+
+  updateButtonsState;
+end;
+
+procedure TFormMain.CollectDisabledProfiles;
+var CliNode: PVirtualNode;
+    ItemNodeData : PItemNodeData;
+begin
+ DisabledProfiles := [];
+    CliNode :=  VirtualStringTree1.GetFirstLevel(1);
+    while Assigned(CliNode) do
+    begin
+      if CliNode.CheckState.IsUnChecked then
+      begin
+        ItemNodeData := VirtualStringTree1.GetNodeData(CliNode);
+        if Assigned(ItemNodeData) then
+        begin
+           DisabledProfiles := DisabledProfiles + [ItemNodeData^.v_ProfileName];
+        end;
+      end;
+      CliNode := VirtualStringTree1.GetNextLevel(CliNode, 1);
+    end;
+end;
+
 
 {$ENDREGION}
 
@@ -1652,14 +1801,18 @@ end;
 
 procedure TFormMain.ActionsClickClick(Sender: TObject);
 begin
-   case TMenuItem(Sender).Tag of
+  var tg: Integer;
+  if Sender is TMenuItem     then  tg:= TMenuItem(Sender).Tag;
+  if Sender is TRzToolButton then  tg:= TRzToolButton(Sender).Tag;
+
+   case tg{TMenuItem(Sender).Tag} of
 
      1: begin
            CollectDisabledProfiles;
            procSearchProfiles;
         end;
 
-     2: AddProfileDlg;
+     2: AddProfileDlg('',-1);
 
      3: CustomProfileDeleteSelected;
 
@@ -1689,7 +1842,13 @@ begin
 
      8:  SettingsBtnClick(nil); //settings
 
-     9:  frmInfo.ShowModal;
+     9:
+          try
+            Application.CreateForm(TfrmInfo, frmInfo);
+            frmInfo.ShowModal;
+          finally
+            frmInfo.Free;
+          end;
 
      10: if FileSaveDialog1.Execute then
             // if createdfile then
@@ -1700,82 +1859,90 @@ end;
 
 procedure TFormMain.PopupMenu1Popup(Sender: TObject);
 begin
-  OptimizeBtn.Enabled := VirtualStringTree1.RootNodeCount > 0;
-  OptimizeBtn2.Enabled := VirtualStringTree1.RootNodeCount > 0;
-
-  if Assigned(VirtualStringTree1.FocusedNode)
-  then
-   Openprofiledirectory1.Enabled :=
-       (VirtualStringTree1.RootNodeCount > 0 ) and
-       (VirtualStringTree1.GetNodeLevel(VirtualStringTree1.FocusedNode) = 1)
-  else
-   Openprofiledirectory1.Enabled := False;
-
-  Copyprofiledirectorypath1.Enabled := Openprofiledirectory1.Enabled;
-
-  UnCheckallprofiles1.Enabled := (VirtualStringTree1.RootNodeCount > 0 );
-  Checkallprofiles1.Enabled := (VirtualStringTree1.RootNodeCount > 0 );
-
-
-  var ItemNodeData : PItemNodeData := nil;
-  var ManualAdded: Boolean := false;
-  if Assigned(VirtualStringTree1.FocusedNode) then
-  ItemNodeData := VirtualStringTree1.GetNodeData(VirtualStringTree1.FocusedNode);
-  if Assigned(ItemNodeData) then
-   ManualAdded := ItemNodeData^.h_ManualAdded ;
-
-  DelCustomProfileBtn.Enabled := (CustomProfilePaths.Count > 0) and
-  (VirtualStringTree1.RootNodeCount > 0 ) and  ManualAdded  ;
-
+  updateButtonsState;
 end;
 
 procedure TFormMain.SettingsBtnClick(Sender: TObject);
 begin
+  Application.CreateForm(TfrmSettings, frmSettings);
+  try
+    with frmSettings do
+    begin
+       Edit1.Text := settings_minfilesizeValue.ToString;
+       ComboBox1.ItemIndex := settings_minfilesizeType;
 
-  with frmSettings do
-  begin
-     Edit1.Text := settings_minfilesizeValue.ToString;
-     ComboBox1.ItemIndex := settings_minfilesizeType;
+       if settings_maxscanndepth = -1
+       then Edit2.Text := '0'
+       else Edit2.Text := settings_maxscanndepth.ToString;
 
-     if settings_maxscanndepth = -1
-     then Edit2.Text := '0'
-     else Edit2.Text := settings_maxscanndepth.ToString;
+       if settings_delete_wal       then ToggleSwitch1.State := tssOn else ToggleSwitch1.State := tssOff;
+       if settings_delete_shm       then ToggleSwitch2.State := tssOn else ToggleSwitch2.State := tssOff;
+       if settings_showhint         then ToggleSwitch3.State := tssOn else ToggleSwitch3.State := tssOff;
+       if settings_showlog          then ToggleSwitch4.State := tssOn else ToggleSwitch4.State := tssOff;
+       if settings_searchlnkdesktop then ToggleSwitch5.State := tssOn else ToggleSwitch5.State := tssOff;
+       if settings_searchlnksmenu   then ToggleSwitch6.State := tssOn else ToggleSwitch6.State := tssOff;
+       if settings_captiontoolbar   then ToggleSwitch7.State := tssOn else ToggleSwitch7.State := tssOff;
+    end;
 
-     if settings_delete_wal       then ToggleSwitch1.State := tssOn else ToggleSwitch1.State := tssOff;
-     if settings_delete_shm       then ToggleSwitch2.State := tssOn else ToggleSwitch2.State := tssOff;
-     if settings_showhint         then ToggleSwitch3.State := tssOn else ToggleSwitch3.State := tssOff;
-     if settings_showlog          then ToggleSwitch4.State := tssOn else ToggleSwitch4.State := tssOff;
-     if settings_searchlnkdesktop then ToggleSwitch5.State := tssOn else ToggleSwitch5.State := tssOff;
-     if settings_searchlnksmenu   then ToggleSwitch6.State := tssOn else ToggleSwitch6.State := tssOff;
-  end;
+    if frmSettings.ShowModal = mrOk then
+    begin
 
-  if frmSettings.ShowModal = mrOk then
-  begin
+      // MinSize  "0" - any size
+      settings_minfilesizeValue := StrToInt(frmSettings.Edit1.Text);
+      settings_minfilesizeType := frmSettings.ComboBox1.ItemIndex ;
 
-    // MinSize  "0" - any size
-    settings_minfilesizeValue := StrToInt(frmSettings.Edit1.Text);
-    settings_minfilesizeType := frmSettings.ComboBox1.ItemIndex ;
+      // MaxDepth   "-1" - any depth
+      settings_maxscanndepth := StrToInt(frmSettings.Edit2.Text);
+      if settings_maxscanndepth = 0 then settings_maxscanndepth := -1;
 
-    // MaxDepth   "-1" - any depth
-    settings_maxscanndepth := StrToInt(frmSettings.Edit2.Text);
-    if settings_maxscanndepth = 0 then settings_maxscanndepth := -1;
+      settings_delete_wal        := frmSettings.ToggleSwitch1.State = tssOn;
+      settings_delete_shm        := frmSettings.ToggleSwitch2.State = tssOn;
+      settings_showhint          := frmSettings.ToggleSwitch3.State = tssOn;
+      settings_showlog           := frmSettings.ToggleSwitch4.State = tssOn;
+      settings_searchlnkdesktop  := frmSettings.ToggleSwitch5.State = tssOn;
+      settings_searchlnksmenu    := frmSettings.ToggleSwitch6.State = tssOn;
+      settings_captiontoolbar    := frmSettings.ToggleSwitch7.State = tssOn;
 
-    settings_delete_wal        := frmSettings.ToggleSwitch1.State = tssOn;
-    settings_delete_shm        := frmSettings.ToggleSwitch2.State = tssOn;
-    settings_showhint          := frmSettings.ToggleSwitch3.State = tssOn;
-    settings_showlog           := frmSettings.ToggleSwitch4.State = tssOn;
-    settings_searchlnkdesktop  := frmSettings.ToggleSwitch5.State = tssOn;
-    settings_searchlnksmenu    := frmSettings.ToggleSwitch6.State = tssOn;
+      FormMain.ShowHint              := settings_showhint;
+      Application.ShowHint           := settings_showhint;
+      RzSplitter1.LowerRight.Visible := settings_showlog;
 
-    FormMain.ShowHint := settings_showhint;
-    Application.ShowHint :=  settings_showhint;
-    RzSplitter1.LowerRight.Visible := settings_showlog;
+      if IsAeroEnabled.ToInteger <> 0  then
+      if settings_captiontoolbar then
+      begin
+         RzToolbar1.Visible := False ;
+
+         TitleBarPanel1.OnPaint := TitleBarPanel1Paint;
+         FormMain.CustomTitleBar.Control := TitleBarPanel1;
+         FormMain.CustomTitleBar.Enabled := True;
+         TitleBarPanel1.Enabled := True;
+         TitleBarPanel1.Visible := True;
+         TitleBarPanel1.Show;
+      end else
+      begin
+         TitleBarPanel1.OnPaint := nil;
+         FormMain.CustomTitleBar.Control := nil;
+         FormMain.CustomTitleBar.Enabled := False;
+         TitleBarPanel1.Enabled := False;
+         TitleBarPanel1.Visible := False;
+         TitleBarPanel1.Hide;
+
+         RzToolbar1.Visible := True ;
+      end;
+    end;
+  finally
+    frmSettings.Free;
   end;
 end;
 
 procedure TFormMain.OptimizeBtnClick(Sender: TObject);
 begin
  if settings_showlog then ProcOptimizeLOG else ProcOptimize;
+end;
+
+procedure TFormMain.Optimizeselectedprofile1Click(Sender: TObject);
+begin
+ if settings_showlog then ProcOptimizeLOG(True) else ProcOptimize(True);
 end;
 
 {$ENDREGION}
@@ -1803,6 +1970,11 @@ begin
     LRect.Width := Round(D);
     FillRect(LRect);
   end;
+end;
+
+procedure TFormMain.VirtualStringTree1Checked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+begin
+  updateButtonsState(true);
 end;
 
 procedure TFormMain.VirtualStringTree1DrawText(Sender: TBaseVirtualTree; TargetCanvas: TCanvas; Node: PVirtualNode;
@@ -1879,6 +2051,10 @@ begin
     end;
 end;
 
+procedure TFormMain.VirtualStringTree1NodeClick(Sender: TBaseVirtualTree; const HitInfo: THitInfo);
+begin
+ updateButtonsState;
+end;
 
 {$ENDREGION}
 
@@ -2010,6 +2186,11 @@ procedure TFormMain.RzToolButton2Click(Sender: TObject);
 begin
    VirtualStringTree2.Clear;
    VirtualStringTree2.RootNodeCount := 0;
+end;
+
+procedure TFormMain.RzToolButton3Click(Sender: TObject);
+begin
+//dbg   ShowObjectInspectorForm(VirtualStringTree1, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
 end;
 
 procedure TFormMain.LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');

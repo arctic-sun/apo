@@ -50,7 +50,7 @@ begin
   BatTxt := BatTxt + ['Title “SQLite3 Batch VACUUM Script v1”'];
   BatTxt := BatTxt + ['cls'];
   BatTxt := BatTxt + ['ECHO :::::::::::::::::::::::::::::::::::::::'];
-  BatTxt := BatTxt + ['ECHO            Generated wit APO           '];
+  BatTxt := BatTxt + ['ECHO           Generated with APO           '];
   BatTxt := BatTxt + ['ECHO :::::::::::::::::::::::::::::::::::::::'];
   BatTxt := BatTxt + ['echo.'];
 

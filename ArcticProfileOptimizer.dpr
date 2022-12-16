@@ -35,9 +35,9 @@ begin
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Windows11 Modern Dark');
   Application.CreateForm(TFormMain, FormMain);
-  Application.CreateForm(TfrmInfo, frmInfo);
-  Application.CreateForm(TfrmSettings, frmSettings);
- Application.CreateForm(TAddProfileDlgForm, AddProfileDlgForm);
+ // Application.CreateForm(TfrmInfo, frmInfo);
+ // Application.CreateForm(TfrmSettings, frmSettings);
+ // Application.CreateForm(TAddProfileDlgForm, AddProfileDlgForm);
   Application.CreateForm(TDataModule1, DataModule1);
   Application.Run;
 end.

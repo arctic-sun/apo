@@ -3,10 +3,11 @@
 interface
 
 uses
-  {-$DEFINE DEBUGMODE}
+ {-$DEFINE DEBUGMODE}
  {$IFDEF DEBUGMODE}
    ObjectInspectorEh,
  {$ENDIF}
+  //aGlobalsUnit,
 
   Winapi.Windows,
   Winapi.Messages,
@@ -130,7 +131,6 @@ type
     BlackSkin1: TMenuItem;
     DirtyHackDPiTimer1: TTimer;
     SVGIconImage2: TSVGIconImage;
-    Timer1: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -214,22 +214,9 @@ type
 
 var
   FormMain: TFormMain;
-  APO_Portable : Boolean;
   FirstShow: Boolean = False;
-
-  settings_minfilesizeType  : Integer;
-  settings_minfilesizeValue : Int64;     // MinSize     0 - any size
-  settings_maxscanndepth    : Integer;   // MaxDepth   -1 - any depth
-  settings_delete_wal       : Boolean;
-  settings_delete_shm       : Boolean;
-  settings_showhint         : Boolean;
-  settings_showlog          : Boolean;
-  settings_searchlnkdesktop : Boolean;
-  settings_searchlnksmenu   : Boolean;
-  settings_captiontoolbar   : boolean;
-  settings_ThemeStyle       : integer;
-
   CancelOptProc : Boolean;
+
 
 // Decrease Exe size
 //{$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}      //
@@ -243,7 +230,8 @@ var
 
 implementation
 
-uses aConstUnit,
+uses aGlobalsUnit,
+     aConstUnit,
      DataModuleUnit,
      UtilsUnit,
      BatScriptUnt,
@@ -294,14 +282,6 @@ begin
       FreeLibrary(ModuleHandle);
     end;
   end;
-end;
-
-function GetAppSettingsPath: string;
-begin
-  if APO_Portable then
-   Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
-  else
-   Result := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
 end;
 
 procedure SaveSettings;
@@ -383,16 +363,6 @@ begin
      3: result := settings_minfilesizeValue*1024*1024*1024;// GB
     end;
 end;
-
-  {
-  1280x720 HD
-  1920x1080 FHD
-  2560x1440 QHD
-  3840x2160 4K
-  7680x4320 8K
-  }
-
-
 
 {$ENDREGION}
 
@@ -554,8 +524,17 @@ begin
       FormMain.VirtualStringTree2.Colors.HotColor := clNavy;
       FormMain.VirtualStringTree2.SelectionBlendFactor := 200;
 
-      if LT then
-      TStyleManager.TrySetStyle('Windows11 Modern Light');
+      FormMain.VirtualStringTree1.Colors.GridLineColor := $00D0D0D0;
+      FormMain.VirtualStringTree1.Colors.UnfocusedColor := $002B2B2B;
+      FormMain.VirtualStringTree1.Colors.UnfocusedSelectionColor := $00C2A072;
+      FormMain.VirtualStringTree1.Colors.UnfocusedSelectionBorderColor := $00FDBA60;
+
+      FormMain.VirtualStringTree2.Colors.GridLineColor := $00D0D0D0;
+      FormMain.VirtualStringTree2.Colors.UnfocusedColor := $002B2B2B;
+      FormMain.VirtualStringTree2.Colors.UnfocusedSelectionColor := $00C2A072;
+      FormMain.VirtualStringTree2.Colors.UnfocusedSelectionBorderColor := $00FDBA60;
+
+      if LT then TStyleManager.TrySetStyle('Windows11 Modern Light');
     end;
 
    0:
@@ -572,8 +551,18 @@ begin
       FormMain.VirtualStringTree2.Colors.HotColor := $00FDBA60;
       FormMain.VirtualStringTree2.SelectionBlendFactor := 128;
 
-      if LT then
-      TStyleManager.TrySetStyle('Windows11 Modern Dark');
+
+      FormMain.VirtualStringTree1.Colors.GridLineColor := $002B2B2B;
+      FormMain.VirtualStringTree1.Colors.UnfocusedColor := $00DEDEDE;// clSilver;
+      FormMain.VirtualStringTree1.Colors.UnfocusedSelectionColor := $00B68D56; // $002B2B2B;
+      FormMain.VirtualStringTree1.Colors.UnfocusedSelectionBorderColor := $00B68D56;//$002B2B2B;
+
+      FormMain.VirtualStringTree2.Colors.GridLineColor := $002B2B2B;
+      FormMain.VirtualStringTree2.Colors.UnfocusedColor := $00DEDEDE;// clSilver;
+      FormMain.VirtualStringTree2.Colors.UnfocusedSelectionColor := $00B68D56; // $002B2B2B;
+      FormMain.VirtualStringTree2.Colors.UnfocusedSelectionBorderColor := $00B68D56;//$002B2B2B;
+
+      if LT then TStyleManager.TrySetStyle('Windows11 Modern Dark');
     end;
 
   end;
@@ -633,7 +622,7 @@ begin
      }
   end;
 
-  APO_Portable := Pos( 'portable',  LowerCase( ExtractFileName( ParamStr(0) ) ) ) > 0  ;
+  // APO_Portable := Pos( 'portable',  LowerCase( ExtractFileName( ParamStr(0) ) ) ) > 0  ;
 
 end;
 
@@ -671,6 +660,9 @@ end;
 procedure TFormMain.FormShow(Sender: TObject);
 begin
   if FirstShow then Exit;
+
+  //SendMessage(FormMain.Handle, CM_CUSTOMSTYLECHANGED, 0, 0);
+  //PostMessage(FormMain.Handle, CM_CUSTOMSTYLECHANGED, 0, 0);
 
   Caption := APP_CAPTION;
 

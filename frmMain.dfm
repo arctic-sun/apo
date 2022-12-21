@@ -149,7 +149,6 @@ object FormMain: TFormMain
     Margins.Bottom = 5
     OnPaint = TitleBarPanel1Paint
     CustomButtons = <>
-    ExplicitTop = 3
     object MenuButton: TRzToolButton
       AlignWithMargins = True
       Left = 51
@@ -595,7 +594,6 @@ object FormMain: TFormMain
       DropDownMenu = PopupMenu3
       ImageIndex = 11
       ToolStyle = tsDropDown
-      Visible = False
     end
     object RzToolButton5: TRzToolButton
       Left = 661
@@ -656,16 +654,16 @@ object FormMain: TFormMain
       Colors.DropTargetBorderColor = 13661955
       Colors.FocusedSelectionColor = 13661955
       Colors.FocusedSelectionBorderColor = 13661955
-      Colors.GridLineColor = 2829099
+      Colors.GridLineColor = 13684944
       Colors.HeaderHotColor = clWhite
       Colors.HotColor = 16628320
       Colors.SelectionRectangleBlendColor = 13661955
       Colors.SelectionRectangleBorderColor = 13661955
       Colors.SelectionTextColor = clWhite
       Colors.TreeLineColor = 9471874
-      Colors.UnfocusedColor = clSilver
-      Colors.UnfocusedSelectionColor = 2829099
-      Colors.UnfocusedSelectionBorderColor = 2829099
+      Colors.UnfocusedColor = 14606046
+      Colors.UnfocusedSelectionColor = 11963734
+      Colors.UnfocusedSelectionBorderColor = 11579568
       DefaultNodeHeight = 27
       Header.AutoSizeIndex = 0
       Header.Height = 29
@@ -694,6 +692,7 @@ object FormMain: TFormMain
       OnNodeClick = VirtualStringTree1NodeClick
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+      ExplicitTop = -1
       Columns = <
         item
           Hint = 'Profile App\Path and settings for its optimization'
@@ -775,37 +774,37 @@ object FormMain: TFormMain
       object RzToolButton1: TRzToolButton
         AlignWithMargins = True
         Left = 1044
-        Top = 5
+        Top = 2
         Width = 92
-        Height = 19
         Margins.Left = 5
-        Margins.Top = 5
+        Margins.Top = 2
         Margins.Right = 5
-        Margins.Bottom = 5
+        Margins.Bottom = 2
         ShowCaption = True
         UseToolbarShowCaption = False
         Align = alRight
         Caption = 'hide'
         OnClick = RzToolButton1Click
         ExplicitLeft = 1326
+        ExplicitTop = 5
         ExplicitHeight = 28
       end
       object RzToolButton2: TRzToolButton
         AlignWithMargins = True
         Left = 959
-        Top = 5
+        Top = 2
         Width = 75
-        Height = 19
         Margins.Left = 5
-        Margins.Top = 5
+        Margins.Top = 2
         Margins.Right = 5
-        Margins.Bottom = 5
+        Margins.Bottom = 2
         ShowCaption = True
         UseToolbarShowCaption = False
         Align = alRight
         Caption = 'clear'
         OnClick = RzToolButton2Click
         ExplicitLeft = 1242
+        ExplicitTop = 5
         ExplicitHeight = 28
       end
     end
@@ -1170,9 +1169,5 @@ object FormMain: TFormMain
     OnTimer = DirtyHackDPiTimer1Timer
     Left = 748
     Top = 143
-  end
-  object Timer1: TTimer
-    Left = 340
-    Top = 147
   end
 end

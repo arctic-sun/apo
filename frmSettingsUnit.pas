@@ -46,6 +46,8 @@ type
     Button2: TButton;
     Label10: TLabel;
     ToggleSwitch7: TToggleSwitch;
+    ComboBox2: TComboBox;
+    Label11: TLabel;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }

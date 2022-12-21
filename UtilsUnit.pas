@@ -67,7 +67,7 @@ uses
 
     TChromiumProfileType = (cpYandex, cpChrome, cpChromiumOrSRwareIron, cpSlimjet, cpBrave, cpMailRuAtom,
                             cpCentBrowser, cpComodoDragon, cpTwinkstar, cpURBrowser, cpMaxthon, cpDecentr,
-                            cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, {cpBasilisk,} cpQQBrowser);
+                            cpiTopPrivateBrowser, cpMSEdge, cpVivaldi, {cpBasilisk,} cpQQBrowser, cp360EEX, cp360SE);
 
     TMozillaProfileType  = (mpFireFox, mpPaleMoon, mpThunderbird, mpSeaMonkey, mpSlimBrowser, mpBasilisk, mpIceDragon, mpWaterFox);
 
@@ -104,6 +104,10 @@ uses
     function FileVersion(const FileName: TFileName): String;
     function FormatByteSize(const bytes: int64): string;
 
+    function CalcRate(before, after: Int64):Integer;
+    function DeletePartPath(Path: string; DelCount: Integer): string;
+    function ifthenstr(b: Boolean; trueStr, falseStr: string): string;
+
   const
      PROFILE_TYPE_UNDEFINED = 0;
 
@@ -113,7 +117,7 @@ uses
      ENGINE_OPERA    = 3;
 
      MozillaBasedAppCount   = 8;
-     ChromiumBasedAppCount  = 16;
+     ChromiumBasedAppCount  = 18;
      MiscEngineAppCount     = 1;
 
 
@@ -193,30 +197,33 @@ begin
 end;
 
 function GetChromiumProfile(const bType: TChromiumProfileType): string;
-var tmp_str: string;
+var tmp_str_local, tmp_str_roaming: string;
 begin
-  tmp_str := GetEnvironmentVariable('USERPROFILE') + '\AppData\Local\';
+  tmp_str_local   := GetEnvironmentVariable('USERPROFILE') + '\AppData\Local\';
+  tmp_str_roaming := GetEnvironmentVariable('USERPROFILE') + '\AppData\Roaming\';
   case bType of
-    cpYandex                : tmp_str := tmp_str + 'Yandex\YandexBrowser\User Data';
-    cpChrome                : tmp_str := tmp_str + 'Google\Chrome\User Data';
-    cpChromiumOrSRwareIron  : tmp_str := tmp_str + 'Chromium\User Data';
-    cpSlimjet               : tmp_str := tmp_str + 'Slimjet\User Data';
-    cpBrave                 : tmp_str := tmp_str + 'BraveSoftware\Brave-Browser\User Data';
-    cpMailRuAtom            : tmp_str := tmp_str + 'Mail.Ru\Atom\User Data';
-    cpCentBrowser           : tmp_str := tmp_str + 'CentBrowser\User Data';
-    cpComodoDragon          : tmp_str := tmp_str + 'Comodo\Dragon\User Data';
-    cpTwinkstar             : tmp_str := tmp_str + 'Twinkstar\User Data';
-    cpURBrowser             : tmp_str := tmp_str + 'URBrowser\User Data';
-    cpMaxthon               : tmp_str := tmp_str + 'Maxthon\Application\User Data';
-    cpDecentr               : tmp_str := tmp_str + 'Decentr\Decentr\User Data';
-    cpiTopPrivateBrowser    : tmp_str := tmp_str + 'iTop Private Browser\User Data';
-    cpMSEdge                : tmp_str := tmp_str + 'Microsoft\Edge\User Data';
-    cpVivaldi               : tmp_str := tmp_str + 'Vivaldi\User Data';
+    cpYandex                : Result := tmp_str_local + 'Yandex\YandexBrowser\User Data';
+    cpChrome                : Result := tmp_str_local + 'Google\Chrome\User Data';
+    cpChromiumOrSRwareIron  : Result := tmp_str_local + 'Chromium\User Data';
+    cpSlimjet               : Result := tmp_str_local + 'Slimjet\User Data';
+    cpBrave                 : Result := tmp_str_local + 'BraveSoftware\Brave-Browser\User Data';
+    cpMailRuAtom            : Result := tmp_str_local + 'Mail.Ru\Atom\User Data';
+    cpCentBrowser           : Result := tmp_str_local + 'CentBrowser\User Data';
+    cpComodoDragon          : Result := tmp_str_local + 'Comodo\Dragon\User Data';
+    cpTwinkstar             : Result := tmp_str_local + 'Twinkstar\User Data';
+    cpURBrowser             : Result := tmp_str_local + 'URBrowser\User Data';
+    cpMaxthon               : Result := tmp_str_local + 'Maxthon\Application\User Data';
+    cpDecentr               : Result := tmp_str_local + 'Decentr\Decentr\User Data';
+    cpiTopPrivateBrowser    : Result := tmp_str_local + 'iTop Private Browser\User Data';
+    cpMSEdge                : Result := tmp_str_local + 'Microsoft\Edge\User Data';
+    cpVivaldi               : Result := tmp_str_local + 'Vivaldi\User Data';
 
-  //  cpBasilisk              : tmp_str := tmp_str + 'Basilisk-Dev\Basilisk\Profiles';
-    cpQQBrowser             : tmp_str := tmp_str + 'Tencent\QQBrowser\User Data';
+  //  cpBasilisk              : tmp_str_local := tmp_str_local + 'Basilisk-Dev\Basilisk\Profiles';
+    cpQQBrowser             : Result := tmp_str_local + 'Tencent\QQBrowser\User Data';
+    cp360EEX                : Result := tmp_str_local + '360ChromeX\Chrome\User Data';
+    cp360SE                 : Result := tmp_str_roaming + '360se6\User Data';
   end;
-  if DirectoryExists( tmp_str ) then Result := tmp_str else Result := '';
+  if not DirectoryExists( Result ) then Result := '';
 end;
 
 function GetMozillaProfiles(const bType: TMozillaProfileType):TList<string>;
@@ -313,6 +320,10 @@ begin
           cpVivaldi               :  begin appType := 214; appName:= 'Vivaldi';               end;
         //  cpBasilisk              :  begin appType := 215; appName:= 'Basilisk(chromium)';    end;
           cpQQBrowser             :  begin appType := 215; appName:= 'QQBrowser';             end;
+          cp360EEX                :  begin appType := 216; appName:= '360ChromeX';            end;
+          cp360SE                 :  begin appType := 217; appName:= '360安全浏览器';         end;
+
+
         end;
 
    ENGINE_UNKNOWN        :
@@ -458,6 +469,10 @@ begin
      214: Result:= 'Vivaldi';
     // 215: Result:= 'Basilisk(chromium)';
      215: Result:= 'QQBrowser';
+     216: Result:= '360ChromeX';
+     217: Result:= '360安全浏览器';
+
+
 
      300: Result:= 'Viber';
      400: Result:= 'Opera';
@@ -599,7 +614,9 @@ begin
     'Vivaldi',
     'Chromium',
   //  'Basilisk',
-    'QQBrowser'
+    'QQBrowser',
+    '360ChromeX',
+    '360安全浏览器'
 
     ])
   of
@@ -620,6 +637,8 @@ begin
     14  :  Result := 214;   // cpVivaldi
    // 16  :  Result := 215;   // cpBasilisk
     16  :  Result := 215;   // cpQQBrowser
+    17  :  Result := 216;   // 360ChromeX
+    18  :  Result := 217;   //360安全浏览器
   else
     Result := RESULT_UNKNOWN_PROFILE;
   end;
@@ -668,6 +687,10 @@ begin
      214:  Result := 15;  //@ cpVivaldi
    //  215:  Result := 1;   //@ cpBasilisk
      215:  Result := 27;  //@ cpQQBrowser
+
+     216: Result := 29; //  '360ChromeX';
+     217: Result := 30; //  '360安全浏览器';
+
 
      300:  Result := 14;  //@ Viber
 
@@ -1017,7 +1040,27 @@ end;
 
 {$ENDREGION}
 
+{$REGION ' str routine '}
 
+function CalcRate(before, after: Int64):Integer;
+begin
+ result := 0;
+   if before = 0 then exit;
+   if after = 0 then exit;
+   Result := Round( ( (before - after) / before ) * 100) ;
+end;
+
+function DeletePartPath(Path: string; DelCount: Integer): string;
+begin
+  Result := Copy(Path, DelCount+1, Length(Path)-DelCount);
+end;
+
+function ifthenstr(b: Boolean; trueStr, falseStr: string): string;
+begin
+  if b then Result := trueStr else Result := falseStr;
+end;
+
+{$ENDREGION}
 
 initialization
  // SetProcessDPIAware;

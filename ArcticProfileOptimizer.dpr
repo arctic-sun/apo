@@ -1,7 +1,9 @@
 program ArcticProfileOptimizer;
-
+ {-$DEFINE DEBUGMODE}
 uses
   Vcl.Forms,
+  SysUtils,
+  System.IOUtils,
   frmMain in 'frmMain.pas' {FormMain},
   Vcl.Themes,
   Vcl.Styles,
@@ -10,14 +12,38 @@ uses
   UtilsUnit in 'UtilsUnit.pas',
   frmAddProfileUnit in 'frmAddProfileUnit.pas' {AddProfileDlgForm},
   DataModuleUnit in 'DataModuleUnit.pas' {DataModule1: TDataModule},
-  BatScriptUnt in 'BatScriptUnt.pas';
+  BatScriptUnt in 'BatScriptUnt.pas',
+  aConstUnit in 'aConstUnit.pas';
 
 {$R *.res}
 
+function GetAppSettingsPath: string;
 begin
-  // ReportMemoryLeaksOnShutdown := True;
+  if APO_Portable then
+   Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
+  else
+   Result := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
+end;
 
-  (*
+function GetSkinIndex:Integer;
+var s, tmp_str: string;
+    str_items : TArray<string>;
+begin
+    tmp_str := GetAppSettingsPath;// GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
+    Result := 0;
+    if not FileExists(tmp_str + APP_SETTINGS_FILENAME) then exit;
+    s := System.IOUtils.TFile.ReadAllText(tmp_str+ APP_SETTINGS_FILENAME, TEncoding.ANSI );
+    str_items := s.Split([',']);
+    if Length(str_items)>10 then
+    Result := StrToIntDef(str_items[10], 0);
+end;
+
+
+begin
+  {$IFDEF DEBUGMODE}
+   ReportMemoryLeaksOnShutdown := True;
+  {$ENDIF}
+ (*
   if System.SysUtils.TOSVersion.Architecture in
    {$IFDEF WIN32} [arARM64, arIntelX64] {$ELSE} [arIntelX86, arARM32] {$IFEND}
   then
@@ -33,8 +59,20 @@ begin
 
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  TStyleManager.TrySetStyle('Windows11 Modern Dark');
+
+
+
+  settings_ThemeStyle := GetSkinIndex;
+  if settings_ThemeStyle  = 0 then
+    TStyleManager.TrySetStyle('Windows11 Modern Dark')
+  else
+    TStyleManager.TrySetStyle('Windows11 Modern Light');
+
+        { }
+
   Application.CreateForm(TFormMain, FormMain);
+  ApplyTheme;
+
  // Application.CreateForm(TfrmInfo, frmInfo);
  // Application.CreateForm(TfrmSettings, frmSettings);
  // Application.CreateForm(TAddProfileDlgForm, AddProfileDlgForm);

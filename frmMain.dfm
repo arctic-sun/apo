@@ -25,26 +25,26 @@ object FormMain: TFormMain
   CustomTitleBar.ButtonInactiveBackgroundColor = 14120960
   Constraints.MinHeight = 300
   Constraints.MinWidth = 1125
-  DefaultMonitor = dmPrimary
+  DefaultMonitor = dmDesktop
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -18
-  Font.Name = 'Verdana'
-  Font.Pitch = fpVariable
+  Font.Name = 'Segoe UI'
   Font.Style = []
-  Font.Quality = fqAntialiased
   GlassFrame.Enabled = True
   GlassFrame.Top = 45
   Position = poScreenCenter
+  PrintScale = poPrintToFit
   ShowHint = True
   StyleElements = [seFont, seClient]
+  OnAfterMonitorDpiChanged = FormAfterMonitorDpiChanged
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 144
-  TextHeight = 22
+  TextHeight = 25
   object RzStatusBar1: TRzStatusBar
     Left = 0
     Top = 569
@@ -75,7 +75,8 @@ object FormMain: TFormMain
       Align = alLeft
       Alignment = taCenter
       Caption = 'version 0.0.0'
-      ExplicitHeight = 35
+      ExplicitLeft = 5
+      ExplicitTop = 5
     end
     object RzStatusPane_SQLiteVer: TRzStatusPane
       Left = 236
@@ -90,7 +91,8 @@ object FormMain: TFormMain
       Align = alLeft
       Alignment = taCenter
       Caption = 'SQL v:'
-      ExplicitHeight = 35
+      ExplicitLeft = 241
+      ExplicitTop = 5
     end
     object Bevel1: TBevel
       AlignWithMargins = True
@@ -117,9 +119,8 @@ object FormMain: TFormMain
       Margins.Bottom = 5
       Align = alClient
       Caption = ''
-      ExplicitLeft = 482
-      ExplicitWidth = 949
-      ExplicitHeight = 35
+      ExplicitLeft = 488
+      ExplicitTop = 5
     end
     object Bevel2: TBevel
       AlignWithMargins = True
@@ -148,6 +149,7 @@ object FormMain: TFormMain
     Margins.Bottom = 5
     OnPaint = TitleBarPanel1Paint
     CustomButtons = <>
+    ExplicitTop = 3
     object MenuButton: TRzToolButton
       AlignWithMargins = True
       Left = 51
@@ -161,205 +163,115 @@ object FormMain: TFormMain
       DropDownMenu = PopupMenu1
       Flat = False
       ImageIndex = 0
-      Images = DataModule1.SVGIconImageList1
+      Images = DataModule1.SVGIconVirtualImageList1
       ToolStyle = tsDropDown
       Align = alLeft
       OnMouseMove = MenuButtonMouseMove
       ExplicitHeight = 36
     end
-    object Image1: TImage
-      Left = 462
-      Top = 11
-      Width = 474
-      Height = 30
+    object SVGIconImage2: TSVGIconImage
+      Left = 395
+      Top = 23
+      Width = 304
+      Height = 11
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      Center = True
-      Picture.Data = {
-        0B5453564747726170686963851600003C3F786D6C2076657273696F6E3D2231
-        2E302220656E636F64696E673D225554462D3822207374616E64616C6F6E653D
-        226E6F223F3E0A3C212D2D2043726561746564207769746820496E6B73636170
-        652028687474703A2F2F7777772E696E6B73636170652E6F72672F29202D2D3E
-        0A0A3C7376670A20202077696474683D2238302E3438333933326D6D220A2020
-        206865696768743D22322E393932303733316D6D220A20202076696577426F78
-        3D223020302038302E34383339333220322E39393230373331220A2020207665
-        7273696F6E3D22312E31220A20202069643D2273766735220A202020786D6C6E
-        733D22687474703A2F2F7777772E77332E6F72672F323030302F737667220A20
-        2020786D6C6E733A7376673D22687474703A2F2F7777772E77332E6F72672F32
-        3030302F737667223E0A20203C646566730A202020202069643D226465667332
-        22202F3E0A20203C670A202020202069643D226C6179657231220A2020202020
-        7472616E73666F726D3D227472616E736C617465282D34342E3135333730372C
-        2D3131362E323633383429223E0A202020203C670A2020202020202061726961
-        2D6C6162656C3D224152435449432050524F46494C45204F5054494D495A4552
-        220A2020202020202069643D2274657874323336220A20202020202020737479
-        6C653D22666F6E742D73697A653A342E313936343670783B6C696E652D686569
-        6768743A312E32353B666F6E742D66616D696C793A4F7874613B2D696E6B7363
-        6170652D666F6E742D73706563696669636174696F6E3A274F7874612C204E6F
-        726D616C273B66696C6C3A236666666666663B7374726F6B652D77696474683A
-        302E313034393132223E0A2020202020203C706174680A202020202020202020
-        643D226D2034372E30393132332C3131362E32363338352068202D322E333530
-        303138206C202D302E3538373530342C302E35383735207620322E3335303032
-        206820302E3538373530342076202D322E3035363237206C20302E3239333735
-        322C2D302E3239333735206820312E373632353134206C20302E323933373532
-        2C302E3239333735207620302E32393337362068202D312E3736323531332076
-        20302E35383735206820312E373632353133207620312E313735303120682030
-        2E3538373530342076202D322E3335303032207A220A20202020202020202069
-        643D2270617468343233220A2020202020202020207374796C653D2266696C6C
-        3A2366666666666622202F3E0A2020202020203C706174680A20202020202020
-        2020643D226D2035312E3834353831392C3131362E3835313335202D302E3538
-        373530342C2D302E353837352068202D322E393337353232207620322E393337
-        3532206820302E3538373530342076202D322E3335303032206820322E303536
-        323635206C20302E3239333735332C302E3239333735207620302E3538373531
-        206C202D302E3635303435322C302E363530343520302E3832323530362C302E
-        3831383331206820302E34313534352076202D302E3431313235206C202D302E
-        3338313837382C2D302E333831383820302E3338313837382C2D302E33383138
-        38207A220A20202020202020202069643D2270617468343235220A2020202020
-        202020207374796C653D2266696C6C3A2366666666666622202F3E0A20202020
-        20203C706174680A202020202020202020643D226D2035352E3935343135332C
-        3131362E38353133352076202D302E353837352068202D332E35323530323620
-        7620322E3335303032206C20302E3538373530342C302E35383735206820322E
-        3933373532322076202D302E353837352068202D322E363433373639206C202D
-        302E3239333735332C2D302E32393337362076202D312E3436383736207A220A
-        20202020202020202069643D2270617468343237220A20202020202020202073
-        74796C653D2266696C6C3A2366666666666622202F3E0A2020202020203C7061
-        74680A202020202020202020643D226D2035362E3233353331372C3131362E32
-        36333835207620302E35383735206820312E343638373631207620322E333530
-        3032206820302E3538373530342076202D322E3035363237206C20302E323933
-        3735322C2D302E3239333735206820312E3137353030392076202D302E353837
-        35207A220A20202020202020202069643D2270617468343239220A2020202020
-        202020207374796C653D2266696C6C3A2366666666666622202F3E0A20202020
-        20203C706174680A202020202020202020643D226D2036302E3438323133382C
-        3131362E32363338352068202D302E323933373532207620322E393337353220
-        6820302E3538373530342076202D322E3634333737207A220A20202020202020
-        202069643D2270617468343331220A2020202020202020207374796C653D2266
-        696C6C3A2366666666666622202F3E0A2020202020203C706174680A20202020
-        2020202020643D226D2036342E3933343538322C3131362E3835313335207620
-        2D302E353837352068202D332E353235303236207620322E3335303032206C20
-        302E3538373530342C302E35383735206820322E3933373532322076202D302E
-        353837352068202D322E3634333737206C202D302E3239333735322C2D302E32
-        393337362076202D312E3436383736207A220A20202020202020202069643D22
-        70617468343333220A2020202020202020207374796C653D2266696C6C3A2366
-        666666666622202F3E0A2020202020203C706174680A20202020202020202064
-        3D226D2037302E3331343434392C3131362E32363338352068202D322E393337
-        353232207620322E3933373532206820302E3538373530342076202D322E3335
-        303032206820322E303536323636206C20302E3239333735322C302E32393337
-        35207620302E3538373531206C202D302E3239333735322C302E323933373520
-        68202D312E343638373631207620302E3538373531206820312E373632353133
-        206C20302E3538373530342C2D302E35383735312076202D312E313735303120
-        7A220A20202020202020202069643D2270617468343335220A20202020202020
-        20207374796C653D2266696C6C3A2366666666666622202F3E0A202020202020
-        3C706174680A202020202020202020643D226D2037342E3937323531362C3131
-        362E3835313335202D302E3538373530352C2D302E353837352068202D322E39
-        3337353232207620322E3933373532206820302E3538373530352076202D322E
-        3335303032206820322E303536323635206C20302E3239333735322C302E3239
-        333735207620302E3538373531206C202D302E3635303435312C302E36353034
-        3520302E3832323530362C302E3831383331206820302E34313534352076202D
-        302E3431313235206C202D302E3338313837382C2D302E333831383820302E33
-        38313837382C2D302E3338313838207A220A20202020202020202069643D2270
-        617468343337220A2020202020202020207374796C653D2266696C6C3A236666
-        6666666622202F3E0A2020202020203C706174680A202020202020202020643D
-        226D2037382E3439333334372C3131362E32363338352068202D322E39333735
-        3232207620322E3335303032206C20302E3538373530342C302E353837352068
-        20322E3933373532322076202D322E3335303032207A206D20302C322E333530
-        30322068202D322E303536323636206C202D302E3239333735322C2D302E3239
-        3337362076202D312E3436383736206820322E303536323635206C20302E3239
-        333735332C302E3239333735207A220A20202020202020202069643D22706174
-        68343339220A2020202020202020207374796C653D2266696C6C3A2366666666
-        666622202F3E0A2020202020203C706174680A202020202020202020643D226D
-        2038332E3138303739312C3131362E38353133352076202D302E353837352068
-        202D332E353235303236207620302E35383735207A206D202D332E3532353032
-        362C322E3335303032206820302E3538373530352076202D312E313735303120
-        6820322E3335303031372076202D302E353837352068202D322E393337353232
-        207A220A20202020202020202069643D2270617468343431220A202020202020
-        2020207374796C653D2266696C6C3A2366666666666622202F3E0A2020202020
-        203C706174680A202020202020202020643D226D2038332E3837333230392C31
-        31362E32363338352068202D302E323933373532207620322E39333735322068
-        20302E3538373530342076202D322E3634333737207A220A2020202020202020
-        2069643D2270617468343433220A2020202020202020207374796C653D226669
-        6C6C3A2366666666666622202F3E0A2020202020203C706174680A2020202020
-        20202020643D226D2038352E3638313838382C3131382E3631333837202D302E
-        3239333735332C2D302E32393337362076202D322E30353632362068202D302E
-        353837353034207620322E3335303032206C20302E3538373530342C302E3538
-        3735206820322E3933373532322076202D302E35383735207A220A2020202020
-        2020202069643D2270617468343435220A2020202020202020207374796C653D
-        2266696C6C3A2366666666666622202F3E0A2020202020203C706174680A2020
-        20202020202020643D226D2039322E3231313537362C3131362E383531333520
-        76202D302E3538373520482038382E3638363535207620302E35383735207A20
-        6D202D322E3933373532322C312E3137353031206820322E3335303031382076
-        202D302E3538373520482038382E3638363535207620312E3736323531206820
-        332E3532353032362076202D302E353837352068202D322E393337353232207A
-        220A20202020202020202069643D2270617468343437220A2020202020202020
-        207374796C653D2266696C6C3A2366666666666622202F3E0A2020202020203C
-        706174680A202020202020202020643D226D2039372E3533363838392C313136
-        2E32363338352068202D322E393337353231207620322E3335303032206C2030
-        2E3538373530342C302E35383735206820322E3933373532322076202D322E33
-        35303032207A206D20302C322E33353030322068202D322E303536323635206C
-        202D302E3239333735322C2D302E32393337362076202D312E34363837362068
-        20322E303536323635206C20302E3239333735322C302E3239333735207A220A
-        20202020202020202069643D2270617468343439220A20202020202020202073
-        74796C653D2266696C6C3A2366666666666622202F3E0A2020202020203C7061
-        74680A202020202020202020643D226D203130312E37303339382C3131362E32
-        363338352068202D322E393337353237207620322E3933373532206820302E35
-        38373530352076202D322E3335303032206820322E303536323632206C20302E
-        32393337362C302E3239333735207620302E3538373531206C202D302E323933
-        37362C302E32393337352068202D312E343638373538207620302E3538373531
-        206820312E373632353138206C20302E353837352C2D302E3538373531207620
-        2D312E3137353031207A220A20202020202020202069643D2270617468343531
-        220A2020202020202020207374796C653D2266696C6C3A236666666666662220
-        2F3E0A2020202020203C706174680A202020202020202020643D226D20313032
-        2E35393336322C3131362E3236333835207620302E35383735206820312E3436
-        383736207620322E3335303032206820302E353837352076202D322E30353632
-        37206C20302E32393337362C2D302E3239333735206820312E31373530312076
-        202D302E35383735207A220A20202020202020202069643D2270617468343533
-        220A2020202020202020207374796C653D2266696C6C3A236666666666662220
-        2F3E0A2020202020203C706174680A202020202020202020643D226D20313036
-        2E38343034342C3131362E32363338352068202D302E3239333735207620322E
-        3933373532206820302E353837352076202D322E3634333737207A220A202020
-        20202020202069643D2270617468343535220A2020202020202020207374796C
-        653D2266696C6C3A2366666666666622202F3E0A2020202020203C706174680A
-        202020202020202020643D226D203130372E37383838342C3131362E33313834
-        207620322E3933373532206820302E35383735312076202D322E333530303120
-        6820302E3239333735206C20302E38383132352C302E383831323520302E3434
-        3036332C2D302E3434303632202D312E30323831332C2D312E3032383134207A
-        206D20322E33353030322C30202D302E31343638382C302E313436383820302E
-        34343036332C302E3434303633206820302E3239333735207620322E33353030
-        31206820302E35383735312076202D322E3933373532207A220A202020202020
-        20202069643D2270617468343537220A2020202020202020207374796C653D22
-        66696C6C3A2366666666666622202F3E0A2020202020203C706174680A202020
-        202020202020643D226D203131322E32373036372C3131362E32363338352068
-        202D302E3239333736207620322E3933373532206820302E3538373531207620
-        2D322E3634333737207A220A20202020202020202069643D2270617468343539
-        220A2020202020202020207374796C653D2266696C6C3A236666666666662220
-        2F3E0A2020202020203C706174680A202020202020202020643D226D20313135
-        2E39383435332C3131372E31343531202D302E32393337352C302E3239333736
-        2068202D322E3035363237206C202D302E32393337352C302E32393337352030
-        2E34343036332C302E343430363320302E31343638372C2D302E313436383820
-        6820322E3035363237206C20302E353837352C2D302E353837352076202D312E
-        31373530312068202D332E3532353032207620302E35383735206820322E3933
-        373532207A206D202D322E39333735322C312E343638373720302E3538333331
-        2C302E35383735206820322E39343137312076202D302E35383735207A220A20
-        202020202020202069643D2270617468343631220A2020202020202020207374
-        796C653D2266696C6C3A2366666666666622202F3E0A2020202020203C706174
-        680A202020202020202020643D226D203132302E36313332332C3131362E3835
-        3133352076202D302E353837352068202D332E3532353032207620302E353837
-        35207A206D202D322E39333735322C312E3137353031206820322E3335303032
-        2076202D302E353837352068202D322E3933373532207620312E373632353120
-        6820332E35323530322076202D302E353837352068202D322E3933373532207A
-        220A20202020202020202069643D2270617468343633220A2020202020202020
-        207374796C653D2266696C6C3A2366666666666622202F3E0A2020202020203C
-        706174680A202020202020202020643D226D203132342E36333736342C313136
-        2E3835313335202D302E35383735312C2D302E353837352068202D322E393337
-        3532207620322E3933373532206820302E353837352076202D322E3335303032
-        206820322E3035363237206C20302E32393337352C302E323933373520762030
-        2E3538373531206C202D302E36353034352C302E363530343520302E38323235
-        312C302E3831383331206820302E34313534352076202D302E3431313235206C
-        202D302E33383138382C2D302E333831383820302E33383138382C2D302E3338
-        313838207A220A20202020202020202069643D2270617468343635220A202020
-        2020202020207374796C653D2266696C6C3A2366666666666622202F3E0A2020
-        20203C2F673E0A20203C2F673E0A3C2F7376673E0A}
-      Transparent = True
+      AutoSize = False
+      Center = False
+      SVGText = 
+        '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'#13#10#13#10'<svg'#13#10 +
+        '   width="64.881073mm"'#13#10'   height="2.4120102mm"'#13#10'   viewBox="0 0' +
+        ' 64.881073 2.4120102"'#13#10'   version="1.1"'#13#10'   id="svg5"'#13#10'   xml:sp' +
+        'ace="preserve"'#13#10'   xmlns="http://www.w3.org/2000/svg"'#13#10'   xmlns:' +
+        'svg="http://www.w3.org/2000/svg"><defs'#13#10'     id="defs2" /><g'#13#10'  ' +
+        '   id="layer1"'#13#10'     transform="translate(-19.028298,-100.37533)' +
+        '"><g'#13#10'       aria-label="ARCTIC PROFILE OPTIMIZER"'#13#10'       id="t' +
+        'ext236"'#13#10'       style="font-size:4.19646px;line-height:1.25;font' +
+        '-family:Oxta;-inkscape-font-specification:'#39'Oxta, Normal'#39';fill:#f' +
+        'fffff;stroke-width:0.104912"'#13#10'       transform="matrix(0.8061369' +
+        '6,0,0,0.80613696,-16.565639,6.6507359)"><path'#13#10'         d="m 47.' +
+        '09123,116.26385 h -2.350018 l -0.587504,0.5875 v 2.35002 h 0.587' +
+        '504 v -2.05627 l 0.293752,-0.29375 h 1.762514 l 0.293752,0.29375' +
+        ' v 0.29376 h -1.762513 v 0.5875 h 1.762513 v 1.17501 h 0.587504 ' +
+        'v -2.35002 z"'#13#10'         id="path423"'#13#10'         style="fill:#ffff' +
+        'ff" /><path'#13#10'         d="m 51.845819,116.85135 -0.587504,-0.5875' +
+        ' h -2.937522 v 2.93752 h 0.587504 v -2.35002 h 2.056265 l 0.2937' +
+        '53,0.29375 v 0.58751 l -0.650452,0.65045 0.822506,0.81831 h 0.41' +
+        '545 v -0.41125 l -0.381878,-0.38188 0.381878,-0.38188 z"'#13#10'      ' +
+        '   id="path425"'#13#10'         style="fill:#ffffff" /><path'#13#10'        ' +
+        ' d="m 55.954153,116.85135 v -0.5875 h -3.525026 v 2.35002 l 0.58' +
+        '7504,0.5875 h 2.937522 v -0.5875 h -2.643769 l -0.293753,-0.2937' +
+        '6 v -1.46876 z"'#13#10'         id="path427"'#13#10'         style="fill:#ff' +
+        'ffff" /><path'#13#10'         d="m 56.235317,116.26385 v 0.5875 h 1.46' +
+        '8761 v 2.35002 h 0.587504 v -2.05627 l 0.293752,-0.29375 h 1.175' +
+        '009 v -0.5875 z"'#13#10'         id="path429"'#13#10'         style="fill:#f' +
+        'fffff" /><path'#13#10'         d="m 60.482138,116.26385 h -0.293752 v ' +
+        '2.93752 h 0.587504 v -2.64377 z"'#13#10'         id="path431"'#13#10'       ' +
+        '  style="fill:#ffffff" /><path'#13#10'         d="m 64.934582,116.8513' +
+        '5 v -0.5875 h -3.525026 v 2.35002 l 0.587504,0.5875 h 2.937522 v' +
+        ' -0.5875 h -2.64377 l -0.293752,-0.29376 v -1.46876 z"'#13#10'        ' +
+        ' id="path433"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d' +
+        '="m 70.314449,116.26385 h -2.937522 v 2.93752 h 0.587504 v -2.35' +
+        '002 h 2.056266 l 0.293752,0.29375 v 0.58751 l -0.293752,0.29375 ' +
+        'h -1.468761 v 0.58751 h 1.762513 l 0.587504,-0.58751 v -1.17501 ' +
+        'z"'#13#10'         id="path435"'#13#10'         style="fill:#ffffff" /><path' +
+        #13#10'         d="m 74.972516,116.85135 -0.587505,-0.5875 h -2.93752' +
+        '2 v 2.93752 h 0.587505 v -2.35002 h 2.056265 l 0.293752,0.29375 ' +
+        'v 0.58751 l -0.650451,0.65045 0.822506,0.81831 h 0.41545 v -0.41' +
+        '125 l -0.381878,-0.38188 0.381878,-0.38188 z"'#13#10'         id="path' +
+        '437"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 78.49' +
+        '3347,116.26385 h -2.937522 v 2.35002 l 0.587504,0.5875 h 2.93752' +
+        '2 v -2.35002 z m 0,2.35002 h -2.056266 l -0.293752,-0.29376 v -1' +
+        '.46876 h 2.056265 l 0.293753,0.29375 z"'#13#10'         id="path439"'#13#10 +
+        '         style="fill:#ffffff" /><path'#13#10'         d="m 83.180791,1' +
+        '16.85135 v -0.5875 h -3.525026 v 0.5875 z m -3.525026,2.35002 h ' +
+        '0.587505 v -1.17501 h 2.350017 v -0.5875 h -2.937522 z"'#13#10'       ' +
+        '  id="path441"'#13#10'         style="fill:#ffffff" /><path'#13#10'         ' +
+        'd="m 83.873209,116.26385 h -0.293752 v 2.93752 h 0.587504 v -2.6' +
+        '4377 z"'#13#10'         id="path443"'#13#10'         style="fill:#ffffff" />' +
+        '<path'#13#10'         d="m 85.681888,118.61387 -0.293753,-0.29376 v -2' +
+        '.05626 h -0.587504 v 2.35002 l 0.587504,0.5875 h 2.937522 v -0.5' +
+        '875 z"'#13#10'         id="path445"'#13#10'         style="fill:#ffffff" /><' +
+        'path'#13#10'         d="m 92.211576,116.85135 v -0.5875 H 88.68655 v 0' +
+        '.5875 z m -2.937522,1.17501 h 2.350018 v -0.5875 H 88.68655 v 1.' +
+        '76251 h 3.525026 v -0.5875 h -2.937522 z"'#13#10'         id="path447"' +
+        #13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 97.536889' +
+        ',116.26385 h -2.937521 v 2.35002 l 0.587504,0.5875 h 2.937522 v ' +
+        '-2.35002 z m 0,2.35002 h -2.056265 l -0.293752,-0.29376 v -1.468' +
+        '76 h 2.056265 l 0.293752,0.29375 z"'#13#10'         id="path449"'#13#10'    ' +
+        '     style="fill:#ffffff" /><path'#13#10'         d="m 101.70398,116.2' +
+        '6385 h -2.937527 v 2.93752 h 0.587505 v -2.35002 h 2.056262 l 0.' +
+        '29376,0.29375 v 0.58751 l -0.29376,0.29375 h -1.468758 v 0.58751' +
+        ' h 1.762518 l 0.5875,-0.58751 v -1.17501 z"'#13#10'         id="path45' +
+        '1"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 102.593' +
+        '62,116.26385 v 0.5875 h 1.46876 v 2.35002 h 0.5875 v -2.05627 l ' +
+        '0.29376,-0.29375 h 1.17501 v -0.5875 z"'#13#10'         id="path453"'#13#10 +
+        '         style="fill:#ffffff" /><path'#13#10'         d="m 106.84044,1' +
+        '16.26385 h -0.29375 v 2.93752 h 0.5875 v -2.64377 z"'#13#10'         i' +
+        'd="path455"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="' +
+        'm 107.78884,116.3184 v 2.93752 h 0.58751 v -2.35001 h 0.29375 l ' +
+        '0.88125,0.88125 0.44063,-0.44062 -1.02813,-1.02814 z m 2.35002,0' +
+        ' -0.14688,0.14688 0.44063,0.44063 h 0.29375 v 2.35001 h 0.58751 ' +
+        'v -2.93752 z"'#13#10'         id="path457"'#13#10'         style="fill:#ffff' +
+        'ff" /><path'#13#10'         d="m 112.27067,116.26385 h -0.29376 v 2.93' +
+        '752 h 0.58751 v -2.64377 z"'#13#10'         id="path459"'#13#10'         sty' +
+        'le="fill:#ffffff" /><path'#13#10'         d="m 115.98453,117.1451 -0.2' +
+        '9375,0.29376 h -2.05627 l -0.29375,0.29375 0.44063,0.44063 0.146' +
+        '87,-0.14688 h 2.05627 l 0.5875,-0.5875 v -1.17501 h -3.52502 v 0' +
+        '.5875 h 2.93752 z m -2.93752,1.46877 0.58331,0.5875 h 2.94171 v ' +
+        '-0.5875 z"'#13#10'         id="path461"'#13#10'         style="fill:#ffffff"' +
+        ' /><path'#13#10'         d="m 120.61323,116.85135 v -0.5875 h -3.52502' +
+        ' v 0.5875 z m -2.93752,1.17501 h 2.35002 v -0.5875 h -2.93752 v ' +
+        '1.76251 h 3.52502 v -0.5875 h -2.93752 z"'#13#10'         id="path463"' +
+        #13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 124.63764' +
+        ',116.85135 -0.58751,-0.5875 h -2.93752 v 2.93752 h 0.5875 v -2.3' +
+        '5002 h 2.05627 l 0.29375,0.29375 v 0.58751 l -0.65045,0.65045 0.' +
+        '82251,0.81831 h 0.41545 v -0.41125 l -0.38188,-0.38188 0.38188,-' +
+        '0.38188 z"'#13#10'         id="path465"'#13#10'         style="fill:#ffffff"' +
+        ' /></g></g></svg>'#13#10
+      Stretch = False
       Visible = False
     end
     object RzPanel1: TRzPanel
@@ -391,24 +303,14 @@ object FormMain: TFormMain
         Margins.Bottom = 5
         Flat = False
         ImageIndex = 4
-        Images = DataModule1.SVGIconImageList1
+        Images = DataModule1.SVGIconVirtualImageList1
         ShowCaption = True
         UseToolbarShowCaption = False
         Align = alClient
         Caption = 'Optimize profiles'
         Color = 2829099
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -18
-        Font.Name = 'Verdana'
-        Font.Pitch = fpVariable
-        Font.Style = []
-        Font.Quality = fqAntialiased
-        ParentFont = False
         OnClick = OptimizeBtnClick
-        ExplicitTop = 1
-        ExplicitWidth = 251
-        ExplicitHeight = 30
+        ExplicitTop = -5
       end
     end
   end
@@ -416,17 +318,20 @@ object FormMain: TFormMain
     Left = 0
     Top = 44
     Width = 1150
-    Height = 42
+    Height = 38
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     AutoStyle = False
-    Images = DataModule1.SVGIconImageList1
-    RowHeight = 38
+    Images = DataModule1.SVGIconVirtualImageList1
+    RowHeight = 42
     ButtonWidth = 38
     ButtonHeight = 38
+    ShowButtonCaptions = True
     TextOptions = ttoCustom
+    WrapControls = False
+    AutoSize = True
     BorderInner = fsNone
     BorderOuter = fsGroove
     BorderSides = [sdRight]
@@ -449,10 +354,11 @@ object FormMain: TFormMain
       UnCheckallprofiles2
       RzLabel6
       RzToolButton10
-      RzToolButton3)
+      RzToolButton3
+      RzToolButton5)
     object MenuButton2: TRzToolButton
       Left = 4
-      Top = 2
+      Top = 0
       Width = 59
       Height = 38
       Margins.Left = 5
@@ -461,13 +367,12 @@ object FormMain: TFormMain
       Margins.Bottom = 5
       DropDownMenu = PopupMenu1
       ImageIndex = 0
-      Images = DataModule1.SVGIconImageList1
       ToolStyle = tsDropDown
     end
     object OptimizeBtn2: TRzToolButton
       Left = 80
-      Top = 2
-      Width = 204
+      Top = 0
+      Width = 188
       Height = 38
       Hint = 'Start optimization for all checked profile(s)'
       Margins.Left = 5
@@ -476,11 +381,8 @@ object FormMain: TFormMain
       Margins.Bottom = 5
       GradientColorStyle = gcsSystem
       ImageIndex = 4
-      Images = DataModule1.SVGIconImageList1
-      ShowCaption = True
       UseToolbarButtonLayout = False
       UseToolbarButtonSize = False
-      UseToolbarShowCaption = False
       UseToolbarVisualStyle = False
       VisualStyle = vsWinXP
       Caption = 'Optimize profiles'
@@ -489,21 +391,20 @@ object FormMain: TFormMain
     end
     object RzToolButton4: TRzToolButton
       Tag = 2
-      Left = 356
-      Top = 2
+      Left = 340
+      Top = 0
       Hint = 'Add new profile path...'
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
       ImageIndex = 1
-      Images = DataModule1.SVGIconImageList1
       OnClick = ActionsClickClick
     end
     object Checkallprofiles2: TRzToolButton
       Tag = 4
-      Left = 487
-      Top = 2
+      Left = 471
+      Top = 0
       Hint = 'Set check On for all profiles'
       Margins.Left = 5
       Margins.Top = 5
@@ -514,8 +415,8 @@ object FormMain: TFormMain
     end
     object UnCheckallprofiles2: TRzToolButton
       Tag = 5
-      Left = 525
-      Top = 2
+      Left = 509
+      Top = 0
       Hint = 'Set check Off for all profiles'
       Margins.Left = 5
       Margins.Top = 5
@@ -526,8 +427,8 @@ object FormMain: TFormMain
     end
     object RzToolButton_OpenProfileDir2: TRzToolButton
       Tag = 6
-      Left = 394
-      Top = 2
+      Left = 378
+      Top = 0
       Hint = 'Open profile directory in explorer'
       Margins.Left = 5
       Margins.Top = 5
@@ -538,8 +439,8 @@ object FormMain: TFormMain
     end
     object Copyprofiledirectorypath2: TRzToolButton
       Tag = 7
-      Left = 432
-      Top = 2
+      Left = 416
+      Top = 0
       Hint = 'Copy profile path to clipboard'
       Margins.Left = 5
       Margins.Top = 5
@@ -550,8 +451,8 @@ object FormMain: TFormMain
     end
     object RzToolButton10: TRzToolButton
       Tag = 8
-      Left = 580
-      Top = 2
+      Left = 564
+      Top = 0
       Hint = 'Settings'
       Margins.Left = 5
       Margins.Top = 5
@@ -562,8 +463,8 @@ object FormMain: TFormMain
     end
     object RzToolButton11: TRzToolButton
       Tag = 1
-      Left = 301
-      Top = 2
+      Left = 285
+      Top = 0
       Hint = 'Search for existing profiles'
       Margins.Left = 5
       Margins.Top = 5
@@ -575,7 +476,7 @@ object FormMain: TFormMain
     object RzLabel1: TRzLabel
       AlignWithMargins = True
       Left = 65
-      Top = 10
+      Top = 8
       Width = 13
       Height = 22
       Margins.Left = 2
@@ -596,8 +497,8 @@ object FormMain: TFormMain
     end
     object RzLabel2: TRzLabel
       AlignWithMargins = True
-      Left = 286
-      Top = 10
+      Left = 270
+      Top = 8
       Width = 13
       Height = 22
       Margins.Left = 2
@@ -618,8 +519,8 @@ object FormMain: TFormMain
     end
     object RzLabel5: TRzLabel
       AlignWithMargins = True
-      Left = 472
-      Top = 10
+      Left = 456
+      Top = 8
       Width = 13
       Height = 22
       Margins.Left = 2
@@ -640,8 +541,8 @@ object FormMain: TFormMain
     end
     object RzLabel6: TRzLabel
       AlignWithMargins = True
-      Left = 565
-      Top = 10
+      Left = 549
+      Top = 8
       Width = 13
       Height = 22
       Margins.Left = 2
@@ -662,8 +563,8 @@ object FormMain: TFormMain
     end
     object RzLabel3: TRzLabel
       AlignWithMargins = True
-      Left = 341
-      Top = 10
+      Left = 325
+      Top = 8
       Width = 13
       Height = 22
       Margins.Left = 2
@@ -683,27 +584,41 @@ object FormMain: TFormMain
       StyleElements = [seClient, seBorder]
     end
     object RzToolButton3: TRzToolButton
-      Left = 618
-      Top = 2
+      Left = 602
+      Top = 0
+      Width = 59
+      Height = 38
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
+      DropDownMenu = PopupMenu3
+      ImageIndex = 11
+      ToolStyle = tsDropDown
       Visible = False
-      OnClick = RzToolButton3Click
+    end
+    object RzToolButton5: TRzToolButton
+      Left = 661
+      Top = 0
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ImageIndex = 11
+      Visible = False
     end
   end
   object RzSplitter1: TRzSplitter
     Left = 0
-    Top = 86
+    Top = 82
     Width = 1150
-    Height = 483
+    Height = 487
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Orientation = orVertical
-    Position = 249
+    Position = 251
     Percent = 52
     UsePercent = True
     RealTimeDrag = True
@@ -716,9 +631,9 @@ object FormMain: TFormMain
     TabOrder = 4
     BarSize = (
       0
-      249
+      251
       1150
-      258)
+      260)
     UpperLeftControls = (
       VirtualStringTree1)
     LowerRightControls = (
@@ -728,7 +643,7 @@ object FormMain: TFormMain
       Left = 0
       Top = 0
       Width = 1150
-      Height = 249
+      Height = 251
       Margins.Left = 2
       Margins.Top = 5
       Margins.Right = 5
@@ -743,7 +658,7 @@ object FormMain: TFormMain
       Colors.FocusedSelectionBorderColor = 13661955
       Colors.GridLineColor = 2829099
       Colors.HeaderHotColor = clWhite
-      Colors.HotColor = clWhite
+      Colors.HotColor = 16628320
       Colors.SelectionRectangleBlendColor = 13661955
       Colors.SelectionRectangleBorderColor = 13661955
       Colors.SelectionTextColor = clWhite
@@ -751,21 +666,14 @@ object FormMain: TFormMain
       Colors.UnfocusedColor = clSilver
       Colors.UnfocusedSelectionColor = 2829099
       Colors.UnfocusedSelectionBorderColor = 2829099
-      DefaultNodeHeight = 36
+      DefaultNodeHeight = 27
       Header.AutoSizeIndex = 0
-      Header.Font.Charset = DEFAULT_CHARSET
-      Header.Font.Color = clWindowText
-      Header.Font.Height = -18
-      Header.Font.Name = 'Verdana'
-      Header.Font.Pitch = fpVariable
-      Header.Font.Style = [fsBold]
-      Header.Font.Quality = fqAntialiased
-      Header.Height = 36
-      Header.MaxHeight = 45
-      Header.MinHeight = 36
-      Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoAutoSpring]
-      Header.ParentFont = False
+      Header.Height = 29
+      Header.MaxHeight = 15000
+      Header.MinHeight = 15
+      Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoAutoSpring, hoFullRepaintOnResize]
       Header.PopupMenu = PopupMenu1
+      Header.SplitterHitTolerance = 16
       HintMode = hmHintAndDefault
       Indent = 27
       LineStyle = lsSolid
@@ -774,9 +682,9 @@ object FormMain: TFormMain
       TabOrder = 0
       TextMargin = 6
       TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoHideButtons, toAutoChangeScale]
-      TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
-      TreeOptions.PaintOptions = [toHideFocusRect, toHideSelection, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
-      TreeOptions.SelectionOptions = [toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
+      TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+      TreeOptions.PaintOptions = [toHideFocusRect, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
+      TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
       OnBeforeCellPaint = VirtualStringTree1BeforeCellPaint
       OnChecked = VirtualStringTree1Checked
       OnDrawText = VirtualStringTree1DrawText
@@ -790,12 +698,12 @@ object FormMain: TFormMain
         item
           Hint = 'Profile App\Path and settings for its optimization'
           MaxWidth = 15000
-          MinWidth = 15
+          MinWidth = 450
           Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus, coEditable, coStyleColor]
           Position = 0
           Spacing = 5
           Text = 'Profile'
-          Width = 499
+          Width = 500
         end
         item
           Alignment = taRightJustify
@@ -815,7 +723,7 @@ object FormMain: TFormMain
           Hint = 'Size of all files before optimization'
           MaxWidth = 15000
           MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 2
           Spacing = 5
           Text = 'Size before'
@@ -827,7 +735,7 @@ object FormMain: TFormMain
           Hint = 'Size of all files after optimization'
           MaxWidth = 15000
           MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 3
           Spacing = 5
           Text = 'Size after'
@@ -850,7 +758,7 @@ object FormMain: TFormMain
       Left = 0
       Top = 0
       Width = 1150
-      Height = 38
+      Height = 29
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -869,7 +777,7 @@ object FormMain: TFormMain
         Left = 1044
         Top = 5
         Width = 92
-        Height = 28
+        Height = 19
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
@@ -880,13 +788,14 @@ object FormMain: TFormMain
         Caption = 'hide'
         OnClick = RzToolButton1Click
         ExplicitLeft = 1326
+        ExplicitHeight = 28
       end
       object RzToolButton2: TRzToolButton
         AlignWithMargins = True
         Left = 959
         Top = 5
         Width = 75
-        Height = 28
+        Height = 19
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
@@ -897,13 +806,14 @@ object FormMain: TFormMain
         Caption = 'clear'
         OnClick = RzToolButton2Click
         ExplicitLeft = 1242
+        ExplicitHeight = 28
       end
     end
     object VirtualStringTree2: TVirtualStringTree
       Left = 0
-      Top = 38
+      Top = 29
       Width = 1150
-      Height = 187
+      Height = 198
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -918,7 +828,7 @@ object FormMain: TFormMain
       Colors.FocusedSelectionBorderColor = 13661955
       Colors.GridLineColor = 2829099
       Colors.HeaderHotColor = clWhite
-      Colors.HotColor = clWhite
+      Colors.HotColor = 16628320
       Colors.SelectionRectangleBlendColor = 13661955
       Colors.SelectionRectangleBorderColor = 13661955
       Colors.SelectionTextColor = clWhite
@@ -928,17 +838,19 @@ object FormMain: TFormMain
       Colors.UnfocusedSelectionBorderColor = 2829099
       DefaultNodeHeight = 27
       Header.AutoSizeIndex = 2
-      Header.Height = 36
-      Header.MaxHeight = 45
-      Header.MinHeight = 36
+      Header.Height = 29
+      Header.MaxHeight = 15000
+      Header.MinHeight = 15
       Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+      Header.SplitterHitTolerance = 16
       Indent = 27
+      LineStyle = lsSolid
       Margin = 6
       PopupMenu = PopupMenu2
       TabOrder = 1
       TextMargin = 6
-      TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection, toUseExplorerTheme]
-      TreeOptions.SelectionOptions = [toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
+      TreeOptions.PaintOptions = [toHideFocusRect, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
+      TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
       OnFreeNode = VirtualStringTree2FreeNode
       OnGetText = VirtualStringTree2GetText
       Touch.InteractiveGestures = [igPan, igPressAndTap]
@@ -974,7 +886,7 @@ object FormMain: TFormMain
     Left = 398
     Top = 242
     Width = 538
-    Height = 169
+    Height = 203
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -992,32 +904,32 @@ object FormMain: TFormMain
       Left = 12
       Top = 12
       Width = 514
-      Height = 22
+      Height = 25
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alTop
       Caption = 'Profile'
-      ExplicitWidth = 57
+      ExplicitWidth = 50
     end
     object Label3: TLabel
       AlignWithMargins = True
       Left = 12
-      Top = 80
+      Top = 83
       Width = 514
-      Height = 22
+      Height = 25
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alTop
       Caption = 'Overall'
-      ExplicitWidth = 65
+      ExplicitWidth = 55
     end
     object RzProgressBar1: TRzProgressBar
       Left = 7
-      Top = 39
+      Top = 42
       Width = 524
       Height = 36
       Margins.Left = 5
@@ -1036,7 +948,7 @@ object FormMain: TFormMain
     end
     object RzProgressBar2: TRzProgressBar
       Left = 7
-      Top = 107
+      Top = 113
       Width = 524
       Height = 36
       Margins.Left = 5
@@ -1050,16 +962,44 @@ object FormMain: TFormMain
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 8
-      ExplicitTop = 104
-      ExplicitWidth = 523
+      ExplicitTop = 103
+    end
+    object RzPanel3: TRzPanel
+      AlignWithMargins = True
+      Left = 7
+      Top = 156
+      Width = 523
+      Height = 42
+      Margins.Left = 0
+      Margins.Top = 7
+      Margins.Right = 1
+      Margins.Bottom = 5
+      Align = alTop
+      BorderOuter = fsNone
+      Color = 2829099
+      TabOrder = 0
+      Transparent = True
+      object RzButton1: TRzButton
+        Left = 410
+        Top = 0
+        Width = 113
+        Height = 42
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 1
+        Margins.Bottom = 5
+        Align = alRight
+        Caption = 'Cancel'
+        TabOrder = 0
+        OnClick = RzButton1Click
+      end
     end
   end
   object PopupMenu1: TPopupMenu
-    Images = DataModule1.SVGIconImageList1
+    Images = DataModule1.SVGIconVirtualImageList1
     OnPopup = PopupMenu1Popup
     Left = 136
-    Top = 120
+    Top = 132
     object Optimizeselectedprofile1: TMenuItem
       Caption = 'Optimize this profile'
       ImageIndex = 4
@@ -1175,8 +1115,8 @@ object FormMain: TFormMain
   end
   object PopupMenu2: TPopupMenu
     OnPopup = PopupMenu2Popup
-    Left = 676
-    Top = 425
+    Left = 280
+    Top = 449
     object Copy1: TMenuItem
       Caption = 'Copy'
       OnClick = Copy1Click
@@ -1201,5 +1141,38 @@ object FormMain: TFormMain
     Options = []
     Left = 128
     Top = 265
+  end
+  object PopupMenu3: TPopupMenu
+    Left = 572
+    Top = 123
+    object VST1: TMenuItem
+      Caption = 'VST'
+      OnClick = Act1Click
+    end
+    object Form1: TMenuItem
+      Tag = 1
+      Caption = 'Form'
+      OnClick = Act1Click
+    end
+    object WhiteSkin1: TMenuItem
+      Tag = 2
+      Caption = 'WhiteSkin'
+      OnClick = Act1Click
+    end
+    object BlackSkin1: TMenuItem
+      Tag = 3
+      Caption = 'BlackSkin'
+      OnClick = Act1Click
+    end
+  end
+  object DirtyHackDPiTimer1: TTimer
+    Enabled = False
+    OnTimer = DirtyHackDPiTimer1Timer
+    Left = 748
+    Top = 143
+  end
+  object Timer1: TTimer
+    Left = 340
+    Top = 147
   end
 end

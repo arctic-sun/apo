@@ -1,4 +1,4 @@
-unit frmAddProfileUnit;
+﻿unit frmAddProfileUnit;
 
 interface
 
@@ -91,6 +91,9 @@ begin
     24: result :=  'QQBrowser';
     25: result :=  'Viber';
     26: result :=  'Opera';
+    27: Result :=  '360ChromeX';
+    28: Result :=  '360安全浏览器';
+
   end;
 end;
 
@@ -125,7 +128,10 @@ begin
     24 : result := 215; // 'QQBrowser';
     25 : result := 300; // 'Viber';
     26 : result := 400; // 'Opera';
+    27 : Result := 216; // '360ChromeX';
+    28 : Result := 217; //'360安全浏览器';
   end;
+
 end;
 
 
@@ -150,7 +156,7 @@ var
   appImgIndex: Integer;
   appName: string;
 begin
-   for I := 0 to 26 do
+   for I := 0 to 28 do
    begin
       appName:=  GetAppNameFromOrdIndex(I);
       appImgIndex:=  AppImageIndexFromType( GetAppIndexFromOrdIndex(I) );

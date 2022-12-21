@@ -3,12 +3,15 @@ unit DataModuleUnit;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.ImageList, Vcl.ImgList, Vcl.Controls, SVGIconImageListBase, SVGIconImageList;
+  System.SysUtils, System.Classes, System.ImageList, Vcl.ImgList, Vcl.Controls, SVGIconImageListBase, SVGIconImageList,
+  Vcl.BaseImageCollection, SVGIconImageCollection, Vcl.VirtualImageList, SVGIconVirtualImageList;
 
 type
   TDataModule1 = class(TDataModule)
-    SVGIconImageList2: TSVGIconImageList;
-    SVGIconImageList1: TSVGIconImageList;
+    SVGIconVirtualImageList1: TSVGIconVirtualImageList;
+    SVGIconImageCollection1: TSVGIconImageCollection;
+    SVGIconVirtualImageList2: TSVGIconVirtualImageList;
+    SVGIconImageCollection2: TSVGIconImageCollection;
   private
     { Private declarations }
   public

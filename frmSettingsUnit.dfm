@@ -3,8 +3,8 @@ object frmSettings: TfrmSettings
   Top = 27
   BorderStyle = bsDialog
   Caption = ' Settings'
-  ClientHeight = 513
-  ClientWidth = 734
+  ClientHeight = 595
+  ClientWidth = 674
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,7 +30,7 @@ object frmSettings: TfrmSettings
     CaptionFont.Height = -18
     CaptionFont.Name = 'Verdana'
     CaptionFont.Style = [fsBold]
-    Color = 2829099
+    Color = 15987699
     GroupStyle = gsUnderline
     TabOrder = 0
     object Label1: TLabel
@@ -167,44 +167,44 @@ object frmSettings: TfrmSettings
     end
   end
   object RzGroupBox2: TRzGroupBox
-    Left = 334
-    Top = 275
-    Width = 390
+    Left = 10
+    Top = 348
+    Width = 314
     Height = 176
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Caption = 'Search profiles'
+    Caption = 'Extra search profiles'
     CaptionFont.Charset = DEFAULT_CHARSET
     CaptionFont.Color = clWindowText
     CaptionFont.Height = -18
     CaptionFont.Name = 'Verdana'
     CaptionFont.Style = [fsBold]
-    Color = 2829099
+    Color = 15987699
     GroupStyle = gsUnderline
     TabOrder = 1
     object Label8: TLabel
       Left = 12
       Top = 36
-      Width = 333
+      Width = 163
       Height = 25
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      Caption = 'Search profiles through desktop shortcuts'
+      Caption = 'In desktop shortcuts'
     end
     object Label9: TLabel
       Left = 12
       Top = 108
-      Width = 348
+      Width = 178
       Height = 25
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      Caption = 'Search profiles through startmenu shortcuts'
+      Caption = 'In startmenu shortcuts'
     end
     object ToggleSwitch5: TToggleSwitch
       Left = 12
@@ -236,10 +236,10 @@ object frmSettings: TfrmSettings
     end
   end
   object RzGroupBox3: TRzGroupBox
-    Left = 334
-    Top = 11
-    Width = 390
-    Height = 254
+    Left = 330
+    Top = 12
+    Width = 327
+    Height = 327
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -250,7 +250,7 @@ object frmSettings: TfrmSettings
     CaptionFont.Height = -18
     CaptionFont.Name = 'Verdana'
     CaptionFont.Style = [fsBold]
-    Color = 2829099
+    Color = 15987699
     GroupStyle = gsUnderline
     TabOrder = 2
     object Label6: TLabel
@@ -285,6 +285,17 @@ object frmSettings: TfrmSettings
       Margins.Right = 5
       Margins.Bottom = 5
       Caption = 'Titlebar menu'
+    end
+    object Label11: TLabel
+      Left = 12
+      Top = 261
+      Width = 94
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Caption = 'Theme style'
     end
     object ToggleSwitch3: TToggleSwitch
       Left = 12
@@ -328,11 +339,28 @@ object frmSettings: TfrmSettings
       TabOrder = 2
       ThumbWidth = 30
     end
+    object ComboBox2: TComboBox
+      Left = 12
+      Top = 289
+      Width = 301
+      Height = 33
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Style = csDropDownList
+      ItemIndex = 0
+      TabOrder = 3
+      Text = 'Windows11 Modern Dark'
+      Items.Strings = (
+        'Windows11 Modern Dark'
+        'Windows11 Modern Light')
+    end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 465
-    Width = 734
+    Top = 547
+    Width = 674
     Height = 48
     Margins.Left = 5
     Margins.Top = 5
@@ -350,7 +378,7 @@ object frmSettings: TfrmSettings
     ExplicitWidth = 724
     object Button1: TButton
       AlignWithMargins = True
-      Left = 566
+      Left = 506
       Top = 3
       Width = 160
       Height = 42
@@ -366,7 +394,7 @@ object frmSettings: TfrmSettings
     end
     object Button2: TButton
       AlignWithMargins = True
-      Left = 401
+      Left = 341
       Top = 3
       Width = 160
       Height = 42

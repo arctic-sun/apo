@@ -29,7 +29,7 @@ object AddProfileDlgForm: TAddProfileDlgForm
     Style = csExDropDownList
     ItemHeight = 28
     TabOrder = 0
-    Images = DataModule1.SVGIconImageList2
+    Images = DataModule1.SVGIconVirtualImageList2
   end
   object Panel1: TPanel
     Left = 10

@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>ArcticProfileOptimizer.dpr</MainSource>
@@ -70,7 +70,7 @@
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <SanitizedProjectName>ArcticProfileOptimizer</SanitizedProjectName>
-        <Custom_Styles>&quot;Windows11 Modern Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Modern_Dark.vsf&quot;</Custom_Styles>
+        <Custom_Styles>&quot;Windows11 Modern Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Modern_Dark.vsf&quot;;&quot;Windows11 Modern Light|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows11_Modern_Light.vsf&quot;</Custom_Styles>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>FireDACIBDriver;dxPSdxSpreadSheetLnkRS28;vclwinx;DataSnapServer;fmx;vclie;DbxCommonDriver;bindengine;IndyIPCommon;VCLRESTComponents;DBXMSSQLDriver;FireDACCommonODBC;emsclient;cxExportRS28;dxHttpIndyRequestRS28;appanalytics;IndyProtocols;vclx;Skia.Package.RTL;dxPSPrVwRibbonRS28;dbxcds;vcledge;IOCore;dxTileControlRS28;cxPivotGridOLAPRS28;dxPSdxDBOCLnkRS28;FmxTeeUI;EasyListviewD;dxGDIPlusRS28;DBXFirebirdDriver;dxCoreRS28;cxPivotGridRS28;vclribbon;IOXML;FireDACSqliteDriver;DbxClientDriver;dxSpreadSheetRS28;dxSkinsCoreRS28;dxPSCoreRS28;soapmidas;dxBarRS28;TeeUI;dxADOServerModeRS28;dxWizardControlRS28;dbexpress;inet;dxServerModeRS28;vcltouch;cxTreeListRS28;dxBarDBNavRS28;FireDACDBXDriver;fmxdae;dxPScxCommonRS28;dxNavBarRS28;EhLibIBXDataDrivers280;CustomIPTransport;FireDACMSSQLDriver;SVGIconPackage;OverbyteIcsD110Run;dxSpreadSheetReportDesignerRS28;dxFireDACEMFRS28;dxComnRS28;dclAbsDBd28;dxFlowChartDesignerRS28;IndySystem;cxVerticalGridRS28;ibxbindings;dxPSDBTeeChartRS28;dxmdsRS28;dxRichEditControlRS28;cxSchedulerGridRS28;dxPsPrVwAdvRS28;dxPScxSchedulerLnkRS28;dxPSdxOCLnkRS28;vclFireDAC;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;dxADOEMFRS28;dxRibbonCustomizationFormRS28;dxPSdxDBTVLnkRS28;bindcompdbx;dxGaugeControlRS28;rtl;FireDACMySQLDriver;IOADO;dxDockingRS28;dxPDFViewerRS28;DBXSqliteDriver;dxBarExtItemsRS28;VirtualTreesDR;dxPSdxFCLnkRS28;dxorgcRS28;DBXSybaseASEDriver;dxSpreadSheetCoreConditionalFormattingDialogsRS28;dxPSRichEditControlLnkRS28;vclimg;DataSnapFireDAC;inetdbxpress;FireDAC;xmlrtl;ibxpress;dsnap;FireDACDb2Driver;cxSchedulerRibbonStyleEventEditorRS28;DBXOracleDriver;dxPScxTLLnkRS28;DBXInformixDriver;EhLibDBXDataDrivers280;vclib;DISQLite3_D111;fmxobj;bindcompvclsmp;DataSnapNativeClient;dxFlowChartRS28;dxPScxPCProdRS28;DatasnapConnectorsFreePascal;SVGIconImageList;emshosting;dxRichEditDocumentModelRS28;dxPSdxMapControlLnkRS28;cxGridEMFRS28;dxGanttControlRS28;dxPScxVGridLnkRS28;dxPScxPivotGridLnkRS28;FireDACCommonDriver;EhLib280;MPCommonLibD;IndyIPClient;dxCloudServiceLibraryRS28;cxLibraryRS28;bindcompvclwinx;emsedge;bindcompfmx;IODBX;dxPSdxPDFViewerLnkRS28;inetdb;dxSpreadSheetCoreRS28;cxSchedulerTreeBrowserRS28;ibmonitor;vclAbsDBd28;FireDACASADriver;dxTabbedMDIRS28;Tee;SVGIconImageListFMX;vclactnband;fmxFireDAC;dxFireDACServerModeRS28;FireDACInfxDriver;DBXMySQLDriver;VclSmp;dxPSdxLCLnkRS28;DataSnapCommon;fmxase;dxdbtrRS28;DBXOdbcDriver;dbrtl;FireDACOracleDriver;Skia.Package.FMX;dxPSLnksRS28;TeeDB;FireDACMSAccDriver;DataSnapIndy10ServerTransport;DataSnapConnectors;vcldsnap;DBXInterBaseDriver;FireDACMongoDBDriver;PngComponentsD;dxSpreadSheetConditionalFormattingDialogsRS28;FireDACTDataDriver;Skia.Package.VCL;dxOrgChartAdvancedCustomizeFormRS28;vcldb;dxDBXServerModeRS28;cxSchedulerRS28;dxRibbonRS28;IconFontsImageList;SynEditDR;dxFlowChartLayoutsRS28;dxPScxExtCommonRS28;SpTBXLib;dxdborRS28;dxRichEditControlCoreRS28;bindcomp;tb2k_d12;dxPScxGridLnkRS28;IndyCore;RESTBackendComponents;cxPivotGridChartRS28;dxBarExtDBItemsRS28;IOFireDAC;dxRichEditCoreRS28;cxTreeListdxBarPopupMenuRS28;dxFlowChartAdvancedCustomizeFormRS28;FireDACADSDriver;RaizeComponentsVclDb;RESTComponents;dxPSTeeChartRS28;IndyIPServer;vcl;dsnapxml;adortl;dsnapcon;DataSnapClient;DataSnapProviderClient;cxSchedulerWebServiceStorageRS28;dxtrmdRS28;DBXDb2Driver;dxPSdxGaugeControlLnkRS28;cxGridRS28;dxSpellCheckerRS28;emsclientfiredac;FireDACPgDriver;FireDACDSDriver;EhLibADODataDrivers280;tethering;dxMapControlRS28;bindcompvcl;dxEMFRS28;CloudService;DBXSybaseASADriver;IconFontsImageListFMX;FMXTee;soaprtl;RaizeComponentsVcl;soapserver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -126,10 +126,10 @@
         <Icon_MainIcon>ProjectX.ico</Icon_MainIcon>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.14.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.14.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.15.0;InternalName=;LegalCopyright= We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.15.0;Comments=</VerInfo_Keys>
         <UWP_DelphiLogo44>res\logo-icon\path491.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
-        <VerInfo_Release>14</VerInfo_Release>
+        <VerInfo_Release>15</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -140,8 +140,8 @@
         <UWP_DelphiLogo150>res\logo-icon\path491.png</UWP_DelphiLogo150>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.14.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.14.0;Comments=</VerInfo_Keys>
-        <VerInfo_Release>14</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=ArcticSun;FileDescription=Arctic Profile Optimizer;FileVersion=0.3.15.0;InternalName=;LegalCopyright=We belong to Allah and to Him we shall return إِنَّا لِلَّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Arctic Profile Optimizer;ProductVersion=0.3.15.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>15</VerInfo_Release>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -159,14 +159,13 @@
         <DCCReference Include="UtilsUnit.pas"/>
         <DCCReference Include="frmAddProfileUnit.pas">
             <Form>AddProfileDlgForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModuleUnit.pas">
             <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="BatScriptUnt.pas"/>
+        <DCCReference Include="aConstUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

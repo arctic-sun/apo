@@ -3,7 +3,10 @@
 interface
 
 uses
-  //dbg  ObjectInspectorEh,
+  {-$DEFINE DEBUGMODE}
+ {$IFDEF DEBUGMODE}
+   ObjectInspectorEh,
+ {$ENDIF}
 
   Winapi.Windows,
   Winapi.Messages,
@@ -21,6 +24,8 @@ uses
   System.TimeSpan,
   System.Threading,
 
+  Vcl.Themes,
+  Vcl.Styles,
   Vcl.Graphics,
   Vcl.StdCtrls,
   Vcl.Controls,
@@ -50,12 +55,7 @@ uses
   VirtualTrees.BaseTree,
   VirtualTrees.AncestorVCL,
   VirtualTrees.Header
-
   ;
-
-const
-  WM_DPICHANGED = 736; // 0x02E0
-
 
 type
   TFormMain = class(TForm)
@@ -89,7 +89,6 @@ type
     Label3: TLabel;
     RzProgressBar1: TRzProgressBar;
     RzProgressBar2: TRzProgressBar;
-    Image1: TImage;
     RzToolbar1: TRzToolbar;
     MenuButton2: TRzToolButton;
     OptimizeBtn2: TRzToolButton;
@@ -121,6 +120,17 @@ type
     Optimizeselectedprofile1: TMenuItem;
     N5: TMenuItem;
     RzToolButton3: TRzToolButton;
+    RzPanel3: TRzPanel;
+    RzButton1: TRzButton;
+    RzToolButton5: TRzToolButton;
+    PopupMenu3: TPopupMenu;
+    VST1: TMenuItem;
+    Form1: TMenuItem;
+    WhiteSkin1: TMenuItem;
+    BlackSkin1: TMenuItem;
+    DirtyHackDPiTimer1: TTimer;
+    SVGIconImage2: TSVGIconImage;
+    Timer1: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -146,11 +156,15 @@ type
     procedure Optimizeselectedprofile1Click(Sender: TObject);
     procedure VirtualStringTree1NodeClick(Sender: TBaseVirtualTree; const HitInfo: THitInfo);
     procedure VirtualStringTree1Checked(Sender: TBaseVirtualTree; Node: PVirtualNode);
-    procedure RzToolButton3Click(Sender: TObject);
+    procedure RzButton1Click(Sender: TObject);
+    procedure Act1Click(Sender: TObject);
+    procedure FormAfterMonitorDpiChanged(Sender: TObject; OldDPI, NewDPI: Integer);
+    procedure DirtyHackDPiTimer1Timer(Sender: TObject);
   private
     { Private declarations }
+    xOldDPI, xNewDPI: Integer;
     add_profiledlg_last_cbindex: integer;
-//   procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
+    // procedure WMDpiChanged(var Message: TMessage); message WM_DPICHANGED;
     procedure WMDropFiles(var Msg: TWMDropFiles);  message WM_DROPFILES;
     procedure updateButtonsState(const ccs: boolean = False );
     procedure VSTSetCheckState(const b: Boolean);
@@ -169,10 +183,14 @@ type
     function  AddProfileToVST(const pPath: string; const pAppType: Integer; const ManualAdded: Boolean = false): Integer;
     function  LogAdd(RootNode: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string =''): PVirtualNode;
     procedure LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');
+
+    procedure ChangeControlsForDPI(const DPIIndex: integer);
   public
     { Public declarations }
 
   end;
+
+
 
   PItemNodeData = ^TItemNodeData;
   TItemNodeData = record
@@ -209,7 +227,9 @@ var
   settings_searchlnkdesktop : Boolean;
   settings_searchlnksmenu   : Boolean;
   settings_captiontoolbar   : boolean;
+  settings_ThemeStyle       : integer;
 
+  CancelOptProc : Boolean;
 
 // Decrease Exe size
 //{$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}      //
@@ -219,9 +239,11 @@ var
 //{$DYNAMICBASE OFF}
 
 
+  procedure ApplyTheme(const LT: Boolean = False);
+
 implementation
 
-uses
+uses aConstUnit,
      DataModuleUnit,
      UtilsUnit,
      BatScriptUnt,
@@ -244,20 +266,7 @@ const
      VST_RATE_COLUMN_INDEX        = 4;
 
 
-     APP_CAPTION            = 'Arctic Profile Optimizer';
-     SQLStatusVerCaption    = 'SQLite: %s';
-     AppVerCaption          = 'apo: %sa'; //0.X.Xa'
-     AppVerPortableCaption  = 'portable: %sa'; //0.X.Xa'
-
-
-     APP_SETTINGS_PATH              = '\AppData\Local\Arctics\ProfileOptimizer\';
-     APP_PORTABLE_SETTINGS_PATH     = 'ProfileOptimizer\';
-     APP_CUSTOM_PROFILES_FILENAME   = 'custom.profiles';
-     APP_SETTINGS_FILENAME          = 'micro.cfg';
-     APP_DISABLED_PROFILES_FILENAME = 'disabled.profiles';
-
 {$R *.dfm}
-
 
 
 {$REGION ' misc  '}
@@ -307,7 +316,8 @@ begin
   settings_showlog.ToString + ',' +
   settings_searchlnkdesktop.ToString + ',' +
   settings_searchlnksmenu.ToString + ',' +
-  settings_captiontoolbar.ToString;
+  settings_captiontoolbar.ToString + ',' +
+  settings_ThemeStyle.ToString;
 
   tmp_str := GetAppSettingsPath; // GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
   ForceDirectories(tmp_str);
@@ -358,6 +368,8 @@ begin
     if Length(str_items)>9 then
     settings_captiontoolbar:=   str_items[9].ToBoolean;
 
+    if Length(str_items)>10 then
+    settings_ThemeStyle := str_items[10].ToInteger else settings_ThemeStyle := 0;
 
 end;
 
@@ -372,43 +384,19 @@ begin
     end;
 end;
 
+  {
+  1280x720 HD
+  1920x1080 FHD
+  2560x1440 QHD
+  3840x2160 4K
+  7680x4320 8K
+  }
+
+
+
 {$ENDREGION}
 
 {$REGION ' Form events  '}
-       (*
-{$DEFINE DELPHI_STYLE_SCALING}
-procedure TFormMain.WMDpiChanged(var Message: TMessage);
-// from https://docwiki.embarcadero.com/RADStudio/Sydney/en/Customizing_the_Windows_Application_Manifest_File
-  {$IFDEF DELPHI_STYLE_SCALING}
-  function FontHeightAtDpi(aDPI, aFontSize: integer): integer;
-  var
-    tmpCanvas: TCanvas;
-  begin
-    tmpCanvas := TCanvas.Create;
-    try
-      tmpCanvas.Handle := GetDC(0);
-      tmpCanvas.Font.Assign(self.Font);
-      tmpCanvas.Font.PixelsPerInch := aDPI; //must be set BEFORE size
-      tmpCanvas.Font.size := aFontSize;
-      result := tmpCanvas.TextHeight('0');
-    finally
-      tmpCanvas.free;
-    end;
-  end;
-  {$ENDIF}
-
-begin
-  inherited;
-  {$IFDEF DELPHI_STYLE_SCALING}
-  ChangeScale(FontHeightAtDpi(LOWORD(Message.wParam), self.Font.Size), FontHeightAtDpi(self.PixelsPerInch, self.Font.Size));
-  {$ELSE}
-  ChangeScale(LOWORD(Message.wParam), self.PixelsPerInch);
-  {$ENDIF}
-  self.PixelsPerInch := LOWORD(Message.wParam);
- // Caption := Format('Monitor #%d (%d dpi, %d x %d)', [self.Monitor.MonitorNum, self.PixelsPerInch, self.Monitor.Width, self.Monitor.Height]);
-end;
-
-*)
 
 procedure TFormMain.WMDropFiles(var Msg: TWMDropFiles);
 // from https://habr.com/ru/post/179131/
@@ -478,6 +466,122 @@ begin
   Msg.Result := 0;
 end;
 
+ {$REGION ' DPI Dirty Hack :D '}
+
+ {
+ В чём тут суть:
+
+ 1.
+ При разрешении 3840x2160 4K иконы тулбара должны быть 24pix
+ А при более низких разрешениях 16px (но могут быть и исключения)
+ А как там оно для 8K загадка ...
+
+ 2.
+ При бросковом перетаскивании окна из одного моника в другой с разными DPI
+ масштабирование исполняется криво, и его нужно вызвать повторно.
+ }
+
+procedure TFormMain.FormAfterMonitorDpiChanged(Sender: TObject; OldDPI, NewDPI: Integer);
+begin
+  xOldDPI := OldDPI;
+  xNewDPI := NewDPI;
+  DirtyHackDPiTimer1.Enabled := True;
+end;
+
+procedure TFormMain.DirtyHackDPiTimer1Timer(Sender: TObject);
+begin
+ DirtyHackDPiTimer1.Enabled := False;
+ FormMain.OnAfterMonitorDpiChanged := nil;
+
+ ChangeControlsForDPI(xNewDPI);
+
+ FormMain.ScaleControlsForDpi(xOldDPI);
+ //FormMain.ScaleForPPI(xOldDPI);
+ FormMain.ScaleControlsForDpi(xNewDPI);
+ //FormMain.ScaleForPPI(xNewDPI);
+ FormMain.OnAfterMonitorDpiChanged := FormAfterMonitorDpiChanged;
+end;
+
+ {$ENDREGION}
+
+
+procedure TFormMain.ChangeControlsForDPI(const DPIIndex: integer);
+begin
+
+
+
+  case DPIIndex of
+    96 :  begin
+           
+
+           DataModule1.SVGIconVirtualImageList2.Size := 16;
+           DataModule1.SVGIconVirtualImageList1.Size := 16;
+           OptimizeBtn.UseToolbarButtonSize := False;
+           OptimizeBtn.Width := 200;
+           OptimizeBtn.UseToolbarButtonSize := true;
+          end;
+
+    144 : begin
+           { Image1.Height := 30;
+            Image1.Proportional := True;
+            Image1.Stretch := True;    }
+
+            DataModule1.SVGIconVirtualImageList2.Size := 24;
+            DataModule1.SVGIconVirtualImageList1.Size := 24;
+            OptimizeBtn.UseToolbarButtonSize := False;
+            OptimizeBtn.Width := 200;
+            OptimizeBtn.UseToolbarButtonSize := true;
+          end;
+  end;
+end;
+
+
+
+procedure ApplyTheme(const LT: Boolean = False);
+begin
+  case settings_ThemeStyle of
+   1:
+    begin
+      FormMain.Checkallprofiles2.ImageIndex := 16;
+      FormMain.UnCheckallprofiles2.ImageIndex := 17;
+      FormMain.UnCheckallprofiles1.ImageIndex := 17;
+      FormMain.Checkallprofiles1.ImageIndex := 16;
+      FormMain.MenuButton2.ImageIndex := 18;
+      FormMain.MenuButton.ImageIndex := 18;
+      FormMain.info1.ImageIndex := 19;
+      FormMain.VirtualStringTree1.Colors.HotColor := clNavy;
+      FormMain.VirtualStringTree1.SelectionBlendFactor := 200;
+      FormMain.VirtualStringTree2.Colors.HotColor := clNavy;
+      FormMain.VirtualStringTree2.SelectionBlendFactor := 200;
+
+      if LT then
+      TStyleManager.TrySetStyle('Windows11 Modern Light');
+    end;
+
+   0:
+    begin
+      FormMain.Checkallprofiles2.ImageIndex := 9;
+      FormMain.UnCheckallprofiles2.ImageIndex := 10;
+      FormMain.UnCheckallprofiles1.ImageIndex := 10;
+      FormMain.Checkallprofiles1.ImageIndex := 9;
+      FormMain.MenuButton2.ImageIndex := 0;
+      FormMain.MenuButton.ImageIndex := 0;
+      FormMain.info1.ImageIndex := 12;
+      FormMain.VirtualStringTree1.Colors.HotColor := $00FDBA60;
+      FormMain.VirtualStringTree1.SelectionBlendFactor := 128;
+      FormMain.VirtualStringTree2.Colors.HotColor := $00FDBA60;
+      FormMain.VirtualStringTree2.SelectionBlendFactor := 128;
+
+      if LT then
+      TStyleManager.TrySetStyle('Windows11 Modern Dark');
+    end;
+
+  end;
+
+end;
+
+
+
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   CollectDisabledProfiles;  // <- Required for SaveSettings
@@ -546,12 +650,45 @@ begin
    RzPanelProgress.Left :=  (ClientWidth - RzPanelProgress.Width) div 2;
 end;
 
+
+function GetRandomColour: TColor;
+begin
+  // Result := RGB(200+Random(55), 200+Random(55), 200+Random(55));
+  // Result := RGB(150+Random(105), 150+Random(105), 150+Random(105));
+    Result := RGB(16+Random(255-16), 125+Random(255-125), 184+Random(255-184));
+end;
+
+function ColorToHex(Color: integer): string;
+var
+  r,g,b: byte;
+begin
+  r:=GetRValue(Color);
+  g:=GetGValue(Color);
+  b:=GetBValue(Color);
+  Result:=IntToHex(r,2)+IntToHex(g,2)+IntToHex(b,2);
+end;
+
 procedure TFormMain.FormShow(Sender: TObject);
 begin
   if FirstShow then Exit;
 
   Caption := APP_CAPTION;
 
+  if Self.Monitor.PixelsPerInch >= 144 then
+  begin
+    Randomize;
+    var colorstr: string;
+    var i: integer;
+
+    for I := 0 to 23 do
+    begin
+      colorstr := '#' + ColorToHex( GetRandomColour );
+      SVGIconImage2.SVGText :=  StringReplace(SVGIconImage2.SVGText, '#ffffff', colorstr, [{rfReplaceAll, rfIgnoreCase}] );
+    end;
+  end;
+
+
+  ChangeControlsForDPI( Self.Monitor.PixelsPerInch );
 
   RzStatusPane_SQLiteVer.Caption :=
      Format(SQLStatusVerCaption, [FileVersion(sqlite3_lib)]);
@@ -604,9 +741,8 @@ begin
 
   SearchProfilesResult := nil;
   ProcSearchProfiles;
-  updateButtonsState;
 
-  FirstShow := False;
+  FirstShow := True;
 end;
 
 // Paint form caption
@@ -619,8 +755,8 @@ begin
    Canvas.Font.Color := clWhite;
    DrawText(Canvas.Handle, PChar(s), Length(s), ARect, DT_SINGLELINE or DT_CENTER or DT_VCENTER);
    }
-   Canvas.Draw((ARect.Width div 2)-100 , (ARect.Height div 2)-5 ,Image1.Picture.Graphic)
-   //  Canvas.StretchDraw(ARect, Image1.Picture.Graphic) ;
+  // Canvas.Draw((ARect.Width div 2)-100 , (ARect.Height div 2)-5 ,Image1.Picture.Graphic);
+   SVGIconImage2.svg.PaintTo(Canvas.Handle,  RectF(  ARect.Width+100 , ARect.Height , 0, 0), false);
 end;
 
 procedure TFormMain.MenuButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -727,13 +863,15 @@ end;
 
 procedure TFormMain.BeforeProcOptimize;
 begin
+   CancelOptProc        := False;
    OptimizeBtn.Enabled  := False;
    OptimizeBtn2.Enabled := False;
    MenuButton.Enabled   := False;
    MenuButton2.Enabled  := False;
-   FormMain.Enabled     := False;
+   RzToolbar1.Enabled   := False;
    RzSplitter1.Enabled  := False;
-   Application.ProcessMessages;
+
+   Application.ProcessMessages;   {  }
 end;
 
 procedure TFormMain.AfterProcOptimize;
@@ -743,16 +881,16 @@ begin
   MenuButton.Enabled   := True;
   MenuButton2.Enabled  := True;
   RzSplitter1.Enabled  := True;
-  FormMain.Enabled := True;
+  RzToolbar1.Enabled   := True;
 
-  RzStatusPane3.Caption := 'done.';
+  if CancelOptProc  then
+    RzStatusPane3.Caption := 'optimization canceled.'
+  else
+    RzStatusPane3.Caption := 'optimization done.';
+
   ProgressDlgVisible(False);
-
-  if RzSplitter1.LowerRight.Visible then
-  VirtualStringTree2.Refresh;
-
+  if RzSplitter1.LowerRight.Visible then   VirtualStringTree2.Refresh;
   VirtualStringTree1.Refresh;
-
   updateButtonsState;
 
   Application.ProcessMessages;
@@ -838,14 +976,14 @@ begin
 
    aTask := TTask.Create(
    procedure
-
+        {
       function CalcRate(before, after: Int64):Integer;
       begin
        result := 0;
          if before = 0 then exit;
          if after = 0 then exit;
          Result := Round( ( (before - after) / before ) * 100) ;
-      end;
+      end;  }
 
    var
     i               : Integer;
@@ -860,7 +998,7 @@ begin
     Node            : PVirtualNode;
    begin
      // BeginUpdate
-     TThread.Synchronize(TThread.Current, procedure begin  VirtualStringTree1.BeginUpdate; end);
+    // TThread.Synchronize(TThread.Current, procedure begin  VirtualStringTree1.BeginUpdate; end);
 
      try
        // Setup progress =======================================
@@ -968,6 +1106,8 @@ begin
               // *********** Process optimization ********** //
               For i := 0 to FilesCount-1 do
               begin
+                // Check for Cancel
+                if CancelOptProc then Break;
                 if ProfileFileList[i].Size > 16 then
                 begin
                    tmpFileName := {ProfileFileList[i].Path + } ProfileFileList[i].Name ;
@@ -1004,13 +1144,16 @@ begin
             end;
           end;
 
+        if CancelOptProc then Break;
+
         if selectedOnly then Node := nil else
-        Node :=  VirtualStringTree1.GetNextLevel(Node, 1);
+           Node :=  VirtualStringTree1.GetNextLevel(Node, 1);
        end;
 
      finally
         // EndUpdate
-        TThread.Synchronize(TThread.Current, procedure begin VirtualStringTree1.EndUpdate; end);
+       // TThread.Synchronize(TThread.Current, procedure begin VirtualStringTree1.EndUpdate; end);
+
      end;
      AfterProcOptimize;
    end);
@@ -1026,7 +1169,7 @@ begin
   {$REGION ' OptimizeProfilesThread '}
    aTask := TTask.Create(
    procedure
-
+    {
       function CalcRate(before, after: Int64):Integer;
       begin
        result := 0;
@@ -1040,7 +1183,7 @@ begin
 
       function ifthenstr(b: Boolean; trueStr, falseStr: string): string;
       begin if b then Result := trueStr else Result := falseStr; end;
-
+      }
 
    var
     i               : Integer;
@@ -1080,8 +1223,8 @@ begin
      LogTotalStopwatch := TStopwatch.StartNew;
      TThread.Synchronize(TThread.Current, procedure
      begin
-       VirtualStringTree1.BeginUpdate;
-       VirtualStringTree2.BeginUpdate;
+     //  VirtualStringTree1.BeginUpdate;
+     //  VirtualStringTree2.BeginUpdate;
      end);
 
      try
@@ -1125,21 +1268,27 @@ begin
        logTotalProfilesSizeAfter  := 0;
 
 
-       if selectedOnly then
 
-       logNodeStart := LogAdd(nil,
-                             'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
-                             'selected profile',
-                             Format('Processed %s of %s, Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s', ['','','','','',''])
-                              )
+       TThread.Synchronize(TThread.Current, procedure
+       begin
+         VirtualStringTree2.BeginUpdate;
 
-       else
-       logNodeStart := LogAdd(nil,
-                             'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
-                             Format('Enabled profiles: %s of %s', [logTotalCheckedProfiles.ToString, logTotalProfileCount.ToString]),
-                             Format('Processed %s of %s, Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s', ['','','','','',''])
-                              );
+          if selectedOnly then
 
+           logNodeStart := LogAdd(nil,
+                                 'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
+                                 'selected profile',
+                                 Format('Processed %s of %s, Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s', ['','','','','',''])
+                                  )
+           else
+           logNodeStart := LogAdd(nil,
+                                 'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
+                                 Format('Enabled profiles: %s of %s', [logTotalCheckedProfiles.ToString, logTotalProfileCount.ToString]),
+                                 Format('Processed %s of %s, Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s', ['','','','','',''])
+                                  );
+
+         VirtualStringTree2.EndUpdate;
+       end);
 
        // Enum Processing
        if selectedOnly then
@@ -1168,11 +1317,16 @@ begin
                 logProfileDeletedFiles := 0;
                 logProfileDeletedFilesSize := 0;
 
-                logNodeProfile := LogAdd(logNodeStart,
-                                          Format('Profile #%s', [logProfileNo.ToString]),
-                                          ItemNodeData^.v_ProfileName,
-                                          '-'
-                                          );
+                TThread.Synchronize(TThread.Current, procedure
+                begin
+                   VirtualStringTree2.BeginUpdate;
+                   logNodeProfile := LogAdd(logNodeStart,
+                                                Format('Profile #%s', [logProfileNo.ToString]),
+                                                ItemNodeData^.v_ProfileName,
+                                                '-'
+                                                );
+                   VirtualStringTree2.EndUpdate;
+                end);
 
 
               // Setup: MaskArray; Proc: delete_wal, delete_shm
@@ -1208,11 +1362,18 @@ begin
                           if tmpDeletedBool then
                            inc(logProfileDeletedFiles);
 
-                          LogAdd(LogNodeProfile,
-                                 Format('#%d Delete',[(i+1)]),
-                                 DeletePartPath({ProfileFileList[i].Path +} ProfileFileList[i].Name, Length(ItemNodeData^.v_ProfileName)),
-                                 ifthenstr(tmpDeletedBool, 'Done. (' + FormatByteSize( tmpDeletedFileSZ ) + ')' , 'Fail' )
-                                  );
+
+                           TThread.Synchronize(TThread.Current, procedure
+                           begin
+                            VirtualStringTree2.BeginUpdate;
+                            LogAdd(LogNodeProfile,
+                                   Format('#%d Delete',[(i+1)]),
+                                   DeletePartPath({ProfileFileList[i].Path +} ProfileFileList[i].Name, Length(ItemNodeData^.v_ProfileName)),
+                                   ifthenstr(tmpDeletedBool, 'Done. (' + FormatByteSize( tmpDeletedFileSZ ) + ')' , 'Fail' )
+                                    );
+
+                            VirtualStringTree2.EndUpdate;
+                           end);
                        end;
 
                        ProfileFileList.Free;
@@ -1246,6 +1407,7 @@ begin
                 // *********** Process optimization ********** //
                 For i := 0 to profileFilesCount-1 do
                 begin
+                   if CancelOptProc then Break;
                    if ProfileFileList[i].Size > 16 then
                    begin
                        tmpFileName := {ProfileFileList[i].Path +} ProfileFileList[i].Name ;
@@ -1258,12 +1420,19 @@ begin
                          logFileSizeAfter := System.IOUtils.TFile.GetSize( tmpFileName );
                          ProfileSizeAfter := ProfileSizeAfter + logFileSizeAfter;
 
-                         //TThread.Synchronize(nil, procedure begin    end);
-                         LogAdd(LogNodeProfile,
-                                Format('#%d Optimization',[(profileFilesProcessed)]),
-                                DeletePartPath(tmpFileName, Length(ItemNodeData^.v_ProfileName) ),
-                                Format( 'Done. Size before: %s, Size after: %s', [ FormatByteSize(ProfileFileList[i].Size), FormatByteSize(logFileSizeAfter) ])
-                                );
+                         TThread.Synchronize(TThread.Current, procedure
+                         begin
+                           VirtualStringTree2.BeginUpdate;
+
+                           //TThread.Synchronize(nil, procedure begin    end);
+                           LogAdd(LogNodeProfile,
+                                  Format('#%d Optimization',[(profileFilesProcessed)]),
+                                  DeletePartPath(tmpFileName, Length(ItemNodeData^.v_ProfileName) ),
+                                  Format( 'Done. Size before: %s, Size after: %s', [ FormatByteSize(ProfileFileList[i].Size), FormatByteSize(logFileSizeAfter) ])
+                                  );
+                            VirtualStringTree2.EndUpdate;
+                         end);
+
                        end;
                    end;
                    // *********** Progress bar Profile ********** //
@@ -1285,16 +1454,26 @@ begin
                 logTotalProfilesSizeBefore := logTotalProfilesSizeBefore + ProfileSizeBefore;
                 logTotalProfilesSizeAfter := logTotalProfilesSizeAfter + ProfileSizeAfter;
 
-                LogEdit(logNodeProfile,
-                        Format('Profile #%s', [logProfileNo.ToString]),
-                        ItemNodeData^.v_ProfileName,
-                        Format('Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s',
-                               [profileFilesProcessed.ToString,
-                                logProfileDeletedFiles.ToString,
-                                FormatByteSize( ProfileSizeBefore ),
-                                FormatByteSize( ProfileSizeAfter )
-                                ])
-                              );
+
+                TThread.Synchronize(TThread.Current, procedure
+                begin
+                  VirtualStringTree2.BeginUpdate;
+
+                   LogEdit(logNodeProfile,
+                          Format('Profile #%s', [logProfileNo.ToString]),
+                          ItemNodeData^.v_ProfileName,
+                          Format('Optimized files: %s, Deleted: %s, Size before: %s, Size after: %s',
+                                 [profileFilesProcessed.ToString,
+                                  logProfileDeletedFiles.ToString,
+                                  FormatByteSize( ProfileSizeBefore ),
+                                  FormatByteSize( ProfileSizeAfter )
+                                  ])
+                                );
+
+                  VirtualStringTree2.EndUpdate;
+                end);
+
+
 
                 // *********** Progress bar overall (if Optimize Checked) ********** //
                 TThread.Synchronize(TThread.Current, procedure begin RzProgressBar2.IncPartsByOne; end);
@@ -1302,16 +1481,29 @@ begin
              begin
                inc(logTotalFailedProfiles);
 
-               logNodeProfile := LogAdd(logNodeStart,
-                                        Format('Profile #%s', [logProfileNo.ToString]),
-                                        ItemNodeData^.v_ProfileName,
-                                        'Fail. Profile path not found.'
-                                        );
+
+                TThread.Synchronize(TThread.Current, procedure
+                begin
+                  VirtualStringTree2.BeginUpdate;
+
+                  logNodeProfile := LogAdd(logNodeStart,
+                                          Format('Profile #%s', [logProfileNo.ToString]),
+                                          ItemNodeData^.v_ProfileName,
+                                          'Fail. Profile path not found.'
+                                          );
+
+
+                  VirtualStringTree2.EndUpdate;
+                end);
+
 
                ItemNodeData^.h_PathNotFound := True;
                TThread.Synchronize(TThread.Current, procedure begin RzProgressBar2.IncPartsByOne; end);
              end;
           end;
+
+        if CancelOptProc then Break;
+
         if selectedOnly then Node := nil else
         Node :=  VirtualStringTree1.GetNextLevel(Node, 1);
        end;
@@ -1325,26 +1517,34 @@ begin
        else
            ElapsedTimeStr  :=  LogTotalElapsed.Seconds.ToString;
 
-       LogEdit(LogNodeStart,
-               '',//'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
-               '',//Format('Enabled profiles: %s of %s', [TP.ToString, AP.ToString]),
-               Format( 'Completed in: ~%s sec. Processed %s of %s profiles. Files optimize: %s, deleted: %s, size before: %s, size after: %s',
-                      [
-                      ElapsedTimeStr,
-                      (logTotalCheckedProfiles-logTotalFailedProfiles).ToString,
-                      logTotalCheckedProfiles.ToString,
-                      logTotalFilesProcessed.ToString,
-                      logTotalDeletedFiles.ToString,
-                      FormatByteSize( logTotalProfilesSizeBefore),
-                      FormatByteSize( logTotalProfilesSizeAfter)]
-                      )
-               );
 
         TThread.Synchronize(TThread.Current, procedure
         begin
+         VirtualStringTree2.BeginUpdate;
+             LogEdit(LogNodeStart,
+                     '',//'Start: ' + FormatDateTime('[hh:mmm:ss]', now),
+                     '',//Format('Enabled profiles: %s of %s', [TP.ToString, AP.ToString]),
+                     Format( 'Completed in: ~%s sec. Processed %s of %s profiles. Files optimize: %s, deleted: %s, size before: %s, size after: %s',
+                            [
+                            ElapsedTimeStr,
+                            (logTotalCheckedProfiles-logTotalFailedProfiles).ToString,
+                            logTotalCheckedProfiles.ToString,
+                            logTotalFilesProcessed.ToString,
+                            logTotalDeletedFiles.ToString,
+                            FormatByteSize( logTotalProfilesSizeBefore),
+                            FormatByteSize( logTotalProfilesSizeAfter)]
+                            )
+                     );
          VirtualStringTree2.EndUpdate;
-         VirtualStringTree1.EndUpdate;
         end);
+
+
+
+       { TThread.Synchronize(TThread.Current, procedure
+        begin
+         VirtualStringTree2.EndUpdate;
+          VirtualStringTree1.EndUpdate;
+        end); }
      end;
      AfterProcOptimize;
    end);
@@ -1801,6 +2001,44 @@ end;
 
 {$REGION ' Popup events '}
 
+procedure TFormMain.Act1Click(Sender: TObject);
+begin
+  var tg: Integer;
+  {$IFDEF DEBUGMODE}
+  if Sender is TMenuItem  then  tg:= TMenuItem(Sender).Tag;
+   case tg of
+
+     0: ShowObjectInspectorForm(VirtualStringTree1, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
+     1: ShowObjectInspectorForm(FormMain, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
+     2:
+      begin
+        Checkallprofiles2.ImageIndex := 16;
+        UnCheckallprofiles2.ImageIndex := 17;
+        UnCheckallprofiles1.ImageIndex := 17;
+        Checkallprofiles1.ImageIndex := 16;
+        MenuButton2.ImageIndex := 18;
+        MenuButton.ImageIndex := 18;
+        info1.ImageIndex := 19;
+        TStyleManager.TrySetStyle('Windows11 Modern Light');
+        // FormMain.StyleName := TStyleManager.ActiveStyle.Name;
+      end;
+
+     3:
+      begin
+        Checkallprofiles2.ImageIndex := 9;
+        UnCheckallprofiles2.ImageIndex := 10;
+        UnCheckallprofiles1.ImageIndex := 10;
+        Checkallprofiles1.ImageIndex := 9;
+        MenuButton2.ImageIndex := 0;
+        MenuButton.ImageIndex := 0;
+        info1.ImageIndex := 12;
+        TStyleManager.TrySetStyle('Windows11 Modern Dark');
+        // FormMain.StyleName := TStyleManager.ActiveStyle.Name;
+      end;
+   end;
+ {$ENDIF}
+end;
+
 procedure TFormMain.ActionsClickClick(Sender: TObject);
 begin
   var tg: Integer;
@@ -1884,6 +2122,8 @@ begin
        if settings_searchlnkdesktop then ToggleSwitch5.State := tssOn else ToggleSwitch5.State := tssOff;
        if settings_searchlnksmenu   then ToggleSwitch6.State := tssOn else ToggleSwitch6.State := tssOff;
        if settings_captiontoolbar   then ToggleSwitch7.State := tssOn else ToggleSwitch7.State := tssOff;
+
+       ComboBox2.ItemIndex := settings_ThemeStyle;
     end;
 
     if frmSettings.ShowModal = mrOk then
@@ -1904,6 +2144,7 @@ begin
       settings_searchlnkdesktop  := frmSettings.ToggleSwitch5.State = tssOn;
       settings_searchlnksmenu    := frmSettings.ToggleSwitch6.State = tssOn;
       settings_captiontoolbar    := frmSettings.ToggleSwitch7.State = tssOn;
+      settings_ThemeStyle        := frmSettings.ComboBox2.ItemIndex;
 
       FormMain.ShowHint              := settings_showhint;
       Application.ShowHint           := settings_showhint;
@@ -1931,6 +2172,8 @@ begin
 
          RzToolbar1.Visible := True ;
       end;
+
+      ApplyTheme(True);
     end;
   finally
     frmSettings.Free;
@@ -2018,7 +2261,11 @@ begin
 
   if not Assigned(ItemNodeData) then Exit;
 
-  ImageList := DataModule1.SVGIconImageList2;
+
+  // DataModule1.SVGIconImageList2.Size := 24;
+
+  // ImageList := DataModule1.SVGIconImageList2;
+  ImageList := DataModule1.SVGIconVirtualImageList2;
 
   if Node.ChildCount = 0 then
     ImageIndex :=  26
@@ -2177,6 +2424,12 @@ begin
 
 end;
 
+procedure TFormMain.RzButton1Click(Sender: TObject);
+begin
+  CancelOptProc := True;
+  Application.ProcessMessages;
+end;
+
 procedure TFormMain.RzToolButton1Click(Sender: TObject);
 begin
    //  hide
@@ -2190,10 +2443,7 @@ begin
    VirtualStringTree2.RootNodeCount := 0;
 end;
 
-procedure TFormMain.RzToolButton3Click(Sender: TObject);
-begin
- //dbg  ShowObjectInspectorForm(FormMain, Rect(Left+Width+10, Top, Left+Width+10+400, Top+Height), True);
-end;
+
 
 procedure TFormMain.LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');
 var
@@ -2249,8 +2499,6 @@ begin
 end;
 
 {$ENDREGION}
-
-
 
 
 end.

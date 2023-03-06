@@ -3,8 +3,8 @@ object frmInfo: TfrmInfo
   Top = 0
   BorderStyle = bsDialog
   Caption = 'info'
-  ClientHeight = 200
-  ClientWidth = 714
+  ClientHeight = 196
+  ClientWidth = 694
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object frmInfo: TfrmInfo
     AlignWithMargins = True
     Left = 5
     Top = 5
-    Width = 704
+    Width = 684
     Height = 177
     Margins.Left = 5
     Margins.Top = 5
@@ -85,7 +85,7 @@ object frmInfo: TfrmInfo
             AlignWithMargins = True
             Left = 5
             Top = 5
-            Width = 463
+            Width = 438
             Height = 25
             Margins.Left = 5
             Margins.Top = 5
@@ -99,7 +99,6 @@ object frmInfo: TfrmInfo
             Font.Name = 'Segoe UI'
             Font.Style = [fsBold]
             ParentFont = False
-            ExplicitWidth = 438
           end
           object Button1: TButton
             AlignWithMargins = True
@@ -159,7 +158,7 @@ object frmInfo: TfrmInfo
           AlignWithMargins = True
           Left = 10
           Top = 10
-          Width = 463
+          Width = 55
           Height = 25
           Margins.Left = 5
           Margins.Top = 5
@@ -167,7 +166,6 @@ object frmInfo: TfrmInfo
           Margins.Bottom = 5
           Align = alTop
           Caption = 'SQLite:'
-          ExplicitWidth = 55
         end
         object Edit4: TEdit
           AlignWithMargins = True

@@ -3,43 +3,31 @@ object AddProfileDlgForm: TAddProfileDlgForm
   Top = 0
   BorderStyle = bsDialog
   Caption = ' Add profile path'
-  ClientHeight = 159
-  ClientWidth = 517
+  ClientHeight = 188
+  ClientWidth = 609
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Padding.Left = 7
+  Padding.Right = 7
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
-  object ComboBoxEx1: TComboBoxEx
-    Left = 13
-    Top = 58
-    Width = 494
-    Height = 34
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    ItemsEx = <>
-    Style = csExDropDownList
-    ItemHeight = 28
-    TabOrder = 0
-    Images = DataModule1.SVGIconVirtualImageList2
-  end
   object Panel1: TPanel
-    Left = 10
-    Top = 9
-    Width = 505
+    Left = 7
+    Top = 0
+    Width = 595
     Height = 41
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
+    Align = alTop
     BevelOuter = bvNone
     Caption = 'Panel1'
     Padding.Left = 2
@@ -47,43 +35,51 @@ object AddProfileDlgForm: TAddProfileDlgForm
     Padding.Right = 2
     Padding.Bottom = 2
     ShowCaption = False
-    TabOrder = 1
+    TabOrder = 0
+    ExplicitWidth = 585
     object SpeedButton1: TSpeedButton
-      Left = 469
+      AlignWithMargins = True
+      Left = 554
       Top = 2
       Width = 34
       Height = 37
       Margins.Left = 5
-      Margins.Top = 5
+      Margins.Top = 0
       Margins.Right = 5
-      Margins.Bottom = 5
+      Margins.Bottom = 0
       Align = alRight
-      ImageIndex = 7
-      ImageName = 'icons8_opened_folder'
-      Images = DataModule1.SVGIconImageList1
+      ImageIndex = 2
+      ImageName = 'icons8_folder'
+      Images = DataModule1.SVGIconVirtualImageList1
+      Flat = True
       OnClick = SpeedButton1Click
-      ExplicitLeft = 336
+      ExplicitTop = 4
+      ExplicitHeight = 27
     end
     object SpeedButton2: TSpeedButton
-      Left = 435
+      AlignWithMargins = True
+      Left = 510
       Top = 2
       Width = 34
       Height = 37
       Margins.Left = 5
-      Margins.Top = 5
+      Margins.Top = 0
       Margins.Right = 5
-      Margins.Bottom = 5
+      Margins.Bottom = 0
       Align = alRight
-      ImageIndex = 6
-      ImageName = 'icons8_paste'
-      Images = DataModule1.SVGIconImageList1
+      ImageIndex = 1
+      ImageName = 'icons8_copy_to_clipboard_1'
+      Images = DataModule1.SVGIconVirtualImageList1
+      Flat = True
+      Layout = blGlyphRight
       OnClick = SpeedButton2Click
-      ExplicitLeft = 445
+      ExplicitTop = 4
+      ExplicitHeight = 27
     end
-    object Edit1: TEdit
+    object profilepath_Edit: TEdit
       Left = 2
       Top = 2
-      Width = 433
+      Width = 503
       Height = 37
       Margins.Left = 5
       Margins.Top = 5
@@ -92,15 +88,16 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Align = alClient
       TabOrder = 0
       TextHint = 'Profile path...'
-      OnChange = Edit1Change
+      OnChange = profilepath_EditChange
+      ExplicitWidth = 513
       ExplicitHeight = 33
     end
   end
   object Panel2: TPanel
-    Left = 0
-    Top = 111
-    Width = 517
-    Height = 48
+    Left = 7
+    Top = 139
+    Width = 595
+    Height = 49
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -109,18 +106,17 @@ object AddProfileDlgForm: TAddProfileDlgForm
     BevelOuter = bvNone
     Caption = 'Panel2'
     Padding.Top = 3
-    Padding.Right = 3
     Padding.Bottom = 3
     ShowCaption = False
-    TabOrder = 2
-    ExplicitTop = 109
-    ExplicitWidth = 507
+    TabOrder = 1
+    ExplicitTop = 137
+    ExplicitWidth = 585
     object Button1: TButton
       AlignWithMargins = True
-      Left = 349
+      Left = 430
       Top = 3
       Width = 160
-      Height = 42
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 5
@@ -129,14 +125,14 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 0
-      ExplicitLeft = 339
+      ExplicitLeft = 420
     end
     object Button2: TButton
       AlignWithMargins = True
-      Left = 184
+      Left = 265
       Top = 3
       Width = 160
-      Height = 42
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 5
@@ -145,14 +141,99 @@ object AddProfileDlgForm: TAddProfileDlgForm
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 1
-      ExplicitLeft = 174
+      ExplicitLeft = 255
+    end
+  end
+  object Panel7: TPanel
+    Left = 7
+    Top = 41
+    Width = 595
+    Height = 39
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'Panel7'
+    Padding.Left = 1
+    ShowCaption = False
+    TabOrder = 2
+    ExplicitLeft = 12
+    ExplicitTop = 36
+    object appid_ComboBoxEx: TComboBoxEx
+      Left = 1
+      Top = 0
+      Width = 384
+      Height = 34
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alLeft
+      ItemsEx = <>
+      Style = csExDropDownList
+      ItemHeight = 28
+      TabOrder = 0
+      Images = DataModule1.SVGIconVirtualImageList2
+    end
+  end
+  object Panel3: TPanel
+    Left = 7
+    Top = 80
+    Width = 595
+    Height = 49
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'Panel3'
+    Padding.Left = 1
+    ShowCaption = False
+    TabOrder = 3
+    ExplicitWidth = 585
+    object Label1: TLabel
+      AlignWithMargins = True
+      Left = 6
+      Top = 5
+      Width = 110
+      Height = 39
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alLeft
+      Caption = 'Profile visibity'
+      Layout = tlCenter
+      ExplicitHeight = 25
+    end
+    object ToggleSwitch1: TToggleSwitch
+      AlignWithMargins = True
+      Left = 131
+      Top = 5
+      Width = 145
+      Height = 39
+      Margins.Left = 10
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alLeft
+      StateCaptions.CaptionOn = 'Visible'
+      StateCaptions.CaptionOff = 'Invisible'
+      SwitchHeight = 30
+      SwitchWidth = 75
+      TabOrder = 0
+      ThumbWidth = 23
+      ExplicitHeight = 30
     end
   end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 268
-    Top = 21
+    Left = 444
+    Top = 43
   end
 end

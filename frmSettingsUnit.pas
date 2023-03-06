@@ -1,54 +1,53 @@
-unit frmSettingsUnit;
+﻿unit frmSettingsUnit;
 
 interface
 
 uses
+
+  DataModuleUnit,
+
   Winapi.Windows,
   Winapi.Messages,
+
   System.SysUtils,
- // System.Variants,
   System.Classes,
+
+  Vcl.Dialogs,
   Vcl.Controls,
   Vcl.Forms,
   Vcl.ExtCtrls,
   Vcl.StdCtrls,
   Vcl.WinXCtrls,
+  Vcl.ComCtrls,
+  Vcl.Samples.Spin,
 
-  RzPanel
+  RzPanel,
+  RzCmboBx,
+  RzButton,
+  Vcl.Menus
 
   ;
 
 type
   TfrmSettings = class(TForm)
-    Edit1: TEdit;
-    ComboBox1: TComboBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    ToggleSwitch1: TToggleSwitch;
-    ToggleSwitch2: TToggleSwitch;
-    Label4: TLabel;
-    Edit2: TEdit;
-    Label5: TLabel;
-    Label6: TLabel;
-    ToggleSwitch3: TToggleSwitch;
-    Label7: TLabel;
-    ToggleSwitch4: TToggleSwitch;
-    Label8: TLabel;
-    ToggleSwitch5: TToggleSwitch;
-    RzGroupBox1: TRzGroupBox;
-    RzGroupBox2: TRzGroupBox;
-    RzGroupBox3: TRzGroupBox;
-    ToggleSwitch6: TToggleSwitch;
-    Label9: TLabel;
     Panel2: TPanel;
     Button1: TButton;
     Button2: TButton;
-    Label10: TLabel;
-    ToggleSwitch7: TToggleSwitch;
-    ComboBox2: TComboBox;
-    Label11: TLabel;
+    ComboBox_ui_theme: TComboBox;
+    RzGroupBox4: TRzGroupBox;
+    Button3: TButton;
+    RzGroupBox5: TRzGroupBox;
+    RzGroupBox6: TRzGroupBox;
+    SpinEdit_ui_font_size: TSpinEdit;
+    FontComboBox_ui_font_name: TRzFontComboBox;
+    RzGroupBox10: TRzGroupBox;
+    ToggleSwitch9: TToggleSwitch;
+    Panel8: TPanel;
+    RzGroupBox7: TRzGroupBox;
+    ComboBox_ui_language: TComboBox;
+    Button4: TButton;
     procedure FormShow(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,18 +59,33 @@ var
 
 implementation
 
+uses
+     aGlobalsUnit,
+     aUtilsUnit
+     ;
+
 {$R *.dfm}
 
 {
-https://www.sqlite.org/tempfiles.html
-Write-ahead Log (WAL) files
-Shared-Memory Files
+  var P: TPoint;
+   P :=  TRzToolButton(Sender).ClientToScreen(Point(0, TRzToolButton(Sender).Height)) ;
+   frmHelpMsgPop.Show;
+   frmHelpMsgPop.SetBounds(P.X, P.Y, frmHelpMsgPop.Width, frmHelpMsgPop.Height);
+
 }
 
+procedure TfrmSettings.Button3Click(Sender: TObject);
+begin
+  if MessageDlgCenter('Are you sure you want to clear the cache?', mtConfirmation, [mbYes, mbNo]) =  mrNo then  Exit;
+
+  MessageDlgCenter('Cache cleared', mtInformation, [mbOK]);
+  APOCache.ClearCache;
+end;
 
 procedure TfrmSettings.FormShow(Sender: TObject);
 begin
  ActiveControl := Button2;
+ Panel8.Left := (ClientWidth - Panel8.Width) div 2;
 end;
 
 end.

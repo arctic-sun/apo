@@ -2,13 +2,10 @@ object FormMain: TFormMain
   Left = 0
   Top = 0
   Caption = 'Arctic Profile Optimizer'
-  ClientHeight = 603
-  ClientWidth = 1150
+  ClientHeight = 737
+  ClientWidth = 1473
   Color = 14120960
   CustomTitleBar.CaptionAlignment = taCenter
-  CustomTitleBar.Control = TitleBarPanel1
-  CustomTitleBar.Enabled = True
-  CustomTitleBar.Height = 45
   CustomTitleBar.ShowCaption = False
   CustomTitleBar.SystemColors = False
   CustomTitleBar.BackgroundColor = 14120960
@@ -25,598 +22,30 @@ object FormMain: TFormMain
   CustomTitleBar.ButtonInactiveBackgroundColor = 14120960
   Constraints.MinHeight = 300
   Constraints.MinWidth = 1125
-  DefaultMonitor = dmDesktop
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -18
   Font.Name = 'Segoe UI'
   Font.Style = []
-  GlassFrame.Enabled = True
-  GlassFrame.Top = 45
-  Position = poScreenCenter
-  PrintScale = poPrintToFit
   ShowHint = True
-  StyleElements = [seFont, seClient]
   OnAfterMonitorDpiChanged = FormAfterMonitorDpiChanged
   OnClose = FormClose
   OnCreate = FormCreate
-  OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 144
   TextHeight = 25
-  object RzStatusBar1: TRzStatusBar
-    Left = 0
-    Top = 569
-    Width = 1150
-    Height = 34
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    SimpleFrameStyle = fsNone
-    BorderInner = fsNone
-    BorderOuter = fsNone
-    BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
-    BorderWidth = 0
-    Color = 2829099
-    TabOrder = 0
-    object RzStatusPane_AppVer: TRzStatusPane
-      Left = 0
-      Top = 0
-      Width = 222
-      Height = 34
-      Hint = 'This application version'
-      Margins.Left = 5
-      Margins.Top = 0
-      Margins.Right = 0
-      Margins.Bottom = 0
-      FrameStyle = fsBump
-      Align = alLeft
-      Alignment = taCenter
-      Caption = 'version 0.0.0'
-      ExplicitLeft = 5
-      ExplicitTop = 5
-    end
-    object RzStatusPane_SQLiteVer: TRzStatusPane
-      Left = 236
-      Top = 0
-      Width = 222
-      Height = 34
-      Hint = 'Current sqlite3.dll version'
-      Margins.Left = 5
-      Margins.Top = 0
-      Margins.Right = 0
-      Margins.Bottom = 0
-      Align = alLeft
-      Alignment = taCenter
-      Caption = 'SQL v:'
-      ExplicitLeft = 241
-      ExplicitTop = 5
-    end
-    object Bevel1: TBevel
-      AlignWithMargins = True
-      Left = 227
-      Top = 5
-      Width = 4
-      Height = 24
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alLeft
-      Shape = bsLeftLine
-      ExplicitHeight = 25
-    end
-    object RzStatusPane3: TRzStatusPane
-      Left = 483
-      Top = 0
-      Width = 667
-      Height = 34
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alClient
-      Caption = ''
-      ExplicitLeft = 488
-      ExplicitTop = 5
-    end
-    object Bevel2: TBevel
-      AlignWithMargins = True
-      Left = 463
-      Top = 5
-      Width = 15
-      Height = 24
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alLeft
-      Shape = bsLeftLine
-      ExplicitLeft = 462
-      ExplicitHeight = 25
-    end
-  end
-  object TitleBarPanel1: TTitleBarPanel
-    Left = 0
-    Top = 0
-    Width = 1150
-    Height = 44
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    OnPaint = TitleBarPanel1Paint
-    CustomButtons = <>
-    object MenuButton: TRzToolButton
-      AlignWithMargins = True
-      Left = 51
-      Top = 5
-      Width = 71
-      Height = 34
-      Margins.Left = 51
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      DropDownMenu = PopupMenu1
-      Flat = False
-      ImageIndex = 0
-      Images = DataModule1.SVGIconVirtualImageList1
-      ToolStyle = tsDropDown
-      Align = alLeft
-      OnMouseMove = MenuButtonMouseMove
-      ExplicitHeight = 36
-    end
-    object SVGIconImage2: TSVGIconImage
-      Left = 395
-      Top = 23
-      Width = 304
-      Height = 11
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      AutoSize = False
-      Center = False
-      SVGText = 
-        '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'#13#10#13#10'<svg'#13#10 +
-        '   width="64.881073mm"'#13#10'   height="2.4120102mm"'#13#10'   viewBox="0 0' +
-        ' 64.881073 2.4120102"'#13#10'   version="1.1"'#13#10'   id="svg5"'#13#10'   xml:sp' +
-        'ace="preserve"'#13#10'   xmlns="http://www.w3.org/2000/svg"'#13#10'   xmlns:' +
-        'svg="http://www.w3.org/2000/svg"><defs'#13#10'     id="defs2" /><g'#13#10'  ' +
-        '   id="layer1"'#13#10'     transform="translate(-19.028298,-100.37533)' +
-        '"><g'#13#10'       aria-label="ARCTIC PROFILE OPTIMIZER"'#13#10'       id="t' +
-        'ext236"'#13#10'       style="font-size:4.19646px;line-height:1.25;font' +
-        '-family:Oxta;-inkscape-font-specification:'#39'Oxta, Normal'#39';fill:#f' +
-        'fffff;stroke-width:0.104912"'#13#10'       transform="matrix(0.8061369' +
-        '6,0,0,0.80613696,-16.565639,6.6507359)"><path'#13#10'         d="m 47.' +
-        '09123,116.26385 h -2.350018 l -0.587504,0.5875 v 2.35002 h 0.587' +
-        '504 v -2.05627 l 0.293752,-0.29375 h 1.762514 l 0.293752,0.29375' +
-        ' v 0.29376 h -1.762513 v 0.5875 h 1.762513 v 1.17501 h 0.587504 ' +
-        'v -2.35002 z"'#13#10'         id="path423"'#13#10'         style="fill:#ffff' +
-        'ff" /><path'#13#10'         d="m 51.845819,116.85135 -0.587504,-0.5875' +
-        ' h -2.937522 v 2.93752 h 0.587504 v -2.35002 h 2.056265 l 0.2937' +
-        '53,0.29375 v 0.58751 l -0.650452,0.65045 0.822506,0.81831 h 0.41' +
-        '545 v -0.41125 l -0.381878,-0.38188 0.381878,-0.38188 z"'#13#10'      ' +
-        '   id="path425"'#13#10'         style="fill:#ffffff" /><path'#13#10'        ' +
-        ' d="m 55.954153,116.85135 v -0.5875 h -3.525026 v 2.35002 l 0.58' +
-        '7504,0.5875 h 2.937522 v -0.5875 h -2.643769 l -0.293753,-0.2937' +
-        '6 v -1.46876 z"'#13#10'         id="path427"'#13#10'         style="fill:#ff' +
-        'ffff" /><path'#13#10'         d="m 56.235317,116.26385 v 0.5875 h 1.46' +
-        '8761 v 2.35002 h 0.587504 v -2.05627 l 0.293752,-0.29375 h 1.175' +
-        '009 v -0.5875 z"'#13#10'         id="path429"'#13#10'         style="fill:#f' +
-        'fffff" /><path'#13#10'         d="m 60.482138,116.26385 h -0.293752 v ' +
-        '2.93752 h 0.587504 v -2.64377 z"'#13#10'         id="path431"'#13#10'       ' +
-        '  style="fill:#ffffff" /><path'#13#10'         d="m 64.934582,116.8513' +
-        '5 v -0.5875 h -3.525026 v 2.35002 l 0.587504,0.5875 h 2.937522 v' +
-        ' -0.5875 h -2.64377 l -0.293752,-0.29376 v -1.46876 z"'#13#10'        ' +
-        ' id="path433"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d' +
-        '="m 70.314449,116.26385 h -2.937522 v 2.93752 h 0.587504 v -2.35' +
-        '002 h 2.056266 l 0.293752,0.29375 v 0.58751 l -0.293752,0.29375 ' +
-        'h -1.468761 v 0.58751 h 1.762513 l 0.587504,-0.58751 v -1.17501 ' +
-        'z"'#13#10'         id="path435"'#13#10'         style="fill:#ffffff" /><path' +
-        #13#10'         d="m 74.972516,116.85135 -0.587505,-0.5875 h -2.93752' +
-        '2 v 2.93752 h 0.587505 v -2.35002 h 2.056265 l 0.293752,0.29375 ' +
-        'v 0.58751 l -0.650451,0.65045 0.822506,0.81831 h 0.41545 v -0.41' +
-        '125 l -0.381878,-0.38188 0.381878,-0.38188 z"'#13#10'         id="path' +
-        '437"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 78.49' +
-        '3347,116.26385 h -2.937522 v 2.35002 l 0.587504,0.5875 h 2.93752' +
-        '2 v -2.35002 z m 0,2.35002 h -2.056266 l -0.293752,-0.29376 v -1' +
-        '.46876 h 2.056265 l 0.293753,0.29375 z"'#13#10'         id="path439"'#13#10 +
-        '         style="fill:#ffffff" /><path'#13#10'         d="m 83.180791,1' +
-        '16.85135 v -0.5875 h -3.525026 v 0.5875 z m -3.525026,2.35002 h ' +
-        '0.587505 v -1.17501 h 2.350017 v -0.5875 h -2.937522 z"'#13#10'       ' +
-        '  id="path441"'#13#10'         style="fill:#ffffff" /><path'#13#10'         ' +
-        'd="m 83.873209,116.26385 h -0.293752 v 2.93752 h 0.587504 v -2.6' +
-        '4377 z"'#13#10'         id="path443"'#13#10'         style="fill:#ffffff" />' +
-        '<path'#13#10'         d="m 85.681888,118.61387 -0.293753,-0.29376 v -2' +
-        '.05626 h -0.587504 v 2.35002 l 0.587504,0.5875 h 2.937522 v -0.5' +
-        '875 z"'#13#10'         id="path445"'#13#10'         style="fill:#ffffff" /><' +
-        'path'#13#10'         d="m 92.211576,116.85135 v -0.5875 H 88.68655 v 0' +
-        '.5875 z m -2.937522,1.17501 h 2.350018 v -0.5875 H 88.68655 v 1.' +
-        '76251 h 3.525026 v -0.5875 h -2.937522 z"'#13#10'         id="path447"' +
-        #13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 97.536889' +
-        ',116.26385 h -2.937521 v 2.35002 l 0.587504,0.5875 h 2.937522 v ' +
-        '-2.35002 z m 0,2.35002 h -2.056265 l -0.293752,-0.29376 v -1.468' +
-        '76 h 2.056265 l 0.293752,0.29375 z"'#13#10'         id="path449"'#13#10'    ' +
-        '     style="fill:#ffffff" /><path'#13#10'         d="m 101.70398,116.2' +
-        '6385 h -2.937527 v 2.93752 h 0.587505 v -2.35002 h 2.056262 l 0.' +
-        '29376,0.29375 v 0.58751 l -0.29376,0.29375 h -1.468758 v 0.58751' +
-        ' h 1.762518 l 0.5875,-0.58751 v -1.17501 z"'#13#10'         id="path45' +
-        '1"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 102.593' +
-        '62,116.26385 v 0.5875 h 1.46876 v 2.35002 h 0.5875 v -2.05627 l ' +
-        '0.29376,-0.29375 h 1.17501 v -0.5875 z"'#13#10'         id="path453"'#13#10 +
-        '         style="fill:#ffffff" /><path'#13#10'         d="m 106.84044,1' +
-        '16.26385 h -0.29375 v 2.93752 h 0.5875 v -2.64377 z"'#13#10'         i' +
-        'd="path455"'#13#10'         style="fill:#ffffff" /><path'#13#10'         d="' +
-        'm 107.78884,116.3184 v 2.93752 h 0.58751 v -2.35001 h 0.29375 l ' +
-        '0.88125,0.88125 0.44063,-0.44062 -1.02813,-1.02814 z m 2.35002,0' +
-        ' -0.14688,0.14688 0.44063,0.44063 h 0.29375 v 2.35001 h 0.58751 ' +
-        'v -2.93752 z"'#13#10'         id="path457"'#13#10'         style="fill:#ffff' +
-        'ff" /><path'#13#10'         d="m 112.27067,116.26385 h -0.29376 v 2.93' +
-        '752 h 0.58751 v -2.64377 z"'#13#10'         id="path459"'#13#10'         sty' +
-        'le="fill:#ffffff" /><path'#13#10'         d="m 115.98453,117.1451 -0.2' +
-        '9375,0.29376 h -2.05627 l -0.29375,0.29375 0.44063,0.44063 0.146' +
-        '87,-0.14688 h 2.05627 l 0.5875,-0.5875 v -1.17501 h -3.52502 v 0' +
-        '.5875 h 2.93752 z m -2.93752,1.46877 0.58331,0.5875 h 2.94171 v ' +
-        '-0.5875 z"'#13#10'         id="path461"'#13#10'         style="fill:#ffffff"' +
-        ' /><path'#13#10'         d="m 120.61323,116.85135 v -0.5875 h -3.52502' +
-        ' v 0.5875 z m -2.93752,1.17501 h 2.35002 v -0.5875 h -2.93752 v ' +
-        '1.76251 h 3.52502 v -0.5875 h -2.93752 z"'#13#10'         id="path463"' +
-        #13#10'         style="fill:#ffffff" /><path'#13#10'         d="m 124.63764' +
-        ',116.85135 -0.58751,-0.5875 h -2.93752 v 2.93752 h 0.5875 v -2.3' +
-        '5002 h 2.05627 l 0.29375,0.29375 v 0.58751 l -0.65045,0.65045 0.' +
-        '82251,0.81831 h 0.41545 v -0.41125 l -0.38188,-0.38188 0.38188,-' +
-        '0.38188 z"'#13#10'         id="path465"'#13#10'         style="fill:#ffffff"' +
-        ' /></g></g></svg>'#13#10
-      Stretch = False
-      Visible = False
-    end
-    object RzPanel1: TRzPanel
-      AlignWithMargins = True
-      Left = 132
-      Top = 5
-      Width = 215
-      Height = 34
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alLeft
-      BorderOuter = fsNone
-      BorderSides = []
-      Color = 2829099
-      TabOrder = 0
-      Transparent = True
-      VisualStyle = vsClassic
-      object OptimizeBtn: TRzToolButton
-        Left = 0
-        Top = 0
-        Width = 215
-        Height = 34
-        Hint = 'Start optimization for all checked profile(s)'
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Flat = False
-        ImageIndex = 4
-        Images = DataModule1.SVGIconVirtualImageList1
-        ShowCaption = True
-        UseToolbarShowCaption = False
-        Align = alClient
-        Caption = 'Optimize profiles'
-        Color = 2829099
-        OnClick = OptimizeBtnClick
-        ExplicitTop = -5
-      end
-    end
-  end
-  object RzToolbar1: TRzToolbar
-    Left = 0
-    Top = 44
-    Width = 1150
-    Height = 38
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    AutoStyle = False
-    Images = DataModule1.SVGIconVirtualImageList1
-    RowHeight = 42
-    ButtonWidth = 38
-    ButtonHeight = 38
-    ShowButtonCaptions = True
-    TextOptions = ttoCustom
-    WrapControls = False
-    AutoSize = True
-    BorderInner = fsNone
-    BorderOuter = fsGroove
-    BorderSides = [sdRight]
-    BorderWidth = 0
-    Color = 2829099
-    TabOrder = 3
-    Transparent = True
-    ToolbarControls = (
-      MenuButton2
-      RzLabel1
-      OptimizeBtn2
-      RzLabel2
-      RzToolButton11
-      RzLabel3
-      RzToolButton4
-      RzToolButton_OpenProfileDir2
-      Copyprofiledirectorypath2
-      RzLabel5
-      Checkallprofiles2
-      UnCheckallprofiles2
-      RzLabel6
-      RzToolButton10
-      RzToolButton3
-      RzToolButton5)
-    object MenuButton2: TRzToolButton
-      Left = 4
-      Top = 0
-      Width = 59
-      Height = 38
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      DropDownMenu = PopupMenu1
-      ImageIndex = 0
-      ToolStyle = tsDropDown
-    end
-    object OptimizeBtn2: TRzToolButton
-      Left = 80
-      Top = 0
-      Width = 188
-      Height = 38
-      Hint = 'Start optimization for all checked profile(s)'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      GradientColorStyle = gcsSystem
-      ImageIndex = 4
-      UseToolbarButtonLayout = False
-      UseToolbarButtonSize = False
-      UseToolbarVisualStyle = False
-      VisualStyle = vsWinXP
-      Caption = 'Optimize profiles'
-      Enabled = False
-      OnClick = OptimizeBtnClick
-    end
-    object RzToolButton4: TRzToolButton
-      Tag = 2
-      Left = 340
-      Top = 0
-      Hint = 'Add new profile path...'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 1
-      OnClick = ActionsClickClick
-    end
-    object Checkallprofiles2: TRzToolButton
-      Tag = 4
-      Left = 471
-      Top = 0
-      Hint = 'Set check On for all profiles'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 9
-      OnClick = ActionsClickClick
-    end
-    object UnCheckallprofiles2: TRzToolButton
-      Tag = 5
-      Left = 509
-      Top = 0
-      Hint = 'Set check Off for all profiles'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 10
-      OnClick = ActionsClickClick
-    end
-    object RzToolButton_OpenProfileDir2: TRzToolButton
-      Tag = 6
-      Left = 378
-      Top = 0
-      Hint = 'Open profile directory in explorer'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 13
-      OnClick = ActionsClickClick
-    end
-    object Copyprofiledirectorypath2: TRzToolButton
-      Tag = 7
-      Left = 416
-      Top = 0
-      Hint = 'Copy profile path to clipboard'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 14
-      OnClick = ActionsClickClick
-    end
-    object RzToolButton10: TRzToolButton
-      Tag = 8
-      Left = 564
-      Top = 0
-      Hint = 'Settings'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 3
-      OnClick = ActionsClickClick
-    end
-    object RzToolButton11: TRzToolButton
-      Tag = 1
-      Left = 285
-      Top = 0
-      Hint = 'Search for existing profiles'
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 15
-      OnClick = ActionsClickClick
-    end
-    object RzLabel1: TRzLabel
-      AlignWithMargins = True
-      Left = 65
-      Top = 8
-      Width = 13
-      Height = 22
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 0
-      Alignment = taCenter
-      Caption = #9474
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 6052956
-      Font.Height = -18
-      Font.Name = 'Verdana'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Quality = fqAntialiased
-      ParentFont = False
-      StyleElements = [seClient, seBorder]
-    end
-    object RzLabel2: TRzLabel
-      AlignWithMargins = True
-      Left = 270
-      Top = 8
-      Width = 13
-      Height = 22
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 0
-      Alignment = taCenter
-      Caption = #9474
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 6052956
-      Font.Height = -18
-      Font.Name = 'Verdana'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Quality = fqAntialiased
-      ParentFont = False
-      StyleElements = [seClient, seBorder]
-    end
-    object RzLabel5: TRzLabel
-      AlignWithMargins = True
-      Left = 456
-      Top = 8
-      Width = 13
-      Height = 22
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 0
-      Alignment = taCenter
-      Caption = #9474
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 6052956
-      Font.Height = -18
-      Font.Name = 'Verdana'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Quality = fqAntialiased
-      ParentFont = False
-      StyleElements = [seClient, seBorder]
-    end
-    object RzLabel6: TRzLabel
-      AlignWithMargins = True
-      Left = 549
-      Top = 8
-      Width = 13
-      Height = 22
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 0
-      Alignment = taCenter
-      Caption = #9474
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 6052956
-      Font.Height = -18
-      Font.Name = 'Verdana'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Quality = fqAntialiased
-      ParentFont = False
-      StyleElements = [seClient, seBorder]
-    end
-    object RzLabel3: TRzLabel
-      AlignWithMargins = True
-      Left = 325
-      Top = 8
-      Width = 13
-      Height = 22
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 0
-      Alignment = taCenter
-      Caption = #9474
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 6052956
-      Font.Height = -18
-      Font.Name = 'Verdana'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Quality = fqAntialiased
-      ParentFont = False
-      StyleElements = [seClient, seBorder]
-    end
-    object RzToolButton3: TRzToolButton
-      Left = 602
-      Top = 0
-      Width = 59
-      Height = 38
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      DropDownMenu = PopupMenu3
-      ImageIndex = 11
-      ToolStyle = tsDropDown
-    end
-    object RzToolButton5: TRzToolButton
-      Left = 661
-      Top = 0
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ImageIndex = 11
-      Visible = False
-    end
-  end
   object RzSplitter1: TRzSplitter
     Left = 0
-    Top = 82
-    Width = 1150
-    Height = 487
+    Top = 111
+    Width = 1473
+    Height = 591
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Orientation = orVertical
-    Position = 251
+    Position = 305
     Percent = 52
     UsePercent = True
     RealTimeDrag = True
@@ -626,12 +55,14 @@ object FormMain: TFormMain
     SplitterWidth = 9
     Align = alClient
     Color = 2829099
-    TabOrder = 4
+    TabOrder = 1
+    ExplicitWidth = 1463
+    ExplicitHeight = 589
     BarSize = (
       0
-      251
-      1150
-      260)
+      305
+      1473
+      314)
     UpperLeftControls = (
       VirtualStringTree1)
     LowerRightControls = (
@@ -640,8 +71,9 @@ object FormMain: TFormMain
     object VirtualStringTree1: TVirtualStringTree
       Left = 0
       Top = 0
-      Width = 1150
-      Height = 251
+      Width = 1473
+      Height = 305
+      Hint = '?'
       Margins.Left = 2
       Margins.Top = 5
       Margins.Right = 5
@@ -665,26 +97,27 @@ object FormMain: TFormMain
       Colors.UnfocusedSelectionColor = 11963734
       Colors.UnfocusedSelectionBorderColor = 11579568
       DefaultNodeHeight = 27
+      DragOperations = []
       Header.AutoSizeIndex = 0
-      Header.Height = 29
-      Header.MaxHeight = 15000
-      Header.MinHeight = 15
+      Header.Height = 34
+      Header.MaxHeight = 100
+      Header.MinHeight = 19
       Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoAutoSpring, hoFullRepaintOnResize]
-      Header.PopupMenu = PopupMenu1
       Header.SplitterHitTolerance = 16
-      HintMode = hmHintAndDefault
+      HintMode = hmTooltip
       Indent = 27
       LineStyle = lsSolid
       Margin = 6
-      PopupMenu = PopupMenu1
+      PopupMenu = PopupActionBar1
       TabOrder = 0
       TextMargin = 6
       TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoHideButtons, toAutoChangeScale]
-      TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+      TreeOptions.MiscOptions = [toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
       TreeOptions.PaintOptions = [toHideFocusRect, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
       TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
       OnBeforeCellPaint = VirtualStringTree1BeforeCellPaint
       OnChecked = VirtualStringTree1Checked
+      OnDragOver = VirtualStringTree1DragOver
       OnDrawText = VirtualStringTree1DrawText
       OnFreeNode = VirtualStringTree1FreeNode
       OnGetText = VirtualStringTree1GetText
@@ -692,7 +125,8 @@ object FormMain: TFormMain
       OnNodeClick = VirtualStringTree1NodeClick
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-      ExplicitTop = -1
+      ExplicitWidth = 1463
+      ExplicitHeight = 304
       Columns = <
         item
           Hint = 'Profile App\Path and settings for its optimization'
@@ -702,27 +136,27 @@ object FormMain: TFormMain
           Position = 0
           Spacing = 5
           Text = 'Profile'
-          Width = 500
+          Width = 568
         end
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
-          Hint = 'Number of files that have been optimized'
+          Hint = 'Total SQLite files found \ Total SQLite files optimized'
           MaxWidth = 15000
-          MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          MinWidth = 105
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coSmartResize, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 1
           Spacing = 5
-          Text = 'Files'
-          Width = 105
+          Text = 'Files f\o'
+          Width = 188
         end
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
-          Hint = 'Size of all files before optimization'
+          Hint = 'SQLite files size before optimization'
           MaxWidth = 15000
-          MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          MinWidth = 210
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coSmartResize, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 2
           Spacing = 5
           Text = 'Size before'
@@ -731,10 +165,10 @@ object FormMain: TFormMain
         item
           Alignment = taRightJustify
           CaptionAlignment = taRightJustify
-          Hint = 'Size of all files after optimization'
+          Hint = 'SQLite files size after optimization'
           MaxWidth = 15000
-          MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          MinWidth = 210
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coSmartResize, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 3
           Spacing = 5
           Text = 'Size after'
@@ -745,18 +179,26 @@ object FormMain: TFormMain
           CaptionAlignment = taCenter
           Hint = 'Rate of optimization efficiency'
           MaxWidth = 15000
-          MinWidth = 15
-          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coShowDropMark, coVisible, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          MinWidth = 120
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coSmartResize, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
           Position = 4
           Spacing = 5
           Text = 'Rate'
           Width = 120
+        end
+        item
+          Hint = 'Last optimization date'
+          MinWidth = 150
+          Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coSmartResize, coAllowFocus, coUseCaptionAlignment, coEditable, coStyleColor]
+          Position = 5
+          Text = 'Optimized'
+          Width = 150
         end>
     end
     object RzPanel2: TRzPanel
       Left = 0
       Top = 0
-      Width = 1150
+      Width = 1473
       Height = 29
       Margins.Left = 5
       Margins.Top = 5
@@ -771,9 +213,10 @@ object FormMain: TFormMain
       Padding.Right = 9
       TabOrder = 0
       Transparent = True
+      ExplicitWidth = 1463
       object RzToolButton1: TRzToolButton
         AlignWithMargins = True
-        Left = 1044
+        Left = 1367
         Top = 2
         Width = 92
         Margins.Left = 5
@@ -785,13 +228,11 @@ object FormMain: TFormMain
         Align = alRight
         Caption = 'hide'
         OnClick = RzToolButton1Click
-        ExplicitLeft = 1326
-        ExplicitTop = 5
-        ExplicitHeight = 28
+        ExplicitTop = -2
       end
       object RzToolButton2: TRzToolButton
         AlignWithMargins = True
-        Left = 959
+        Left = 1282
         Top = 2
         Width = 75
         Margins.Left = 5
@@ -811,8 +252,8 @@ object FormMain: TFormMain
     object VirtualStringTree2: TVirtualStringTree
       Left = 0
       Top = 29
-      Width = 1150
-      Height = 198
+      Width = 1473
+      Height = 248
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -837,7 +278,7 @@ object FormMain: TFormMain
       Colors.UnfocusedSelectionBorderColor = 2829099
       DefaultNodeHeight = 27
       Header.AutoSizeIndex = 2
-      Header.Height = 29
+      Header.Height = 34
       Header.MaxHeight = 15000
       Header.MinHeight = 15
       Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
@@ -845,15 +286,19 @@ object FormMain: TFormMain
       Indent = 27
       LineStyle = lsSolid
       Margin = 6
-      PopupMenu = PopupMenu2
+      PopupMenu = PopupActionBar2
       TabOrder = 1
       TextMargin = 6
+      TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
       TreeOptions.PaintOptions = [toHideFocusRect, toHotTrack, toShowButtons, toShowDropmark, toShowHorzGridLines, toShowRoot, toShowTreeLines, toShowVertGridLines, toThemeAware, toUseBlendedImages, toFullVertGridLines, toUseBlendedSelection]
       TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toRightClickSelect, toAlwaysSelectNode, toRestoreSelection]
+      OnDragOver = VirtualStringTree1DragOver
       OnFreeNode = VirtualStringTree2FreeNode
       OnGetText = VirtualStringTree2GetText
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
+      ExplicitWidth = 1463
+      ExplicitHeight = 247
       Columns = <
         item
           MaxWidth = 15000
@@ -882,10 +327,10 @@ object FormMain: TFormMain
     end
   end
   object RzPanelProgress: TRzPanel
-    Left = 398
+    Left = 463
     Top = 242
-    Width = 538
-    Height = 203
+    Width = 534
+    Height = 218
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -895,14 +340,14 @@ object FormMain: TFormMain
     Padding.Top = 5
     Padding.Right = 5
     Padding.Bottom = 5
-    TabOrder = 2
+    TabOrder = 0
     Transparent = True
     Visible = False
     object Label2: TLabel
       AlignWithMargins = True
       Left = 12
       Top = 12
-      Width = 514
+      Width = 510
       Height = 25
       Margins.Left = 5
       Margins.Top = 5
@@ -915,8 +360,8 @@ object FormMain: TFormMain
     object Label3: TLabel
       AlignWithMargins = True
       Left = 12
-      Top = 83
-      Width = 514
+      Top = 93
+      Width = 510
       Height = 25
       Margins.Left = 5
       Margins.Top = 5
@@ -927,9 +372,10 @@ object FormMain: TFormMain
       ExplicitWidth = 55
     end
     object RzProgressBar1: TRzProgressBar
-      Left = 7
-      Top = 42
-      Width = 524
+      AlignWithMargins = True
+      Left = 12
+      Top = 47
+      Width = 510
       Height = 36
       Margins.Left = 5
       Margins.Top = 5
@@ -941,14 +387,15 @@ object FormMain: TFormMain
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitLeft = 8
-      ExplicitTop = 38
-      ExplicitWidth = 523
+      ExplicitLeft = 10
+      ExplicitTop = 45
+      ExplicitWidth = 263
     end
     object RzProgressBar2: TRzProgressBar
-      Left = 7
-      Top = 113
-      Width = 524
+      AlignWithMargins = True
+      Left = 12
+      Top = 128
+      Width = 510
       Height = 36
       Margins.Left = 5
       Margins.Top = 5
@@ -961,17 +408,19 @@ object FormMain: TFormMain
       PartsComplete = 0
       Percent = 0
       TotalParts = 0
-      ExplicitTop = 103
+      ExplicitLeft = 10
+      ExplicitTop = 126
+      ExplicitWidth = 263
     end
-    object RzPanel3: TRzPanel
+    object RzPanelProgressBtnPanel: TRzPanel
       AlignWithMargins = True
-      Left = 7
-      Top = 156
-      Width = 523
-      Height = 42
-      Margins.Left = 0
+      Left = 12
+      Top = 176
+      Width = 510
+      Height = 34
+      Margins.Left = 5
       Margins.Top = 7
-      Margins.Right = 1
+      Margins.Right = 5
       Margins.Bottom = 5
       Align = alTop
       BorderOuter = fsNone
@@ -979,10 +428,10 @@ object FormMain: TFormMain
       TabOrder = 0
       Transparent = True
       object RzButton1: TRzButton
-        Left = 410
+        Left = 295
         Top = 0
-        Width = 113
-        Height = 42
+        Width = 215
+        Height = 34
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 1
@@ -994,116 +443,149 @@ object FormMain: TFormMain
       end
     end
   end
-  object PopupMenu1: TPopupMenu
-    Images = DataModule1.SVGIconVirtualImageList1
-    OnPopup = PopupMenu1Popup
-    Left = 136
-    Top = 132
-    object Optimizeselectedprofile1: TMenuItem
-      Caption = 'Optimize this profile'
-      ImageIndex = 4
-      ImageName = 'icons8_flash_on'
-      OnClick = Optimizeselectedprofile1Click
+  object RzStatusBar1: TRzStatusBar
+    Left = 0
+    Top = 702
+    Width = 1473
+    Height = 35
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    SimpleFrameStyle = fsNone
+    BorderInner = fsNone
+    BorderOuter = fsNone
+    BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
+    BorderWidth = 0
+    Color = 2829099
+    TabOrder = 2
+    ExplicitTop = 700
+    ExplicitWidth = 1463
+    object RzStatusPane_AppVer: TRzStatusPane
+      Left = 0
+      Top = 0
+      Width = 222
+      Height = 35
+      Hint = 'This application version'
+      Margins.Left = 5
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      FrameStyle = fsBump
+      Align = alLeft
+      Alignment = taCenter
+      Caption = 'version 0.0.0'
+      ExplicitTop = -5
+      ExplicitHeight = 34
     end
-    object N5: TMenuItem
-      Caption = '-'
+    object RzStatusPane_SQLiteVer: TRzStatusPane
+      Left = 236
+      Top = 0
+      Width = 222
+      Height = 35
+      Hint = 'Current sqlite3.dll version'
+      Margins.Left = 5
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alLeft
+      Alignment = taCenter
+      Caption = 'SQL v:'
+      ExplicitTop = -5
+      ExplicitHeight = 34
     end
-    object ScannProfiles: TMenuItem
-      Tag = 1
-      Caption = 'Search for existing profiles'
-      ImageIndex = 15
-      ImageName = 'icons8_browse_folder'
-      ShortCut = 116
-      OnClick = ActionsClickClick
+    object Bevel1: TBevel
+      AlignWithMargins = True
+      Left = 227
+      Top = 5
+      Width = 4
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alLeft
+      Shape = bsLeftLine
     end
-    object CreateBATfile1: TMenuItem
-      Tag = 10
-      Caption = 'Generate .BAT script for checked profile(s)...'
-      ImageIndex = 8
-      ImageName = 'icons8_console_2'
-      OnClick = ActionsClickClick
+    object RzStatusPane3: TRzStatusPane
+      Left = 483
+      Top = 0
+      Width = 990
+      Height = 35
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alClient
+      Caption = ''
+      ExplicitLeft = 488
     end
-    object aa1: TMenuItem
-      Caption = '-'
+    object Bevel2: TBevel
+      AlignWithMargins = True
+      Left = 463
+      Top = 5
+      Width = 15
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Align = alLeft
+      Shape = bsLeftLine
+      ExplicitLeft = 462
     end
-    object AddCustomProfileBtn: TMenuItem
-      Tag = 2
-      Caption = 'Add profile path...'
-      ImageIndex = 1
-      ImageName = 'icons8_add_folder'
-      ShortCut = 16449
-      OnClick = ActionsClickClick
-    end
-    object Edit1: TMenuItem
-      Caption = 'Edit...'
-      Visible = False
-    end
-    object DelCustomProfileBtn: TMenuItem
-      Tag = 3
-      Caption = 'Remove selected profile'
-      ImageIndex = 2
-      ImageName = 'icons8_delete_folder'
-      ShortCut = 46
-      OnClick = ActionsClickClick
-    end
-    object N1: TMenuItem
-      Caption = '-'
-    end
-    object Checkallprofiles1: TMenuItem
-      Tag = 4
-      Caption = 'Check all profiles'
-      ImageIndex = 9
-      ImageName = 'icons8_Checked_Checkbox'
-      ShortCut = 16471
-      OnClick = ActionsClickClick
-    end
-    object UnCheckallprofiles1: TMenuItem
-      Tag = 5
-      Caption = 'UnCheck all profiles'
-      ImageIndex = 10
-      ImageName = 'icons8_Unchecked_Checkbox'
-      ShortCut = 16453
-      OnClick = ActionsClickClick
-    end
-    object N2: TMenuItem
-      Caption = '-'
-    end
-    object Openprofiledirectory1: TMenuItem
-      Tag = 6
-      Caption = 'Open profile directory in Explorer'
-      ImageIndex = 13
-      ImageName = 'icons8_file_explorer'
-      ShortCut = 16452
-      OnClick = ActionsClickClick
-    end
-    object Copyprofiledirectorypath1: TMenuItem
-      Tag = 7
-      Caption = 'Copy profile path'
-      ImageIndex = 14
-      ImageName = 'icons8_symlink_directory_1'
-      ShortCut = 16451
-      OnClick = ActionsClickClick
-    end
-    object N3: TMenuItem
-      Caption = '-'
-    end
-    object SettingsBtn: TMenuItem
-      Tag = 8
-      Caption = 'Settings ...'
-      ImageIndex = 3
-      ImageName = 'icons8_settings_1'
-      OnClick = ActionsClickClick
-    end
-    object N4: TMenuItem
-      Caption = '-'
-    end
-    object info1: TMenuItem
-      Tag = 9
-      Caption = 'Info...'
-      ImageIndex = 12
-      ImageName = 'icons8_fish_skeleton'
-      OnClick = ActionsClickClick
-    end
+  end
+  object ActionMainMenuBar1: TActionMainMenuBar
+    Left = 0
+    Top = 0
+    Width = 1473
+    Height = 39
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    UseSystemFont = False
+    ActionManager = ActionManager1
+    AllowHiding = True
+    Caption = 'ActionMainMenuBar1'
+    Color = clMenuBar
+    ColorMap.DisabledFontColor = 10461087
+    ColorMap.HighlightColor = clWhite
+    ColorMap.BtnSelectedFont = clBlack
+    ColorMap.UnusedColor = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -18
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Spacing = 0
+    ExplicitWidth = 1463
+  end
+  object ActionToolBar2: TActionToolBar
+    Left = 0
+    Top = 39
+    Width = 1473
+    Height = 72
+    Margins.Left = 0
+    Margins.Top = 7
+    Margins.Right = 0
+    Margins.Bottom = 0
+    ActionManager = ActionManager2
+    Caption = 'ActionToolBar2'
+    Color = clMenuBar
+    ColorMap.DisabledFontColor = 10461087
+    ColorMap.HighlightColor = clWhite
+    ColorMap.BtnSelectedFont = clBlack
+    ColorMap.UnusedColor = clWhite
+    EdgeBorders = [ebTop]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -18
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    Spacing = 0
+    ExplicitWidth = 1463
   end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
@@ -1111,19 +593,6 @@ object FormMain: TFormMain
     Options = [fdoPickFolders]
     Left = 136
     Top = 188
-  end
-  object PopupMenu2: TPopupMenu
-    OnPopup = PopupMenu2Popup
-    Left = 280
-    Top = 449
-    object Copy1: TMenuItem
-      Caption = 'Copy'
-      OnClick = Copy1Click
-    end
-    object Gotofile1: TMenuItem
-      Caption = 'Goto file'
-      OnClick = Gotofile1Click
-    end
   end
   object FileSaveDialog1: TFileSaveDialog
     FavoriteLinks = <>
@@ -1142,32 +611,784 @@ object FormMain: TFormMain
     Top = 265
   end
   object PopupMenu3: TPopupMenu
-    Left = 572
-    Top = 123
+    Left = 1304
+    Top = 171
     object VST1: TMenuItem
       Caption = 'VST'
-      OnClick = Act1Click
     end
     object Form1: TMenuItem
       Tag = 1
       Caption = 'Form'
-      OnClick = Act1Click
     end
     object WhiteSkin1: TMenuItem
       Tag = 2
       Caption = 'WhiteSkin'
-      OnClick = Act1Click
     end
     object BlackSkin1: TMenuItem
       Tag = 3
       Caption = 'BlackSkin'
-      OnClick = Act1Click
+    end
+    object Save1: TMenuItem
+      Tag = 4
+      AutoHotkeys = maManual
+      Caption = 'RzToolbar1'
+      ShortCut = 16465
+    end
+    object Load1: TMenuItem
+      Tag = 5
+      Caption = 'RzStatusBar1'
+    end
+    object ctrls1: TMenuItem
+      Tag = 6
+      Caption = 'ctrls'
+    end
+    object Progress1: TMenuItem
+      Tag = 7
+      Caption = 'Progress'
+    end
+    object SaveLoadJSON1: TMenuItem
+      Caption = 'Save\Load JSON'
     end
   end
   object DirtyHackDPiTimer1: TTimer
     Enabled = False
     OnTimer = DirtyHackDPiTimer1Timer
-    Left = 748
-    Top = 143
+    Left = 880
+    Top = 191
+  end
+  object RzFormState1: TRzFormState
+    Section = 'mainwnd'
+    RegIniFile = RzRegIniFile1
+    Left = 400
+    Top = 508
+  end
+  object RzRegIniFile1: TRzRegIniFile
+    Left = 584
+    Top = 508
+  end
+  object ActionManager1: TActionManager
+    ActionBars = <
+      item
+        Items = <
+          item
+            Action = Action27
+            CommandStyle = csSeparator
+            CommandProperties.Width = -1
+            CommandProperties.Font.Charset = DEFAULT_CHARSET
+            CommandProperties.Font.Color = clWindowText
+            CommandProperties.Font.Height = -18
+            CommandProperties.Font.Name = 'Segoe UI'
+            CommandProperties.Font.Style = []
+            CommandProperties.ParentFont = False
+          end
+          item
+            ContextItems.CaptionOptions = coNone
+            ContextItems = <>
+            Items = <
+              item
+                Action = Action6
+                Caption = '&Open setting directory in Explorer'
+                ImageIndex = 16
+                ImageName = 'icons8_adventure'
+              end
+              item
+                Action = Action24
+                Caption = '&Generate .BAT script for checked profiles(s)...'
+                ImageIndex = 8
+                ImageName = 'icons8_console_2'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action7
+                Caption = '&Exit'
+              end>
+            Action = Action1
+            Caption = '&File'
+          end
+          item
+            Action = Action26
+          end
+          item
+            ContextItems.CaptionOptions = coNone
+            ContextItems = <>
+            Items = <
+              item
+                Action = Action8
+                Caption = '&Add new profile path...'
+                ImageIndex = 3
+                ImageName = 'icons8_add_folder'
+              end
+              item
+                Action = Action9
+                Caption = '&Edit selected...'
+                ImageIndex = 4
+                ImageName = 'f3'
+              end
+              item
+                Action = Action10
+                Caption = '&Delete selected'
+                ImageIndex = 5
+                ImageName = 'icons8_delete_folder'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action11
+                Caption = '&Check all'
+                ImageIndex = 6
+                ImageName = 'icons8_Checked_Checkbox_1'
+              end
+              item
+                Action = Action12
+                Caption = '&UnCheck all'
+                ImageIndex = 7
+                ImageName = 'icons8_Unchecked_Checkbox_1'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action13
+                Caption = '&Make selected profile Invisible'
+                ImageIndex = 15
+                ImageName = 'icons8_hide'
+              end
+              item
+                Action = Action14
+                Caption = 'Ma&ke selected profile Visible'
+                ImageIndex = 14
+                ImageName = 'icons8_eye'
+              end>
+            Action = Action2
+            Caption = '&Edit'
+          end
+          item
+            Action = Action26
+          end
+          item
+            ContextItems.CaptionOptions = coNone
+            ContextItems = <>
+            Items = <
+              item
+                Action = Action15
+                Caption = '&Reload profiles'
+                ImageIndex = 2
+                ImageName = 'icons8_find_and_replace'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action16
+                Caption = '&Full Optimization'
+                ImageIndex = 0
+                ImageName = 'Page 9'
+              end
+              item
+                Action = Action47
+                Caption = 'Fa&st Optimization'
+                ImageIndex = 20
+                ImageName = 'fxxc1'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action35
+                Caption = 'F&ull Optimization (selected profile)'
+                ImageIndex = 1
+                ImageName = 'f2'
+              end
+              item
+                Action = Action17
+                Caption = 'F&ast Optimization (selected profile)'
+                ImageIndex = 19
+                ImageName = 'ret1'
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = Action18
+                Caption = 'Op&en profile directory in Explorer'
+                ImageIndex = 12
+                ImageName = 'icons8_symlink_directory_1'
+              end
+              item
+                Action = Action19
+                Caption = '&Copy profile directory to Clipboard'
+                ImageIndex = 17
+                ImageName = 'icons8_file_submodule'
+              end>
+            Action = Action3
+            Caption = '&Profiles'
+          end
+          item
+            Action = Action26
+          end
+          item
+            ContextItems.CaptionOptions = coNone
+            ContextItems = <>
+            Items = <
+              item
+                Action = Action20
+                Caption = '&Show toolbar'
+              end
+              item
+                Action = Action21
+                Caption = 'S&how log panel'
+              end
+              item
+                Action = Action22
+                Caption = 'Sh&ow non existing profiles'
+              end
+              item
+                Action = Action23
+                Caption = 'Sho&w profiles hidden by user'
+              end>
+            Action = Action4
+            Caption = '&View'
+          end
+          item
+            Action = Action26
+          end
+          item
+            ContextItems.CaptionOptions = coNone
+            ContextItems = <>
+            Action = Action5
+            Caption = '&Settings'
+            ImageIndex = 9
+            ImageName = 'icons8_settings_1'
+          end
+          item
+            Action = Action26
+            CommandStyle = csSeparator
+            CommandProperties.Width = -1
+            CommandProperties.Font.Charset = DEFAULT_CHARSET
+            CommandProperties.Font.Color = clWindowText
+            CommandProperties.Font.Height = -18
+            CommandProperties.Font.Name = 'Segoe UI'
+            CommandProperties.Font.Style = []
+            CommandProperties.ParentFont = False
+          end
+          item
+            Action = Action25
+            Caption = ' &info'
+            ImageIndex = 13
+            ImageName = 'icons8_fish_skeleton'
+          end>
+        ActionBar = ActionMainMenuBar1
+      end
+      item
+        Items.CaptionOptions = coAll
+        Items = <
+          item
+            Caption = '-'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Caption = '-'
+          end>
+        GlyphLayout = blGlyphTop
+      end>
+    LargeImages = DataModule1.SVGIconVirtualImageList4
+    Images = DataModule1.SVGIconVirtualImageList4
+    Left = 1100
+    Top = 188
+    StyleName = 'Platform Default'
+    object Action1: TAction
+      Category = 'top'
+      Caption = 'File'
+      OnExecute = AllActionExecute
+    end
+    object Action2: TAction
+      Category = 'top'
+      Caption = 'Edit'
+      OnExecute = AllActionExecute
+    end
+    object Action3: TAction
+      Category = 'top'
+      Caption = 'Profiles'
+      OnExecute = AllActionExecute
+    end
+    object Action4: TAction
+      Category = 'top'
+      Caption = 'View'
+      OnExecute = AllActionExecute
+    end
+    object Action5: TAction
+      Tag = 99
+      Category = 'top'
+      Caption = 'Settings'
+      ImageIndex = 9
+      ImageName = 'icons8_settings_1'
+      OnExecute = AllActionExecute
+    end
+    object Action6: TAction
+      Tag = 22
+      Category = 'File'
+      Caption = 'Open setting directory in Explorer'
+      ImageIndex = 16
+      ImageName = 'icons8_adventure'
+      OnExecute = AllActionExecute
+    end
+    object Action24: TAction
+      Tag = 5
+      Category = 'File'
+      Caption = 'Generate .BAT script for checked profiles(s)...'
+      ImageIndex = 8
+      ImageName = 'icons8_console_2'
+      OnExecute = AllActionExecute
+    end
+    object Action7: TAction
+      Tag = 1
+      Category = 'File'
+      Caption = 'Exit'
+      OnExecute = AllActionExecute
+    end
+    object Action8: TAction
+      Tag = 10
+      Category = 'Edit'
+      Caption = 'Add new profile path...'
+      ImageIndex = 3
+      ImageName = 'icons8_add_folder'
+      OnExecute = AllActionExecute
+    end
+    object Action9: TAction
+      Tag = 8
+      Category = 'Edit'
+      Caption = 'Edit selected...'
+      ImageIndex = 4
+      ImageName = 'f3'
+      OnExecute = AllActionExecute
+    end
+    object Action10: TAction
+      Tag = 9
+      Category = 'Edit'
+      Caption = 'Delete selected'
+      ImageIndex = 5
+      ImageName = 'icons8_delete_folder'
+      OnExecute = AllActionExecute
+    end
+    object Action11: TAction
+      Tag = 14
+      Category = 'Edit'
+      Caption = 'Check all'
+      ImageIndex = 6
+      ImageName = 'icons8_Checked_Checkbox_1'
+      OnExecute = AllActionExecute
+    end
+    object Action12: TAction
+      Tag = 15
+      Category = 'Edit'
+      Caption = 'UnCheck all'
+      ImageIndex = 7
+      ImageName = 'icons8_Unchecked_Checkbox_1'
+      OnExecute = AllActionExecute
+    end
+    object Action13: TAction
+      Tag = 16
+      Category = 'Edit'
+      Caption = 'Make selected profile Invisible'
+      ImageIndex = 15
+      ImageName = 'icons8_hide'
+      OnExecute = AllActionExecute
+    end
+    object Action14: TAction
+      Tag = 17
+      Category = 'Edit'
+      Caption = 'Make selected profile Visible'
+      ImageIndex = 14
+      ImageName = 'icons8_eye'
+      OnExecute = AllActionExecute
+    end
+    object Action15: TAction
+      Tag = 13
+      Category = 'Profiles'
+      Caption = 'Reload profiles'
+      ImageIndex = 2
+      ImageName = 'icons8_find_and_replace'
+      OnExecute = AllActionExecute
+    end
+    object Action16: TAction
+      Tag = 23
+      Category = 'Profiles'
+      Caption = 'Full Optimization'
+      ImageIndex = 0
+      ImageName = 'Page 9'
+      OnExecute = AllActionExecute
+    end
+    object Action47: TAction
+      Tag = 24
+      Category = 'Profiles'
+      Caption = 'Fast Optimization'
+      ImageIndex = 20
+      ImageName = 'fxxc1'
+      OnExecute = AllActionExecute
+    end
+    object Action35: TAction
+      Tag = 25
+      Category = 'Profiles'
+      Caption = 'Full Optimization (selected profile)'
+      ImageIndex = 1
+      ImageName = 'f2'
+      OnExecute = AllActionExecute
+    end
+    object Action17: TAction
+      Tag = 26
+      Category = 'Profiles'
+      Caption = 'Fast Optimization (selected profile)'
+      ImageIndex = 19
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+    object Action18: TAction
+      Tag = 6
+      Category = 'Profiles'
+      Caption = 'Open profile directory in Explorer'
+      ImageIndex = 12
+      ImageName = 'icons8_symlink_directory_1'
+      OnExecute = AllActionExecute
+    end
+    object Action19: TAction
+      Tag = 7
+      Category = 'Profiles'
+      Caption = 'Copy profile directory to Clipboard'
+      ImageIndex = 17
+      ImageName = 'icons8_file_submodule'
+      OnExecute = AllActionExecute
+    end
+    object Action20: TAction
+      Tag = 18
+      Category = 'View'
+      Caption = 'Show toolbar'
+      GroupIndex = 1
+      OnExecute = AllActionExecute
+    end
+    object Action21: TAction
+      Tag = 19
+      Category = 'View'
+      Caption = 'Show log panel'
+      GroupIndex = 2
+      OnExecute = AllActionExecute
+    end
+    object Action22: TAction
+      Tag = 20
+      Category = 'View'
+      Caption = 'Show non existing profiles'
+      GroupIndex = 3
+      OnExecute = AllActionExecute
+    end
+    object Action23: TAction
+      Tag = 21
+      Category = 'View'
+      Caption = 'Show profiles hidden by user'
+      GroupIndex = 4
+      OnExecute = AllActionExecute
+    end
+    object AllAction: TAction
+      Caption = 'AllAction'
+      OnExecute = AllActionExecute
+    end
+    object Action25: TAction
+      Tag = 114
+      Category = 'top'
+      Caption = ' info'
+      ImageIndex = 13
+      ImageName = 'icons8_fish_skeleton'
+      OnExecute = AllActionExecute
+    end
+    object Action26: TAction
+      Category = 'top'
+      Caption = '|'
+    end
+    object Action27: TAction
+      Category = 'top'
+      Caption = '::'
+    end
+    object Action28: TAction
+      Category = 'Log'
+      Caption = 'Copy to clipboard'
+      OnExecute = Copy1Click
+      OnUpdate = Action28Update
+    end
+    object Action29: TAction
+      Category = 'Log'
+      Caption = 'Goto file'
+      OnExecute = Gotofile1Click
+      OnUpdate = Action29Update
+    end
+    object Action30: TAction
+      Category = 'top'
+      Caption = 'Optimize'
+      OnExecute = Action30Execute
+    end
+  end
+  object PopupActionBar1: TPopupActionBar
+    Images = DataModule1.SVGIconVirtualImageList4
+    Left = 128
+    Top = 345
+    object Fil1: TMenuItem
+      Action = Action35
+    end
+    object Optimizeselectedprofile2: TMenuItem
+      Action = Action17
+    end
+    object N4: TMenuItem
+      Caption = '-'
+    end
+    object OpenprofiledirectoryinExplorer1: TMenuItem
+      Action = Action18
+    end
+    object CopyprofiledirectorytoClipboard1: TMenuItem
+      Action = Action19
+    end
+    object N6: TMenuItem
+      Caption = '-'
+    end
+    object Addnewprofilepath1: TMenuItem
+      Action = Action8
+    end
+    object edit2: TMenuItem
+      Action = Action9
+    end
+    object Deleteselected1: TMenuItem
+      Action = Action10
+    end
+    object N7: TMenuItem
+      Caption = '-'
+    end
+    object MakeselectedprofileInvisible1: TMenuItem
+      Action = Action13
+    end
+    object MakeselectedprofileVisible1: TMenuItem
+      Action = Action14
+    end
+  end
+  object ActionManager2: TActionManager
+    ActionBars = <
+      item
+        Items = <
+          item
+            Items = <
+              item
+                Action = Action31
+                Caption = '&Full Optimization (selected profile)'
+                ImageIndex = 1
+                ImageName = 'f2'
+              end>
+            Action = Action36
+            Caption = '&full'
+            CommandStyle = csComboBox
+            ImageIndex = 0
+            ImageName = 'Page 9'
+            CommandProperties.Width = -1
+          end
+          item
+            Items = <
+              item
+                Action = Action32
+                Caption = '&Fast Optimization (selected profile)'
+                ImageIndex = 17
+                ImageName = 'ret1'
+              end>
+            Action = Action37
+            Caption = 'fa&st'
+            CommandStyle = csComboBox
+            ImageIndex = 18
+            ImageName = 'fxxc1'
+            CommandProperties.Width = -1
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Action = Action38
+            Caption = '&reload'
+            ImageIndex = 2
+            ImageName = 'icons8_find_and_replace'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Action = Action39
+            Caption = '&add'
+            ImageIndex = 3
+            ImageName = 'icons8_add_folder'
+          end
+          item
+            Action = Action40
+            Caption = '&edit'
+            ImageIndex = 4
+            ImageName = 'f3'
+          end
+          item
+            Action = Action41
+            Caption = '&delete'
+            ImageIndex = 5
+            ImageName = 'icons8_delete_folder'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Action = Action44
+            Caption = 'c&opy'
+            ImageIndex = 13
+            ImageName = 'icons8_file_submodule'
+          end
+          item
+            Action = Action45
+            Caption = 'o&pen'
+            ImageIndex = 12
+            ImageName = 'icons8_symlink_directory_1'
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Action = Action42
+            Caption = 'c&heck'
+            ImageIndex = 6
+            ImageName = 'icons8_Checked_Checkbox_1'
+          end
+          item
+            Action = Action43
+            Caption = '&uncheck'
+            ImageIndex = 7
+            ImageName = 'icons8_Unchecked_Checkbox_1'
+          end>
+        ActionBar = ActionToolBar2
+        GlyphLayout = blGlyphTop
+      end>
+    LargeImages = DataModule1.SVGIconVirtualImageList5
+    Images = DataModule1.SVGIconVirtualImageList5
+    Left = 1108
+    Top = 289
+    StyleName = 'Platform Default'
+    object Action36: TAction
+      Tag = 23
+      Caption = 'full'
+      Hint = 'Full optimization for checked profiles'
+      ImageIndex = 0
+      ImageName = 'Page 9'
+      OnExecute = AllActionExecute
+    end
+    object Action37: TAction
+      Tag = 24
+      Caption = 'fast'
+      Hint = 'Fast optimization for checked profiles'
+      ImageIndex = 17
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+    object Action38: TAction
+      Tag = 13
+      Caption = 'reload'
+      Hint = 'Reload profiles'
+      ImageIndex = 2
+      ImageName = 'icons8_find_and_replace'
+      OnExecute = AllActionExecute
+    end
+    object Action39: TAction
+      Tag = 10
+      Caption = 'add'
+      Hint = 'Add new profile'
+      ImageIndex = 3
+      ImageName = 'icons8_add_folder'
+      OnExecute = AllActionExecute
+    end
+    object Action40: TAction
+      Tag = 8
+      Caption = 'edit'
+      Hint = 'Edit selected profile'
+      ImageIndex = 4
+      ImageName = 'f3'
+      OnExecute = AllActionExecute
+    end
+    object Action41: TAction
+      Tag = 9
+      Caption = 'delete'
+      Hint = 'Delete selected profile'
+      ImageIndex = 5
+      ImageName = 'icons8_delete_folder'
+      OnExecute = AllActionExecute
+    end
+    object Action42: TAction
+      Tag = 14
+      Caption = 'check'
+      Hint = 'Set all checked'
+      ImageIndex = 6
+      ImageName = 'icons8_Checked_Checkbox_1'
+      OnExecute = AllActionExecute
+    end
+    object Action43: TAction
+      Tag = 15
+      Caption = 'uncheck'
+      Hint = 'Set all unchecked'
+      ImageIndex = 7
+      ImageName = 'icons8_Unchecked_Checkbox_1'
+      OnExecute = AllActionExecute
+    end
+    object Action44: TAction
+      Tag = 7
+      Caption = 'copy'
+      Hint = 'Copy profile directory to Clipboard'
+      ImageIndex = 13
+      ImageName = 'icons8_file_submodule'
+      OnExecute = AllActionExecute
+    end
+    object Action45: TAction
+      Tag = 6
+      Caption = 'open'
+      Hint = 'Open profile directory in Explorer'
+      ImageIndex = 12
+      ImageName = 'icons8_symlink_directory_1'
+      OnExecute = AllActionExecute
+    end
+    object Action46: TAction
+      Tag = 99
+      Caption = 'settings'
+      ImageIndex = 9
+      ImageName = 'icons8_settings_1'
+      OnExecute = AllActionExecute
+    end
+    object Action31: TAction
+      Tag = 25
+      Caption = 'Full Optimization (selected profile)'
+      ImageIndex = 1
+      ImageName = 'f2'
+      OnExecute = AllActionExecute
+    end
+    object Action32: TAction
+      Tag = 26
+      Caption = 'Fast Optimization (selected profile)'
+      ImageIndex = 17
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+  end
+  object PopupActionBar2: TPopupActionBar
+    OnPopup = PopupActionBar2Popup
+    Left = 1268
+    Top = 537
+    object Copytoclipboard1: TMenuItem
+      Action = Action28
+    end
+    object Gotofile2: TMenuItem
+      Action = Action29
+    end
   end
 end

@@ -1,44 +1,33 @@
-unit aGlobalsUnit;
+﻿unit aGlobalsUnit;
 
 interface
 
  uses
       aConstUnit,
-      System.SysUtils,
-      System.IOUtils
-      ;
-
- {
-  1280x720 HD
-  1920x1080 FHD
-  2560x1440 QHD
-  3840x2160 4K
-  7680x4320 8K
- }
-
-
-
+      aCacheUnit,
+      aSettingsUnit,
+      aUtilsUnit,
+      System.SysUtils;
 
 function IsPortable: Boolean;
 function GetAppSettingsPath: string;
-function GetSkinIndex:Integer;
-
-
-
 
 var
-    APO_Portable : Boolean;
-    settings_minfilesizeType  : Integer;
-    settings_minfilesizeValue : Int64;     // MinSize     0 - any size
-    settings_maxscanndepth    : Integer;   // MaxDepth   -1 - any depth
-    settings_delete_wal       : Boolean;
-    settings_delete_shm       : Boolean;
-    settings_showhint         : Boolean;
-    settings_showlog          : Boolean;
-    settings_searchlnkdesktop : Boolean;
-    settings_searchlnksmenu   : Boolean;
-    settings_captiontoolbar   : boolean;
-    settings_ThemeStyle       : integer;
+    GLOBAL_ui_language                 : string;   // Название языка (можно было и индексом сделать)
+    GLOBAL_ui_theme                    : Integer;  // Индекс темы
+    GLOBAL_ui_font_name                : string;   // Имя шрифта
+    GLOBAL_ui_font_size                : Integer;  // Размер шрифта
+    GLOBAL_check_running_browsers      : Boolean;  // Проверка запущенности браузеров
+    GLOBAL_show_showlog                : Boolean;  // Видимость панели LOG
+    GLOBAL_show_nonexisting_profiles   : Boolean;  // Видимость не существующих профилей
+    GLOBAL_show_hidden_profiles        : Boolean;  // Видимость скрытых профилей
+    GLOBAL_show_toolbar                : Boolean;  // Видимость тулбара
+
+    APO_Portable     : Boolean;           // Глобальный статус портабельности
+    JSONSettingsLoad : Boolean;           // Статус наличия настроек
+    APOCache         : TAPOCacheRecord;
+    APOSettings      : TAPOSettings;
+
 
 implementation
 
@@ -48,28 +37,15 @@ begin
   APO_Portable  := Result;
 end;
 
-
 function GetAppSettingsPath: string;
 begin
-  if APO_Portable then
-   Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
-  else
-   Result := GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
-end;
+  if APO_Portable
+  then Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
+  else  Result := IncludeTrailingPathDelimiter( ExpandEnvironmentPath(APP_SYSTEM_SETTINGS_PATH) ) ;
 
-function GetSkinIndex:Integer;
-var s, tmp_str: string;
-    str_items : TArray<string>;
-begin
-    tmp_str := GetAppSettingsPath;// GetEnvironmentVariable('USERPROFILE') + APP_SETTINGS_PATH ;
-    Result := 0;
-    if not FileExists(tmp_str + APP_SETTINGS_FILENAME) then exit;
-    s := System.IOUtils.TFile.ReadAllText(tmp_str+ APP_SETTINGS_FILENAME, TEncoding.ANSI );
-    str_items := s.Split([',']);
-    if Length(str_items)>10 then
-    Result := StrToIntDef(str_items[10], 0);
+  if not ForceDirectories(Result) then Exit('');
+  if not DirectoryExists(Result) then Exit('');
 end;
-
 
 
 end.

@@ -1,4 +1,4 @@
-unit frmInfoUnit;
+﻿unit frmInfoUnit;
 
 interface
 
@@ -14,7 +14,9 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
 
-  UtilsUnit,
+  aUtilsUnit,
+  aConstUnit,
+  aSQLUtilsUnit,
   ShellApi,
   SVGIconImage;
 
@@ -52,14 +54,14 @@ procedure TfrmInfo.Button1Click(Sender: TObject);
 var
   URL: string;
 begin
-  URL := 'https://github.com/arctic-sun/apo';
+  URL := GITHUB_APO_HOME;
   ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TfrmInfo.FormShow(Sender: TObject);
 begin
  Label2.Caption := 'SQLite: ' + FileVersion(sqlite3_lib);
- Label1.Caption := Format( 'Arctic Profile Optimizer: %s alpha ( %s )', [ FileVersion(paramstr(0)) , '21/12/2022' ]  ) ;
+ Label1.Caption := Format( APO_VER_INFO, [ FileVersion(paramstr(0)) , FINAL_BUILD_DATE   ]  ) ;
  ActiveControl  := Button1;
 end;
 

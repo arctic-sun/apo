@@ -62,7 +62,7 @@ begin
          end;
        end;
 
-      SetLength(g_header, 7);
+      SetLength(g_header, VST.Header.Columns.Count);
       for I := 0 to VST.Header.Columns.Count-1 do
       begin
         g_header[i].width := VST.Header.Columns[i].Width ;

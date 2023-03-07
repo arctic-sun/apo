@@ -45,6 +45,11 @@ begin
   then TStyleManager.TrySetStyle('Windows11 Modern Dark')
   else TStyleManager.TrySetStyle('Windows11 Modern Light');
 
+
+
+
+
+
   Application.CreateForm(TFormMain, FormMain);
  // Application.CreateForm(TfrmHelpMsgPop, frmHelpMsgPop);
   Application.CreateForm(TDataModule1, DataModule1);

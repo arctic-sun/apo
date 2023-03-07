@@ -1,5 +1,7 @@
 ﻿unit aUtilsUnit;
 
+{$DEFINE ExpandEnvironmentPath_v1}
+
 interface
 
  uses

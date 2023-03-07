@@ -43,6 +43,8 @@ begin
   then Result := IncludeTrailingPathDelimiter( ExtractFilePath( paramStr(0) ) ) + APP_PORTABLE_SETTINGS_PATH
   else  Result := IncludeTrailingPathDelimiter( ExpandEnvironmentPath(APP_SYSTEM_SETTINGS_PATH) ) ;
 
+  if DirectoryExists(Result) then Exit;
+
   if not ForceDirectories(Result) then Exit('');
   if not DirectoryExists(Result) then Exit('');
 end;

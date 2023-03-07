@@ -125,8 +125,6 @@ object FormMain: TFormMain
       OnNodeClick = VirtualStringTree1NodeClick
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-      ExplicitWidth = 1463
-      ExplicitHeight = 304
       Columns = <
         item
           Hint = 'Profile App\Path and settings for its optimization'
@@ -136,7 +134,7 @@ object FormMain: TFormMain
           Position = 0
           Spacing = 5
           Text = 'Profile'
-          Width = 568
+          Width = 538
         end
         item
           Alignment = taRightJustify
@@ -297,8 +295,6 @@ object FormMain: TFormMain
       OnGetText = VirtualStringTree2GetText
       Touch.InteractiveGestures = [igPan, igPressAndTap]
       Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-      ExplicitWidth = 1463
-      ExplicitHeight = 247
       Columns = <
         item
           MaxWidth = 15000
@@ -613,42 +609,6 @@ object FormMain: TFormMain
   object PopupMenu3: TPopupMenu
     Left = 1304
     Top = 171
-    object VST1: TMenuItem
-      Caption = 'VST'
-    end
-    object Form1: TMenuItem
-      Tag = 1
-      Caption = 'Form'
-    end
-    object WhiteSkin1: TMenuItem
-      Tag = 2
-      Caption = 'WhiteSkin'
-    end
-    object BlackSkin1: TMenuItem
-      Tag = 3
-      Caption = 'BlackSkin'
-    end
-    object Save1: TMenuItem
-      Tag = 4
-      AutoHotkeys = maManual
-      Caption = 'RzToolbar1'
-      ShortCut = 16465
-    end
-    object Load1: TMenuItem
-      Tag = 5
-      Caption = 'RzStatusBar1'
-    end
-    object ctrls1: TMenuItem
-      Tag = 6
-      Caption = 'ctrls'
-    end
-    object Progress1: TMenuItem
-      Tag = 7
-      Caption = 'Progress'
-    end
-    object SaveLoadJSON1: TMenuItem
-      Caption = 'Save\Load JSON'
-    end
   end
   object DirtyHackDPiTimer1: TTimer
     Enabled = False

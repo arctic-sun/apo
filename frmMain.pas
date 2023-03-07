@@ -88,24 +88,15 @@ type
     RzPanelProgressBtnPanel: TRzPanel;
     RzButton1: TRzButton;
     PopupMenu3: TPopupMenu;
-    VST1: TMenuItem;
-    Form1: TMenuItem;
-    WhiteSkin1: TMenuItem;
-    BlackSkin1: TMenuItem;
     DirtyHackDPiTimer1: TTimer;
-    Save1: TMenuItem;
-    Load1: TMenuItem;
     RzFormState1: TRzFormState;
     RzRegIniFile1: TRzRegIniFile;
-    ctrls1: TMenuItem;
     RzStatusBar1: TRzStatusBar;
     RzStatusPane_AppVer: TRzStatusPane;
     RzStatusPane_SQLiteVer: TRzStatusPane;
     Bevel1: TBevel;
     RzStatusPane3: TRzStatusPane;
     Bevel2: TBevel;
-    Progress1: TMenuItem;
-    SaveLoadJSON1: TMenuItem;
     ActionMainMenuBar1: TActionMainMenuBar;
     ActionManager1: TActionManager;
     Action1: TAction;
@@ -593,6 +584,8 @@ end;
 
 procedure TFormMain.FormShow(Sender: TObject);
 begin
+  if FormMain.Tag = 1 then Exit;  // Prevent second time fire this event
+
   // Caption
   Application.Title := APP_CAPTION;
   Caption           := APP_CAPTION;
@@ -634,9 +627,8 @@ begin
   Action23.Checked := GLOBAL_show_hidden_profiles;
 
   // Prevent second time fire this event
-  FormMain.OnShow := nil;
-
-  RzFormState1.RestoreState;
+  // FormMain.OnShow := nil; - Cause AV in RzFormState1(RzForms)
+  FormMain.Tag := 1;
 
   SearchAndLoadProfiles;
 end;
@@ -644,12 +636,13 @@ end;
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  { VTCheckBoxDecorator.Free;}
-
+  var tms: string := GetAppSettingsPath;
   WriteSettings(APOSettings, VirtualStringTree1);
-  APOSettings.SaveToJSONFile( GetAppSettingsPath + APP_JSETTINGS_V1);
-  APOCache.SaveCache( GetAppSettingsPath + APP_CACHE_FILENAME);
+  APOSettings.SaveToJSONFile( tms + APP_JSETTINGS_V1);
+  APOCache.SaveCache( tms + APP_CACHE_FILENAME);
 
   FreeSearchProfilesResult(SearchProfilesResult);
+
   DragAcceptFiles(Self.Handle, False);
 end;
 
@@ -1001,7 +994,24 @@ begin
    updateButtonsState;
 end;
 
-function TFormMain.AddProfileToVST_v2(const pathid: string; const appid: Integer; const optimizationenabled{, caching}: boolean): Integer;
+function TFormMain.AddProfileToVST_v2(const pathid: string; const appid: Integer; const optimizationenabled: boolean): Integer;
+
+ Function GetL0RootNode(AppIDIndex: integer): PVirtualNode;
+ var ItemNodeData       : PItemNodeData;
+ begin
+        Result := VirtualStringTree1.GetFirstLevel(0);
+        while Assigned(Result) do
+        begin
+          ItemNodeData := VirtualStringTree1.GetNodeData(Result);
+          if Assigned(ItemNodeData) then
+           if ItemNodeData^.h_AppIndex = AppIDIndex then Exit;
+
+          Result := VirtualStringTree1.GetNextLevel(Result, 0);
+        end;
+       Result := nil;
+ end;
+
+
 const
  RESULT_PROFILE_ALREADY_EXISTS = -1;
  RESULT_PROFILE_ADDED          =  0;
@@ -1030,7 +1040,7 @@ begin
 
       {$REGION ' Search for root node '}
         // Поиск корневого узла (по appid) к которому будет добавлен дочерний нод содержащий путь к профилю
-        RootNode :=  VirtualStringTree1.GetFirstLevel(0);
+      {  RootNode :=  VirtualStringTree1.GetFirstLevel(0);
         while Assigned(RootNode) do
         begin
           ItemNodeData := VirtualStringTree1.GetNodeData(RootNode);
@@ -1038,7 +1048,8 @@ begin
            if ItemNodeData^.h_AppIndex = appid then Break;
 
            RootNode := VirtualStringTree1.GetNextLevel(RootNode, 0);
-        end;
+        end;  }
+       RootNode :=  GetL0RootNode(appid);
       {$ENDREGION}
 
       {$REGION ' If Root node not exists, then create it '}
@@ -1118,7 +1129,7 @@ begin
                       end;
                     end else
                     begin
-                     APOCache.AddProfile( v_ProfileName );
+                      APOCache.AddProfile( v_ProfileName );
                     end;
 
             end;
@@ -1180,7 +1191,7 @@ begin
            if profileinx > -1 then // Если результат -1 то профиль уже есть
             AddProfileToVST_v2( APOSettings.g_profiles[profileinx].p_pathid,
                                 APOSettings.g_profiles[profileinx].p_appid,
-                                APOSettings.g_profiles[profileinx].p_optimizationenabled  );
+                                APOSettings.g_profiles[profileinx].p_optimizationenabled  );   { }
          end;
       end;
     finally

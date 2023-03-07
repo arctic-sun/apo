@@ -562,7 +562,7 @@ begin
   if List = nil then Exit;
 
   for I := 0 to List.Count-1 do
-     List[i].appProfiles.Free;
+     List[i].appProfiles.Free;   { }
 
   List.Free; //  List := nil;
 end;
@@ -611,7 +611,7 @@ begin
       end;
       Result.Add(AProfile);
     end;
-  end;
+  end;  { }
 
 // *******************************
 // Mozilla

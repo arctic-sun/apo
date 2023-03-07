@@ -33,7 +33,7 @@ Depending on your browsing activity we recommend optimizing your profile once ev
 
 
 # Development
-ArcticProfileOptimizer is written in Delphi 11.2.
+ArcticProfileOptimizer is written in Delphi 11.3.
 
 ## Components used in this project
 Virtual-TreeView from https://github.com/JAM-Software/Virtual-TreeView
@@ -43,3 +43,5 @@ SVGIconImageList from https://github.com/EtheaDev/SVGIconImageList
 Konopka Signature VCL Controls (KSVC) from [Embarcadero Getit](http://altd.embarcadero.com/getit/installer/components/KonopkaControls/KonopkaControls-280-7.0For11.2.zip)
 
 JEDI Code Library from https://github.com/project-jedi/jcl
+
+mORMot2 from https://github.com/synopse/mORMot2

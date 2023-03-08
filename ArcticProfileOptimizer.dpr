@@ -47,9 +47,6 @@ begin
 
 
 
-
-
-
   Application.CreateForm(TFormMain, FormMain);
  // Application.CreateForm(TfrmHelpMsgPop, frmHelpMsgPop);
   Application.CreateForm(TDataModule1, DataModule1);

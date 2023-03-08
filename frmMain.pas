@@ -65,8 +65,7 @@ uses
   VirtualTrees.BaseTree,
   VirtualTrees.AncestorVCL,
   VirtualTrees.Header,
-  VirtualTrees.Types,
-  Vcl.ComCtrls
+  VirtualTrees.Types
   ;
 
 
@@ -87,7 +86,6 @@ type
     FileSaveDialog1: TFileSaveDialog;
     RzPanelProgressBtnPanel: TRzPanel;
     RzButton1: TRzButton;
-    PopupMenu3: TPopupMenu;
     DirtyHackDPiTimer1: TTimer;
     RzFormState1: TRzFormState;
     RzRegIniFile1: TRzRegIniFile;
@@ -183,7 +181,6 @@ type
     procedure Copy1Click(Sender: TObject);
     procedure Gotofile1Click(Sender: TObject);
     procedure RzButton1Click(Sender: TObject);
-  // procedure Act1Click(Sender: TObject);
     procedure DirtyHackDPiTimer1Timer(Sender: TObject);
     procedure AllActionExecute(Sender: TObject);
     procedure PopupActionBar2Popup(Sender: TObject);
@@ -630,12 +627,18 @@ begin
   // FormMain.OnShow := nil; - Cause AV in RzFormState1(RzForms)
   FormMain.Tag := 1;
 
+  // Prevent white flickering
+  RzSplitter1.Visible  := True;
+  RzStatusBar1.Visible := True;
+  ActionManager2.ActionBars[0].Visible := True;
+  ActionManager1.ActionBars[0].Visible := True;
+  ActionManager1.ActionBars[1].Visible := True;
+
   SearchAndLoadProfiles;
 end;
 
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- { VTCheckBoxDecorator.Free;}
   var tms: string := GetAppSettingsPath;
   WriteSettings(APOSettings, VirtualStringTree1);
   APOSettings.SaveToJSONFile( tms + APP_JSETTINGS_V1);

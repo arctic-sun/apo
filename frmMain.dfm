@@ -2,8 +2,8 @@ object FormMain: TFormMain
   Left = 0
   Top = 0
   Caption = 'Arctic Profile Optimizer'
-  ClientHeight = 737
-  ClientWidth = 1473
+  ClientHeight = 905
+  ClientWidth = 1528
   Color = 14120960
   CustomTitleBar.CaptionAlignment = taCenter
   CustomTitleBar.ShowCaption = False
@@ -38,14 +38,14 @@ object FormMain: TFormMain
   object RzSplitter1: TRzSplitter
     Left = 0
     Top = 111
-    Width = 1473
-    Height = 591
+    Width = 1528
+    Height = 759
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Orientation = orVertical
-    Position = 305
+    Position = 393
     Percent = 52
     UsePercent = True
     RealTimeDrag = True
@@ -56,13 +56,15 @@ object FormMain: TFormMain
     Align = alClient
     Color = 2829099
     TabOrder = 1
-    ExplicitWidth = 1463
-    ExplicitHeight = 589
+    Transparent = True
+    Visible = False
+    ExplicitWidth = 1518
+    ExplicitHeight = 757
     BarSize = (
       0
-      305
-      1473
-      314)
+      393
+      1528
+      402)
     UpperLeftControls = (
       VirtualStringTree1)
     LowerRightControls = (
@@ -71,8 +73,8 @@ object FormMain: TFormMain
     object VirtualStringTree1: TVirtualStringTree
       Left = 0
       Top = 0
-      Width = 1473
-      Height = 305
+      Width = 1528
+      Height = 393
       Hint = '?'
       Margins.Left = 2
       Margins.Top = 5
@@ -134,7 +136,7 @@ object FormMain: TFormMain
           Position = 0
           Spacing = 5
           Text = 'Profile'
-          Width = 538
+          Width = 563
         end
         item
           Alignment = taRightJustify
@@ -196,7 +198,7 @@ object FormMain: TFormMain
     object RzPanel2: TRzPanel
       Left = 0
       Top = 0
-      Width = 1473
+      Width = 1528
       Height = 29
       Margins.Left = 5
       Margins.Top = 5
@@ -211,10 +213,10 @@ object FormMain: TFormMain
       Padding.Right = 9
       TabOrder = 0
       Transparent = True
-      ExplicitWidth = 1463
+      ExplicitWidth = 1518
       object RzToolButton1: TRzToolButton
         AlignWithMargins = True
-        Left = 1367
+        Left = 1422
         Top = 2
         Width = 92
         Margins.Left = 5
@@ -226,11 +228,12 @@ object FormMain: TFormMain
         Align = alRight
         Caption = 'hide'
         OnClick = RzToolButton1Click
+        ExplicitLeft = 1367
         ExplicitTop = -2
       end
       object RzToolButton2: TRzToolButton
         AlignWithMargins = True
-        Left = 1282
+        Left = 1337
         Top = 2
         Width = 75
         Margins.Left = 5
@@ -250,8 +253,8 @@ object FormMain: TFormMain
     object VirtualStringTree2: TVirtualStringTree
       Left = 0
       Top = 29
-      Width = 1473
-      Height = 248
+      Width = 1528
+      Height = 328
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -441,8 +444,8 @@ object FormMain: TFormMain
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 702
-    Width = 1473
+    Top = 870
+    Width = 1528
     Height = 35
     Margins.Left = 5
     Margins.Top = 5
@@ -455,8 +458,9 @@ object FormMain: TFormMain
     BorderWidth = 0
     Color = 2829099
     TabOrder = 2
-    ExplicitTop = 700
-    ExplicitWidth = 1463
+    Visible = False
+    ExplicitTop = 868
+    ExplicitWidth = 1518
     object RzStatusPane_AppVer: TRzStatusPane
       Left = 0
       Top = 0
@@ -506,7 +510,7 @@ object FormMain: TFormMain
     object RzStatusPane3: TRzStatusPane
       Left = 483
       Top = 0
-      Width = 990
+      Width = 1045
       Height = 35
       Margins.Left = 5
       Margins.Top = 5
@@ -515,6 +519,7 @@ object FormMain: TFormMain
       Align = alClient
       Caption = ''
       ExplicitLeft = 488
+      ExplicitTop = 10
     end
     object Bevel2: TBevel
       AlignWithMargins = True
@@ -534,7 +539,7 @@ object FormMain: TFormMain
   object ActionMainMenuBar1: TActionMainMenuBar
     Left = 0
     Top = 0
-    Width = 1473
+    Width = 1528
     Height = 39
     Margins.Left = 5
     Margins.Top = 5
@@ -555,12 +560,13 @@ object FormMain: TFormMain
     Font.Name = 'Segoe UI'
     Font.Style = []
     Spacing = 0
-    ExplicitWidth = 1463
+    Visible = False
+    ExplicitWidth = 1518
   end
   object ActionToolBar2: TActionToolBar
     Left = 0
     Top = 39
-    Width = 1473
+    Width = 1528
     Height = 72
     Margins.Left = 0
     Margins.Top = 7
@@ -581,7 +587,8 @@ object FormMain: TFormMain
     Font.Style = []
     ParentFont = False
     Spacing = 0
-    ExplicitWidth = 1463
+    Visible = False
+    ExplicitWidth = 1518
   end
   object FileOpenDialog1: TFileOpenDialog
     FavoriteLinks = <>
@@ -606,10 +613,6 @@ object FormMain: TFormMain
     Left = 128
     Top = 265
   end
-  object PopupMenu3: TPopupMenu
-    Left = 1304
-    Top = 171
-  end
   object DirtyHackDPiTimer1: TTimer
     Enabled = False
     OnTimer = DirtyHackDPiTimer1Timer
@@ -619,12 +622,12 @@ object FormMain: TFormMain
   object RzFormState1: TRzFormState
     Section = 'mainwnd'
     RegIniFile = RzRegIniFile1
-    Left = 400
-    Top = 508
+    Left = 684
+    Top = 627
   end
   object RzRegIniFile1: TRzRegIniFile
-    Left = 584
-    Top = 508
+    Left = 870
+    Top = 621
   end
   object ActionManager1: TActionManager
     ActionBars = <
@@ -840,6 +843,7 @@ object FormMain: TFormMain
             ImageIndex = 13
             ImageName = 'icons8_fish_skeleton'
           end>
+        Visible = False
         ActionBar = ActionMainMenuBar1
       end
       item
@@ -860,12 +864,13 @@ object FormMain: TFormMain
           item
             Caption = '-'
           end>
+        Visible = False
         GlyphLayout = blGlyphTop
       end>
     LargeImages = DataModule1.SVGIconVirtualImageList4
     Images = DataModule1.SVGIconVirtualImageList4
-    Left = 1100
-    Top = 188
+    Left = 342
+    Top = 150
     StyleName = 'Platform Default'
     object Action1: TAction
       Category = 'top'
@@ -1230,13 +1235,14 @@ object FormMain: TFormMain
             ImageIndex = 7
             ImageName = 'icons8_Unchecked_Checkbox_1'
           end>
+        Visible = False
         ActionBar = ActionToolBar2
         GlyphLayout = blGlyphTop
       end>
     LargeImages = DataModule1.SVGIconVirtualImageList5
     Images = DataModule1.SVGIconVirtualImageList5
-    Left = 1108
-    Top = 289
+    Left = 546
+    Top = 158
     StyleName = 'Platform Default'
     object Action36: TAction
       Tag = 23
@@ -1342,8 +1348,8 @@ object FormMain: TFormMain
   end
   object PopupActionBar2: TPopupActionBar
     OnPopup = PopupActionBar2Popup
-    Left = 1268
-    Top = 537
+    Left = 714
+    Top = 158
     object Copytoclipboard1: TMenuItem
       Action = Action28
     end

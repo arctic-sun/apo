@@ -140,7 +140,7 @@ var I:integer;
 begin
 
   for I := 0 to High(sqlfiles) do                       // Проверяем файл в списке SQL
-   if compareText(FileName, sqlfiles[i] ) = 0 then      // Если файл есть в списке SQL
+   if System.SysUtils.compareText(FileName, sqlfiles[i] ) = 0 then      // Если файл есть в списке SQL
     begin
       CacheFileIndex := i;                              // Индекс в списке SQL
       tmpFiles1[i]   := 1;                              // Отмечаем наличие файла в кэше
@@ -150,7 +150,7 @@ begin
     end;
 
   for I := 0 to High(nonsqlfiles) do                    // Проверяем файл в списке NonSQL
-   if compareText(FileName, nonsqlfiles[i] ) = 0 then   // Если файл есть в списке NonSQL
+   if System.SysUtils.compareText(FileName, nonsqlfiles[i] ) = 0 then   // Если файл есть в списке NonSQL
    begin
      CacheFileIndex := i;                               // Индекс в списке NonSQL
      tmpFiles2[i] := 1;                                 // Отмечаем наличие файла в кэше
@@ -186,7 +186,7 @@ begin
   if IsSQL then
   begin
      for I := 0 to High(sqlfiles) do                     // Ищем файл в списке sqlfiles
-        if compareText(FileName, sqlfiles[i] ) = 0 then  // Если файл есть в списке sqlfiles
+        if System.SysUtils.compareText(FileName, sqlfiles[i] ) = 0 then  // Если файл есть в списке sqlfiles
         begin
           sqlfilessz[i] := Size;                         // Обновляем размер файла
           tmpFiles1[i]  := 1;
@@ -199,7 +199,7 @@ begin
      tmpFiles1  := tmpFiles1 + [1];                     // Отмечаем наличие файла в кэше sqlfiles
 
      for I := 0 to High(nonsqlfiles) do                 // Чистим список nonsqlfiles если файл мог быть ранее там
-     if compareText(FileName, nonsqlfiles[i] ) = 0 then // Ищем файл в списке nonsqlfiles
+     if System.SysUtils.compareText(FileName, nonsqlfiles[i] ) = 0 then // Ищем файл в списке nonsqlfiles
      begin                                              // Если файл есть в списке nonsqlfiles
        Delete(nonsqlfiles, i, 1);                       // Удаляем файл
        Delete(tmpFiles2, i, 1);                         // Удаляем из списка tmpFiles2
@@ -210,7 +210,7 @@ begin
   end;
 
   for I := 0 to High(nonsqlfiles) do                    // Ищем файл в списке nonsqlfiles
-    if compareText(FileName, nonsqlfiles[i] ) = 0 then  // Если файл есть в списке nonsqlfiles
+    if System.SysUtils.compareText(FileName, nonsqlfiles[i] ) = 0 then  // Если файл есть в списке nonsqlfiles
      begin
         tmpFiles2[i] := 1;
         Exit;                                           // то делать больше нечего, Выходим
@@ -220,7 +220,7 @@ begin
   tmpFiles2  := tmpFiles2 + [1];                        // Отмечаем наличие файла в кэше nonsqlfiles
 
   for I := 0 to High(sqlfiles) do                       // Чистим список sqlfiles и sqlfilessz
-  if compareText(FileName, sqlfiles[i] ) = 0 then       // Ищем файл в списке sqlfiles, если находим то
+  if System.SysUtils.compareText(FileName, sqlfiles[i] ) = 0 then       // Ищем файл в списке sqlfiles, если находим то
   begin
     Delete(sqlfiles,   i, 1);                           // Удаляем из sqlfiles
     Delete(sqlfilessz, i, 1);                           // Удаляем из sqlfilessz
@@ -372,7 +372,7 @@ begin
   if Length(CacheRecArray) = 0 then Exit(-1);
 
   for var I: integer := 0 to Length(CacheRecArray)-1 do
-   if CompareText(PathName, CacheRecArray[i].PathName ) = 0 then
+   if System.SysUtils.CompareText(PathName, CacheRecArray[i].PathName ) = 0 then
     Exit(i);
 
   Result := -1;

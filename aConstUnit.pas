@@ -10,7 +10,7 @@ const
      AppVerCaption          = 'apo: %sa'; //0.X.Xa'
      AppVerPortableCaption  = 'portable: %sa'; //0.X.Xa'
 
-     FINAL_BUILD_DATE       = '07/03/2023';
+     FINAL_BUILD_DATE       = '10/03/2023';
      GITHUB_APO_HOME        = 'https://github.com/arctic-sun/apo';
      APO_VER_INFO           = 'Arctic Profile Optimizer: %s alpha ( %s )';
 

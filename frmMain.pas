@@ -140,7 +140,6 @@ type
     N7: TMenuItem;
     ActionManager2: TActionManager;
     Action36: TAction;
-    Action37: TAction;
     Action38: TAction;
     Action39: TAction;
     Action40: TAction;
@@ -158,9 +157,25 @@ type
     Action30: TAction;
     Action35: TAction;
     Action47: TAction;
-    Action31: TAction;
-    Action32: TAction;
     Fil1: TMenuItem;
+    act1: TAction;
+    act2: TAction;
+    act3: TAction;
+    act4: TAction;
+    act5: TAction;
+    act6: TAction;
+    act7: TAction;
+    act8: TAction;
+    Standardoptimizationselectedprofile1: TMenuItem;
+    PopupActionBar3: TPopupActionBar;
+    N11: TMenuItem;
+    N21: TMenuItem;
+    N31: TMenuItem;
+    N41: TMenuItem;
+    N51: TMenuItem;
+    N61: TMenuItem;
+    Selectedprofile1: TMenuItem;
+    N1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -187,6 +202,7 @@ type
     procedure Action28Update(Sender: TObject);
     procedure Action29Update(Sender: TObject);
     procedure Action30Execute(Sender: TObject);
+    procedure Action36Execute(Sender: TObject);
   private
     { Private declarations }
     add_profiledlg_last_cbindex: integer;
@@ -198,8 +214,8 @@ type
     procedure BeforeProcOptimization;
     procedure AfterProcOptimization(const elapsedTime: string);
     procedure ProcCreateBAT(const outfile : string);
-    procedure ProcOptimizeFullLOG(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
-    procedure ProcOptimizeFastLOG(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
+    procedure ProcOptimize(const Full: Boolean= True;  selectedOnly: Boolean = False; const ShowLog: Boolean = False);
+    procedure ProcOptimizeFast(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
     function  LogAdd(RootNode: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string =''): PVirtualNode;
     procedure LogEdit(Node: PVirtualNode; const p1: string = ''; p2: string = ''; p3: string ='');
     procedure UpdateNodeHeight(VST: TVirtualStringTree; H: Integer);
@@ -651,8 +667,8 @@ end;
 
 procedure TFormMain.FormResize(Sender: TObject);
 begin
-   VirtualStringTree1.Header.Options := VirtualStringTree1.Header.Options + [hoAutoResize];
-   VirtualStringTree1.Header.Options := VirtualStringTree1.Header.Options - [hoAutoResize];
+   VirtualStringTree1.Header.Options := VirtualStringTree1.Header.Options + [hoAutoResize, hoAutoSpring];
+   VirtualStringTree1.Header.Options := VirtualStringTree1.Header.Options - [hoAutoResize, hoAutoSpring];
 
    VirtualStringTree2.Header.Options := VirtualStringTree2.Header.Options + [hoAutoResize];
    VirtualStringTree2.Header.Options := VirtualStringTree2.Header.Options - [hoAutoResize];
@@ -1152,7 +1168,7 @@ begin
     // Загрузка профилей из настроек
     // Вместо использования  Exclude(Node.States, vsVisible); для скрытия
     // ноды просто не создаются, ибо так проще, иначе придётся прикручивать контроль пустоты родительских нодов, что муторно.
-    VirtualStringTree1.BeginUpdate;
+     VirtualStringTree1.BeginUpdate;
     try
        if Length(APOSettings.g_profiles) > 0 then
        for i := 0 to High(APOSettings.g_profiles) do
@@ -1200,7 +1216,7 @@ begin
     finally
       VirtualStringTree1.EndUpdate;
     end;
-  end;
+  end;  (* *)
 
   updateButtonsState;
 end;
@@ -1348,7 +1364,6 @@ begin
      10   :   NewProfileDlg('', -1, false);
      11   :  ;
      12   :  ;
-
      13   :   SearchAndLoadProfiles;
      14   :   VSTSetCheckState(True);
      15   :   VSTSetCheckState(False);
@@ -1359,18 +1374,21 @@ begin
      20   :   ChangeNonexistingprofilesVisibility;
      21   :   ChangeHiddenprofilesVisibility;
      22   :   OpenSettingsDirectory;  // Open setting directory in Explorer
-
-     23   :   ProcOptimizeFullLOG(False, GLOBAL_show_showlog);  // full checked
-     24   :   ProcOptimizeFastLOG(False, GLOBAL_show_showlog);    // fast checked
-     25   :   ProcOptimizeFullLOG(True, GLOBAL_show_showlog);//    full selected
-     26   :   ProcOptimizeFastLOG(True, GLOBAL_show_showlog);    // fast sel
+     // Checked
+     27  : ProcOptimize(True, False, GLOBAL_show_showlog);   //  full
+     28  : ProcOptimize(False, False, GLOBAL_show_showlog);  //  std
+     29  : ProcOptimizeFast(False, GLOBAL_show_showlog);     //  fast
+     // Sel
+     30  : ProcOptimize(True,  True, GLOBAL_show_showlog);    //  full
+     31  : ProcOptimize(False, True, GLOBAL_show_showlog);    //  std
+     32  : ProcOptimizeFast(   True, GLOBAL_show_showlog);    //  fast
 
      99   :   ShowSettingsDlg;
      114  :   ShowInfoDlg;
    end;
 end;
 
-procedure TFormMain.ProcOptimizeFullLOG(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
+procedure TFormMain.ProcOptimize(const Full: Boolean = True; selectedOnly: Boolean = False; const ShowLog: Boolean = False); //FullLOG(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
 {
   * Полная оптимизация
     - Осуществляет поиск по подкаталогам без ограничения их глубины ( CNST_MAX_SEARCH_DEPTH := -1 )
@@ -1386,8 +1404,9 @@ begin
    procedure label Skipz;
 
    const
-      CNST_MIN_FILE_SIZE    = 50*1024;   // 50kb
-      CNST_MAX_SEARCH_DEPTH = -1;         // Unlimited
+      CNST_MIN_FILE_SIZE_STD  = 50*1024;   // 50kb
+      CNST_MIN_FILE_SIZE_FULL = 1024;      // 1 Kb
+      CNST_MAX_SEARCH_DEPTH = -1;          // Unlimited
 
    var
   {$REGION ' var '}
@@ -1399,6 +1418,7 @@ begin
     logNodeStart,                                    // Для лога
     logNodeProfile : PVirtualNode;                   // Для лога
 
+    SearchMinFileSize,
     cacheignoresz,                                   // Минимальный размер разницы между размером файла на диске и в кеше
     profile_OptimizedFilesSizeBefore,                // Общий размер подлежащих оптимизации файлов обрабатываемого профиля До оптимизации
     profile_OptimizedFilesSizeAfter,                 // Общий размер подлежащих оптимизации файлов обрабатываемого профиля После оптимизации
@@ -1541,6 +1561,9 @@ begin
             profile_SQLiteFiles               := 0;
 
             cacheignoresz := 0;//  1*1024*1024; // 1 MB
+            if Full
+            then SearchMinFileSize := CNST_MIN_FILE_SIZE_FULL
+            else SearchMinFileSize := CNST_MIN_FILE_SIZE_STD;
 
            {$REGION ' log '}
               inc(logProfileNo);
@@ -1577,7 +1600,7 @@ begin
            pFileList := ScannDirectory(                                                                                  // Получаем список файлов в профиле
                                        ExpandEnvironmentPath(ItemNodeData^.v_ProfileName),                               // каталог
                                        MaskArray,                                                                        // маска
-                                       CNST_MIN_FILE_SIZE,                                                               // минимальный размер файла
+                                       SearchMinFileSize,                                                                // минимальный размер файла
                                        CNST_MAX_SEARCH_DEPTH                                                             // максимальная глубина сканирования (-1 безконечная)
                                        );
 
@@ -1787,7 +1810,7 @@ begin
   aTask.Start;
 end;
 
-procedure TFormMain.ProcOptimizeFastLOG(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
+procedure TFormMain.ProcOptimizeFast(const selectedOnly: Boolean = False; const ShowLog: Boolean = False);
 {
   * Быстрая оптимизация
     - Осуществляется на основе кешированных файлов размер которых отличается на 1 MB от ранее записанных в кеш.
@@ -1807,7 +1830,7 @@ begin
    procedure label Skipz;
 
    const
-      CNST_MIN_FILE_SIZE          = 50*1024;     // 50kb
+      CNST_MIN_FILE_SIZE          = 50*1024;      // 50kb
       CNST_MAX_SEARCH_DEPTH       = -1;           // Unlimited
       CNST_CACHE_IGNOREIFLESSTHAN = 1*1024*1024;  // 1MB  Минимальный размер разницы между размером файла на диске и в кеше
 
@@ -2067,7 +2090,7 @@ begin
                 inc(Profile_OptimizedFilesSizeBefore, pFileList[i].Size);                                                // общий размер профиля до
                 inc(Profile_OptimizedFilesSizeAfter, tmpFileSizeAfter);                                                  // общий размер профиля после
 
-                APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, tmpFileSizeAfter, True);             // Добавление в Кэш нового файла
+                APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, tmpFileSizeAfter, True);                 // Добавление в Кэш нового файла
 
                 if ShowLog then
                 TThread.Synchronize(TThread.Current, procedure
@@ -2081,10 +2104,10 @@ begin
                 end);
               end
               else
-               APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, pFileList[i].Size, True);             // Добавление в Кэш нового файла
+               APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, pFileList[i].Size, True);                 // Добавление в Кэш нового файла
             end
             else // Если у файла НЕвалидная сигнатура
-               APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, 0, False);              // Добавление в Кэш нового файла
+               APOCache.CacheRecArray[profile_CacheIndex].addfile(tmpFileName, 0, False);                                // Добавление в Кэш нового файла
 
           inc(profile_ProcessedFiles); // инкремент кол-во обработанных файлов
 
@@ -2110,7 +2133,7 @@ begin
              inc(Profile_OptimizedFilesSizeBefore, pFileList[i].Size);                                                   // общий размер профиля до
              inc(Profile_OptimizedFilesSizeAfter, tmpFileSizeAfter);                                                     // общий размер профиля после
 
-             APOCache.CacheRecArray[profile_CacheIndex].UpdateFileByName(tmpFileName, tmpFileSizeAfter, True);                 // Обновляем файл в кеше
+             APOCache.CacheRecArray[profile_CacheIndex].UpdateFileByName(tmpFileName, tmpFileSizeAfter, True);           // Обновляем файл в кеше
 
              if ShowLog then
              TThread.Synchronize(TThread.Current, procedure
@@ -2150,12 +2173,12 @@ begin
        // *********** VST ********** //
        ItemNodeData^.v_SizeBefore   := FormatByteSize( Profile_OptimizedFilesSizeBefore );                               // VST Before
        ItemNodeData^.v_SizeAfter    := FormatByteSize( Profile_OptimizedFilesSizeAfter );                                // VST After
-       ItemNodeData^.v_FilesCount   := profile_SQLiteFiles.ToString + ' \ ' + Profile_OptimizedFilesCount.ToString ;  // Всего SQL файлов  \ Оптимизированно
+       ItemNodeData^.v_FilesCount   := profile_SQLiteFiles.ToString + ' \ ' + Profile_OptimizedFilesCount.ToString ;     // Всего SQL файлов  \ Оптимизированно
        ItemNodeData^.h_RateProgress := CalcRate(Profile_OptimizedFilesSizeBefore, Profile_OptimizedFilesSizeAfter );     // VST ProgressBar
        ItemNodeData^.v_RateStr      := ItemNodeData^.h_RateProgress.ToString + '%';                                      // VST ProgressBar Caption
 
        if not CancelOptProc
-       then ItemNodeData^.v_LastProcDate := 'Today at: ' + FormatDateTime('hh:nn', ProfileLastDT)                             // VST Date
+       then ItemNodeData^.v_LastProcDate := 'Today at: ' + FormatDateTime('hh:nn', ProfileLastDT)                        // VST Date
        else ItemNodeData^.v_LastProcDate :=  'Cancelled at: ' + FormatDateTime('hh:nn', ProfileLastDT);
 
        if ShowLog then
@@ -2274,6 +2297,11 @@ begin
   var checked_profile : boolean := VSTHasCheckedNodes;
   Action36.Enabled := checked_profile; // Optimize checked
   Action16.Enabled := checked_profile;
+  act7.Enabled := checked_profile;
+  Action47.Enabled := checked_profile;
+  act1.Enabled := checked_profile;
+  act2.Enabled := checked_profile;
+  act3.Enabled := checked_profile;
 
   var profile_selected : boolean := False;
   if Assigned(VirtualStringTree1.FocusedNode)
@@ -2286,9 +2314,10 @@ begin
   Action17.Enabled := profile_selected;  // Почемуто надо вызвать два раза
   Action17.Enabled := profile_selected;  // Почемуто надо вызвать два раза
 
-  Action31.Enabled := profile_selected;
-  Action32.Enabled := profile_selected;
-
+  act8.Enabled := profile_selected;
+  act4.Enabled := profile_selected;
+  act5.Enabled := profile_selected;
+  act6.Enabled := profile_selected;
 
   Action40.Enabled := profile_selected; //edit
   Action9.Enabled  := profile_selected; //edit
@@ -2461,6 +2490,13 @@ end;
 procedure TFormMain.Action30Execute(Sender: TObject);
 begin
 //
+end;
+
+procedure TFormMain.Action36Execute(Sender: TObject);
+begin
+   var Pt: TPoint;
+   Pt := ActionToolBar2.ClientToScreen( Point(0, ActionToolBar2.ClientHeight)  );
+   PopupActionBar3.Popup(Pt.X, Pt.Y);
 end;
 
 procedure TFormMain.PopupActionBar2Popup(Sender: TObject);

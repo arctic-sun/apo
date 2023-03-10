@@ -87,9 +87,16 @@ implementation
 
 function TAPOSettings.GetProfileIndex(const path: string): Integer;
 begin
- for Result := 0 to High(g_profiles) do
+ {for Result := 0 to High(g_profiles) do
   if CompareText(g_profiles[Result].p_pathid, path) = 0 then Exit;
-  Result := -1;
+  Result := -1;    }
+
+  var j: integer;
+
+   for j := 0 to High(g_profiles) do
+    if System.SysUtils.CompareText(g_profiles[j].p_pathid, path) = 0 then Exit(j);
+    Result := -1;
+
 end;
 
 function TAPOSettings.AddProfile(const v: variant): Integer;
@@ -107,6 +114,7 @@ begin
   if Pix = -1 then
   begin
     SetLength( g_profiles, Length(g_profiles)+1 );
+
     pix := High(g_profiles);
     g_profiles[pix].p_pathid              := s_path;
     g_profiles[pix].p_appid               := VarArrayGet(V, [ v_index_appid  ]);

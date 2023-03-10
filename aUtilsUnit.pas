@@ -1,6 +1,6 @@
 ﻿unit aUtilsUnit;
 
-{$DEFINE ExpandEnvironmentPath_v1}
+{.$DEFINE ExpandEnvironmentPath_v1}
 
 interface
 

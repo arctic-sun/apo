@@ -10,9 +10,9 @@ interface
 
       // SynCommons,
       mormot.core.variants,
-      mormot.core.json,
+    //  mormot.core.json,
       mormot.core.base,
-      mormot.core.data,
+    //  mormot.core.data,
 
       VirtualTrees,
       VirtualTrees.Header,

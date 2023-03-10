@@ -2,7 +2,7 @@ object FormMain: TFormMain
   Left = 0
   Top = 0
   Caption = 'Arctic Profile Optimizer'
-  ClientHeight = 905
+  ClientHeight = 696
   ClientWidth = 1528
   Color = 14120960
   CustomTitleBar.CaptionAlignment = taCenter
@@ -39,13 +39,13 @@ object FormMain: TFormMain
     Left = 0
     Top = 111
     Width = 1528
-    Height = 759
+    Height = 550
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Orientation = orVertical
-    Position = 393
+    Position = 284
     Percent = 52
     UsePercent = True
     RealTimeDrag = True
@@ -59,12 +59,12 @@ object FormMain: TFormMain
     Transparent = True
     Visible = False
     ExplicitWidth = 1518
-    ExplicitHeight = 757
+    ExplicitHeight = 548
     BarSize = (
       0
-      393
+      284
       1528
-      402)
+      293)
     UpperLeftControls = (
       VirtualStringTree1)
     LowerRightControls = (
@@ -74,7 +74,7 @@ object FormMain: TFormMain
       Left = 0
       Top = 0
       Width = 1528
-      Height = 393
+      Height = 284
       Hint = '?'
       Margins.Left = 2
       Margins.Top = 5
@@ -104,7 +104,7 @@ object FormMain: TFormMain
       Header.Height = 34
       Header.MaxHeight = 100
       Header.MinHeight = 19
-      Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoAutoSpring, hoFullRepaintOnResize]
+      Header.Options = [hoColumnResize, hoDrag, hoShowHint, hoShowImages, hoShowSortGlyphs, hoVisible, hoFullRepaintOnResize]
       Header.SplitterHitTolerance = 16
       HintMode = hmTooltip
       Indent = 27
@@ -254,7 +254,7 @@ object FormMain: TFormMain
       Left = 0
       Top = 29
       Width = 1528
-      Height = 328
+      Height = 228
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
@@ -444,7 +444,7 @@ object FormMain: TFormMain
   end
   object RzStatusBar1: TRzStatusBar
     Left = 0
-    Top = 870
+    Top = 661
     Width = 1528
     Height = 35
     Margins.Left = 5
@@ -459,7 +459,7 @@ object FormMain: TFormMain
     Color = 2829099
     TabOrder = 2
     Visible = False
-    ExplicitTop = 868
+    ExplicitTop = 659
     ExplicitWidth = 1518
     object RzStatusPane_AppVer: TRzStatusPane
       Left = 0
@@ -622,12 +622,12 @@ object FormMain: TFormMain
   object RzFormState1: TRzFormState
     Section = 'mainwnd'
     RegIniFile = RzRegIniFile1
-    Left = 684
-    Top = 627
+    Left = 1188
+    Top = 195
   end
   object RzRegIniFile1: TRzRegIniFile
-    Left = 870
-    Top = 621
+    Left = 1194
+    Top = 273
   end
   object ActionManager1: TActionManager
     ActionBars = <
@@ -746,28 +746,40 @@ object FormMain: TFormMain
               end
               item
                 Action = Action16
-                Caption = '&Full Optimization'
+                Caption = '&Full optimization'
+                ImageIndex = 0
+                ImageName = 'Page 9'
+              end
+              item
+                Action = act7
+                Caption = 'S&tandard optimization'
                 ImageIndex = 0
                 ImageName = 'Page 9'
               end
               item
                 Action = Action47
-                Caption = 'Fa&st Optimization'
-                ImageIndex = 20
-                ImageName = 'fxxc1'
+                Caption = 'F&ast optimization'
+                ImageIndex = 0
+                ImageName = 'Page 9'
               end
               item
                 Caption = '-'
               end
               item
                 Action = Action35
-                Caption = 'F&ull Optimization (selected profile)'
-                ImageIndex = 1
-                ImageName = 'f2'
+                Caption = 'F&ull optimization (selected profile)'
+                ImageIndex = 19
+                ImageName = 'ret1'
+              end
+              item
+                Action = act8
+                Caption = '&Standard optimization (selected profile)'
+                ImageIndex = 19
+                ImageName = 'ret1'
               end
               item
                 Action = Action17
-                Caption = 'F&ast Optimization (selected profile)'
+                Caption = 'Fast &optimization (selected profile)'
                 ImageIndex = 19
                 ImageName = 'ret1'
               end
@@ -869,8 +881,8 @@ object FormMain: TFormMain
       end>
     LargeImages = DataModule1.SVGIconVirtualImageList4
     Images = DataModule1.SVGIconVirtualImageList4
-    Left = 342
-    Top = 150
+    Left = 906
+    Top = 6
     StyleName = 'Platform Default'
     object Action1: TAction
       Category = 'top'
@@ -987,33 +999,49 @@ object FormMain: TFormMain
       OnExecute = AllActionExecute
     end
     object Action16: TAction
-      Tag = 23
+      Tag = 27
       Category = 'Profiles'
-      Caption = 'Full Optimization'
+      Caption = 'Full optimization'
+      ImageIndex = 0
+      ImageName = 'Page 9'
+      OnExecute = AllActionExecute
+    end
+    object act7: TAction
+      Tag = 28
+      Category = 'Profiles'
+      Caption = 'Standard optimization'
       ImageIndex = 0
       ImageName = 'Page 9'
       OnExecute = AllActionExecute
     end
     object Action47: TAction
-      Tag = 24
+      Tag = 29
       Category = 'Profiles'
-      Caption = 'Fast Optimization'
-      ImageIndex = 20
-      ImageName = 'fxxc1'
+      Caption = 'Fast optimization'
+      ImageIndex = 0
+      ImageName = 'Page 9'
       OnExecute = AllActionExecute
     end
     object Action35: TAction
-      Tag = 25
+      Tag = 30
       Category = 'Profiles'
-      Caption = 'Full Optimization (selected profile)'
-      ImageIndex = 1
-      ImageName = 'f2'
+      Caption = 'Full optimization (selected profile)'
+      ImageIndex = 19
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+    object act8: TAction
+      Tag = 31
+      Category = 'Profiles'
+      Caption = 'Standard optimization (selected profile)'
+      ImageIndex = 19
+      ImageName = 'ret1'
       OnExecute = AllActionExecute
     end
     object Action17: TAction
-      Tag = 26
+      Tag = 32
       Category = 'Profiles'
-      Caption = 'Fast Optimization (selected profile)'
+      Caption = 'Fast optimization (selected profile)'
       ImageIndex = 19
       ImageName = 'ret1'
       OnExecute = AllActionExecute
@@ -1102,10 +1130,13 @@ object FormMain: TFormMain
   end
   object PopupActionBar1: TPopupActionBar
     Images = DataModule1.SVGIconVirtualImageList4
-    Left = 128
-    Top = 345
+    Left = 296
+    Top = 249
     object Fil1: TMenuItem
       Action = Action35
+    end
+    object Standardoptimizationselectedprofile1: TMenuItem
+      Action = act8
     end
     object Optimizeselectedprofile2: TMenuItem
       Action = Action17
@@ -1148,32 +1179,75 @@ object FormMain: TFormMain
           item
             Items = <
               item
-                Action = Action31
-                Caption = '&Full Optimization (selected profile)'
-                ImageIndex = 1
-                ImageName = 'f2'
+                Action = act1
+                ImageIndex = 0
+                ImageName = 'Page 9'
+              end
+              item
+                Action = act2
+                ImageIndex = 0
+                ImageName = 'Page 9'
+              end
+              item
+                Action = act3
+                ImageIndex = 0
+                ImageName = 'Page 9'
+              end
+              item
+                Caption = '-'
+                CommandStyle = csSeparator
+                CommandProperties.Width = -1
+                CommandProperties.Font.Charset = DEFAULT_CHARSET
+                CommandProperties.Font.Color = clWindowText
+                CommandProperties.Font.Height = -18
+                CommandProperties.Font.Name = 'Segoe UI'
+                CommandProperties.Font.Style = []
+              end
+              item
+                ContextItems = <
+                  item
+                    Caption = 'ActionClientItem0'
+                  end
+                  item
+                    Caption = 'ActionClientItem1'
+                  end
+                  item
+                    Caption = 'ActionClientItem2'
+                  end
+                  item
+                    Caption = 'ActionClientItem3'
+                  end>
+                Items = <
+                  item
+                    Action = act4
+                    ImageIndex = 17
+                    ImageName = 'ret1'
+                  end
+                  item
+                    Action = act5
+                    ImageIndex = 17
+                    ImageName = 'ret1'
+                  end
+                  item
+                    Action = act6
+                    ImageIndex = 17
+                    ImageName = 'ret1'
+                  end>
+                Caption = 'S&elected profile'
+                CommandProperties.ButtonType = btDropDown
               end>
             Action = Action36
-            Caption = '&full'
-            CommandStyle = csComboBox
+            Caption = 'Op&timize'
+            CommandStyle = csMenu
             ImageIndex = 0
             ImageName = 'Page 9'
             CommandProperties.Width = -1
-          end
-          item
-            Items = <
-              item
-                Action = Action32
-                Caption = '&Fast Optimization (selected profile)'
-                ImageIndex = 17
-                ImageName = 'ret1'
-              end>
-            Action = Action37
-            Caption = 'fa&st'
-            CommandStyle = csComboBox
-            ImageIndex = 18
-            ImageName = 'fxxc1'
-            CommandProperties.Width = -1
+            CommandProperties.Font.Charset = DEFAULT_CHARSET
+            CommandProperties.Font.Color = clWindowText
+            CommandProperties.Font.Height = -18
+            CommandProperties.Font.Name = 'Segoe UI'
+            CommandProperties.Font.Style = []
+            CommandProperties.Height = 0
           end
           item
             Caption = '-'
@@ -1241,24 +1315,15 @@ object FormMain: TFormMain
       end>
     LargeImages = DataModule1.SVGIconVirtualImageList5
     Images = DataModule1.SVGIconVirtualImageList5
-    Left = 546
-    Top = 158
+    Left = 1074
+    Top = 38
     StyleName = 'Platform Default'
     object Action36: TAction
-      Tag = 23
-      Caption = 'full'
+      Caption = 'Optimize'
       Hint = 'Full optimization for checked profiles'
       ImageIndex = 0
       ImageName = 'Page 9'
-      OnExecute = AllActionExecute
-    end
-    object Action37: TAction
-      Tag = 24
-      Caption = 'fast'
-      Hint = 'Fast optimization for checked profiles'
-      ImageIndex = 17
-      ImageName = 'ret1'
-      OnExecute = AllActionExecute
+      OnExecute = Action36Execute
     end
     object Action38: TAction
       Tag = 13
@@ -1331,16 +1396,50 @@ object FormMain: TFormMain
       ImageName = 'icons8_settings_1'
       OnExecute = AllActionExecute
     end
-    object Action31: TAction
-      Tag = 25
-      Caption = 'Full Optimization (selected profile)'
-      ImageIndex = 1
-      ImageName = 'f2'
+    object act1: TAction
+      Tag = 27
+      Caption = 'F&ull'
+      Hint = 'Full optimization for checked profiles'
+      ImageIndex = 0
+      ImageName = 'Page 9'
       OnExecute = AllActionExecute
     end
-    object Action32: TAction
-      Tag = 26
-      Caption = 'Fast Optimization (selected profile)'
+    object act2: TAction
+      Tag = 28
+      Caption = '&Standard'
+      Hint = 'Standart optimization for checked profiles'
+      ImageIndex = 0
+      ImageName = 'Page 9'
+      OnExecute = AllActionExecute
+    end
+    object act3: TAction
+      Tag = 29
+      Caption = 'F&ast'
+      Hint = 'Fast optimization for checked profiles'
+      ImageIndex = 0
+      ImageName = 'Page 9'
+      OnExecute = AllActionExecute
+    end
+    object act4: TAction
+      Tag = 30
+      Caption = 'F&ull'
+      Hint = 'Full optimization for selected profiles'
+      ImageIndex = 17
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+    object act5: TAction
+      Tag = 31
+      Caption = '&Standard'
+      Hint = 'Standart optimization for selected profiles'
+      ImageIndex = 17
+      ImageName = 'ret1'
+      OnExecute = AllActionExecute
+    end
+    object act6: TAction
+      Tag = 32
+      Caption = 'F&ast'
+      Hint = 'Fast optimization for selected profiles'
       ImageIndex = 17
       ImageName = 'ret1'
       OnExecute = AllActionExecute
@@ -1348,13 +1447,42 @@ object FormMain: TFormMain
   end
   object PopupActionBar2: TPopupActionBar
     OnPopup = PopupActionBar2Popup
-    Left = 714
-    Top = 158
+    Left = 282
+    Top = 494
     object Copytoclipboard1: TMenuItem
       Action = Action28
     end
     object Gotofile2: TMenuItem
       Action = Action29
+    end
+  end
+  object PopupActionBar3: TPopupActionBar
+    Images = DataModule1.SVGIconVirtualImageList5
+    Left = 76
+    Top = 62
+    object N11: TMenuItem
+      Action = act1
+    end
+    object N21: TMenuItem
+      Action = act2
+    end
+    object N31: TMenuItem
+      Action = act3
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object Selectedprofile1: TMenuItem
+      Caption = 'Selected profile'
+      object N41: TMenuItem
+        Action = act4
+      end
+      object N51: TMenuItem
+        Action = act5
+      end
+      object N61: TMenuItem
+        Action = act6
+      end
     end
   end
 end
